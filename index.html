@@ -1,1714 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>MY Song</title>
-<link href="logo.png" rel="icon">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #0d0d0d;
-  --bg2: #161616;
-  --bg3: #1e1e1e;
-  --bg4: #252525;
-  --bg5: #2e2e2e;
-  --accent: #1db954;
-  --accent2: #1ed760;
-  --accent-dim: rgba(29,185,84,0.12);
-  --txt: #fff;
-  --txt2: #b3b3b3;
-  --txt3: #6a6a6a;
-  --border: rgba(255,255,255,0.07);
-  --topbar-h: 60px;
-  --player-h: 72px;
-  --bottomnav-h: 64px;
-  --r: 12px;
-  --err: #ff6b6b;
-  --err-bg: rgba(220,50,50,.15);
-  --err-border: rgba(220,50,50,.3);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --stats-gold: #f4b942;
-  --stats-blue: #4a9eff;
-  --stats-purple: #a855f7;
-}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);overflow:hidden;overscroll-behavior:none;}
-.screen{display:none;position:fixed;inset:0;z-index:10;flex-direction:column}
-.screen.active{display:flex}
-.auth-logo-mark{width:95px;height:90px;}
-.auth-logo-mark img{width:130px;height:100px;object-fit:contain;}
-.topbar-logo-mark{width:32px;height:32px;border-radius:8px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.topbar-logo-mark img{width:50px;height:60px;object-fit:contain;}
-#authScreen{background:var(--bg);align-items:center;justify-content:center;overflow-y:auto;padding:20px 16px;}
-.auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px;}
-.auth-logo span{font-size:38px;font-weight:800;letter-spacing:-2px;color:#fff}
-.auth-box{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;max-width:400px;position:relative;z-index:1;box-shadow:0 24px 64px rgba(0,0,0,.5);}
-.auth-box h2{font-size:20px;font-weight:700;margin-bottom:3px;text-align:center}
-.auth-box p{font-size:13px;color:var(--txt2);text-align:center;margin-bottom:20px}
-.auth-tabs{display:flex;background:var(--bg3);border-radius:10px;padding:4px;margin-bottom:20px;gap:4px}
-.auth-tab{flex:1;padding:9px;text-align:center;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;color:var(--txt2);transition:.2s;user-select:none;}
-.auth-tab.active{background:var(--bg5);color:var(--txt);box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.auth-form{display:flex;flex-direction:column;gap:12px}
-.input-group{display:flex;flex-direction:column;gap:5px}
-.input-group label{font-size:11px;font-weight:700;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase}
-.input-wrap{position:relative;display:flex;align-items:center}
-.input-wrap input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 40px 12px 14px;color:var(--txt);font-size:15px;font-family:inherit;outline:none;transition:.2s;}
-.input-wrap input:focus{border-color:var(--accent);background:var(--bg4)}
-.input-wrap input::placeholder{color:var(--txt3)}
-.input-wrap input.err{border-color:var(--err)!important}
-.input-icon{position:absolute;right:12px;color:var(--txt3);pointer-events:none;display:flex;align-items:center}
-.input-icon.clickable{pointer-events:all;cursor:pointer;transition:.15s}
-.auth-avatar-row{display:flex;align-items:center;gap:14px}
-.auth-avatar-preview{width:60px;height:60px;border-radius:50%;background:var(--bg3);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex-shrink:0;transition:.2s;}
-.auth-avatar-preview:hover{border-color:var(--accent)}
-.auth-avatar-preview img{width:100%;height:100%;object-fit:cover}
-.auth-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;border:none;border-radius:30px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;transition:.2s;font-family:inherit;margin-top:4px;box-shadow:0 4px 20px rgba(29,185,84,.3);}
-.auth-btn:active{transform:scale(.98)}
-.auth-btn:disabled{opacity:.5;cursor:not-allowed}
-.auth-err{background:var(--err-bg);border:1px solid var(--err-border);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--err);display:none;animation:shake .35s ease;}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-.field-err{font-size:11px;color:var(--err);display:none;padding:0 2px}
-.auth-spinner{display:none;width:18px;height:18px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .6s linear infinite;margin:0 auto}
-@keyframes spin{to{transform:rotate(360deg)}}
-.pw-strength{height:3px;border-radius:2px;margin-top:4px;background:var(--bg4);overflow:hidden}
-.pw-strength-fill{height:100%;border-radius:2px;transition:width .3s,background .3s;width:0}
-#appScreen{background:var(--bg)}
-.topbar{height:var(--topbar-h);background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0;border-bottom:1px solid var(--border);z-index:50;}
-.topbar-logo{display:flex;align-items:center;gap:8px}
-.topbar-logo span{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px}
-.topbar-profile{width:36px;height:36px;border-radius:50%;background:var(--bg3);overflow:hidden;cursor:pointer;border:2px solid var(--bg4);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.topbar-profile img{width:100%;height:100%;object-fit:cover}
-.content-area{flex:1;overflow:hidden;position:relative;}
-.mini-player{background:var(--bg3);border-top:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;cursor:pointer;position:relative;overflow:hidden;}
-.mini-player::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(29,185,84,.06) 0%,transparent 60%);pointer-events:none;}
-.mini-player-art{width:44px;height:44px;border-radius:8px;background:var(--bg4);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.mini-player-art img{width:100%;height:100%;object-fit:cover}
-.mini-player-info{flex:1;min-width:0}
-.mini-player-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mini-player-artist{font-size:11px;color:var(--txt2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mini-player-prog{position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--bg4);}
-.mini-player-prog-fill{height:100%;background:var(--accent);transition:width .1s linear}
-.mini-player-btns{display:flex;align-items:center;gap:4px}
-.mini-btn{width:36px;height:36px;border-radius:50%;background:none;border:none;cursor:pointer;color:var(--txt2);display:flex;align-items:center;justify-content:center;transition:.15s;}
-.mini-btn:active{color:var(--txt);background:var(--bg4)}
-.mini-play-btn{width:36px;height:36px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.mini-play-btn:active{background:var(--accent2)}
-.mini-queue-btn{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);cursor:pointer;color:var(--txt3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;margin-left:2px;}
-.mini-queue-btn:active,.mini-queue-btn.has-queue{color:var(--accent);background:var(--accent-dim);border-color:rgba(29,185,84,.3);}
-.bottom-nav{height:calc(var(--bottomnav-h) + var(--safe-bottom));padding-bottom:var(--safe-bottom);background:var(--bg2);border-top:1px solid var(--border);display:flex;flex-shrink:0;z-index:50;}
-.nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:var(--txt3);transition:.15s;font-size:10px;font-weight:600;letter-spacing:.02em;padding:0 4px;}
-.nav-tab.active{color:var(--accent)}
-.nav-tab svg{transition:.15s}
-.nav-tab.active svg{transform:scale(1.1)}
-.queue-panel-overlay{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.6);display:none;align-items:flex-end;backdrop-filter:blur(4px);}
-.queue-panel-overlay.open{display:flex}
-.queue-panel{width:100%;background:var(--bg3);border-radius:20px 20px 0 0;border:1px solid var(--border);border-bottom:none;padding:0 0 calc(12px + var(--safe-bottom));max-height:72vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.2,.64,1);}
-.queue-panel-overlay.open .queue-panel{transform:translateY(0);}
-.queue-panel-handle{width:40px;height:4px;background:var(--bg5);border-radius:2px;margin:10px auto 0;flex-shrink:0;}
-.queue-panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 12px;border-bottom:1px solid var(--border);flex-shrink:0;}
-.queue-panel-title{font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px;}
-.queue-count-badge{background:var(--accent-dim);color:var(--accent);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;}
-.queue-panel-close{width:30px;height:30px;border-radius:50%;background:var(--bg4);border:none;cursor:pointer;color:var(--txt2);display:flex;align-items:center;justify-content:center;font-size:14px;}
-.queue-panel-body{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;}
-.queue-panel-body::-webkit-scrollbar{display:none}
-.queue-now-playing{padding:12px 20px;background:var(--accent-dim);border-bottom:1px solid rgba(29,185,84,.15);flex-shrink:0;}
-.queue-now-label{font-size:9px;font-weight:700;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
-.queue-now-track{display:flex;align-items:center;gap:10px;}
-.queue-now-art{width:38px;height:38px;border-radius:7px;background:var(--bg4);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.queue-now-art img{width:100%;height:100%;object-fit:cover}
-.queue-now-name{font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.queue-now-artist{font-size:11px;color:var(--txt2);margin-top:1px}
-.queue-up-next{padding:12px 20px 6px;flex-shrink:0}
-.queue-up-label{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
-.queue-empty{padding:32px 20px;text-align:center;color:var(--txt3);font-size:13px;}
-.queue-empty-icon{font-size:36px;margin-bottom:8px;opacity:.4}
-.queue-track-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:.15s;}
-.queue-track-item:active{background:var(--bg4)}
-.queue-track-art{width:40px;height:40px;border-radius:7px;background:var(--bg4);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.queue-track-art img{width:100%;height:100%;object-fit:cover}
-.queue-track-info{flex:1;min-width:0}
-.queue-track-name{font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.queue-track-artist{font-size:11px;color:var(--txt2);margin-top:1px}
-.queue-track-remove{width:28px;height:28px;border-radius:50%;background:none;border:none;cursor:pointer;color:var(--txt3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;transition:.15s;}
-.queue-track-remove:active{color:var(--err);background:rgba(255,100,100,.1)}
-.queue-clear-btn{margin:8px 20px 0;background:rgba(255,100,100,.08);border:1px solid rgba(255,100,100,.15);color:rgba(255,100,100,.7);border-radius:10px;padding:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;width:calc(100% - 40px);display:flex;align-items:center;justify-content:center;gap:6px;}
-.queue-clear-btn:active{background:rgba(255,100,100,.15)}
-.page{display:none;position:absolute;inset:0;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:var(--bg);}
-.page.active{display:flex}
-.page::-webkit-scrollbar{display:none}
-.home-filter{display:flex;gap:8px;padding:14px 16px 12px;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch;}
-.home-filter::-webkit-scrollbar{display:none}
-.filter-chip{padding:7px 16px;border-radius:20px;border:1px solid var(--border);font-size:13px;color:var(--txt2);cursor:pointer;transition:.15s;background:transparent;font-family:inherit;white-space:nowrap;flex-shrink:0;}
-.filter-chip:active,.filter-chip.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
-.now-playing-card{margin:0 16px 16px;border-radius:16px;background:linear-gradient(135deg,rgba(29,185,84,.15) 0%,rgba(29,185,84,.04) 100%);border:1px solid rgba(29,185,84,.15);padding:16px;display:flex;align-items:center;gap:14px;flex-shrink:0;}
-.now-playing-art{width:62px;height:62px;border-radius:10px;background:var(--bg3);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.now-playing-art img{width:100%;height:100%;object-fit:cover}
-.now-playing-info{flex:1;min-width:0}
-.now-playing-tag{font-size:9px;font-weight:700;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
-.now-playing-title{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.now-playing-sub{font-size:11px;color:var(--txt2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.now-playing-actions{display:flex;align-items:center;gap:8px;margin-top:10px}
-.np-play-fab{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(29,185,84,.35);flex-shrink:0;}
-.np-play-fab:active{transform:scale(.95)}
-.np-icon-btn{width:32px;height:32px;border-radius:50%;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt2);transition:.15s;}
-.np-icon-btn:active{color:var(--txt)}
-.np-icon-btn.liked{color:var(--accent)}
-.section-label{font-size:16px;font-weight:800;padding:4px 16px 10px;flex-shrink:0;}
-.track-list{padding:0 8px 8px;flex-shrink:0}
-.track-item{display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:10px;cursor:pointer;transition:.15s;position:relative;}
-.track-item:active{background:var(--bg3)}
-.track-item.active{background:var(--accent-dim)}
-.track-item.active .track-item-name{color:var(--accent)}
-.track-num{width:28px;text-align:center;font-size:13px;color:var(--txt3);flex-shrink:0;}
-.track-item-art{width:48px;height:48px;border-radius:8px;background:var(--bg3);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.track-item-art img{width:100%;height:100%;object-fit:cover}
-.track-item-info{flex:1;min-width:0}
-.track-item-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.track-item-artist{font-size:12px;color:var(--txt2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.track-item-right{display:flex;align-items:center;gap:4px;flex-shrink:0}
-.track-item-dur{font-size:12px;color:var(--txt3)}
-.track-more-btn{width:32px;height:32px;border-radius:50%;background:none;border:none;cursor:pointer;color:var(--txt3);display:flex;align-items:center;justify-content:center;}
-.track-more-btn:active{color:var(--txt);background:var(--bg4)}
-.eq-bars{display:flex;align-items:flex-end;gap:2px;height:12px}
-.eq-bar{width:3px;background:var(--accent);border-radius:1px;animation:eq .6s ease-in-out infinite alternate}
-.eq-bar:nth-child(2){animation-delay:.15s}
-.eq-bar:nth-child(3){animation-delay:.3s}
-@keyframes eq{from{height:3px}to{height:12px}}
-.eq-bars.paused .eq-bar{animation-play-state:paused;height:4px}
-.search-header{padding:16px 16px 12px;flex-shrink:0}
-.search-header h2{font-size:22px;font-weight:800;margin-bottom:14px}
-.search-input-wrap{position:relative}
-.search-input-wrap input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:24px;padding:12px 16px 12px 44px;color:var(--txt);font-size:15px;font-family:inherit;outline:none;transition:.2s;}
-.search-input-wrap input:focus{background:var(--bg4);border-color:var(--accent)}
-.search-input-wrap input::placeholder{color:var(--txt3)}
-.search-icon-pos{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--txt3);pointer-events:none}
-.search-results{padding:4px 8px;flex:1}
-.search-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--txt3);gap:10px;padding:40px;}
-.lib-header{padding:16px 16px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.lib-header h2{font-size:22px;font-weight:800;flex:1}
-.btn-new-pl{display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;border:none;border-radius:20px;padding:8px 14px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;}
-.btn-new-pl:active{opacity:.85}
-.lib-tabs{display:flex;gap:6px;padding:0 16px 14px;flex-shrink:0}
-.lib-tab{padding:7px 16px;border-radius:20px;border:1px solid var(--border);font-size:13px;color:var(--txt2);cursor:pointer;transition:.15s;font-family:inherit;background:transparent;}
-.lib-tab.active{background:var(--bg4);color:var(--txt);border-color:var(--bg5)}
-.lib-content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.lib-content::-webkit-scrollbar{display:none}
-.pl-card{display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer;transition:.15s;}
-.pl-card:active{background:var(--bg3)}
-.pl-card-art{width:58px;height:58px;border-radius:10px;background:var(--bg3);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.pl-card-art img{width:100%;height:100%;object-fit:cover}
-.pl-card-info{flex:1;min-width:0}
-.pl-card-name{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pl-card-sub{font-size:12px;color:var(--txt2);margin-top:2px}
-.pl-card-more{width:32px;height:32px;border-radius:50%;background:none;border:none;cursor:pointer;color:var(--txt3);display:flex;align-items:center;justify-content:center;}
-.liked-card-art{background:linear-gradient(135deg,#4a3fa0,#2d1f6e);display:flex;align-items:center;justify-content:center;}
-.settings-page{background:var(--bg)}
-.settings-profile-section{padding:24px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;border-bottom:1px solid var(--border);flex-shrink:0;}
-.settings-avatar-wrap{position:relative;cursor:pointer}
-.settings-avatar{width:80px;height:80px;border-radius:50%;background:var(--bg3);object-fit:cover;border:3px solid var(--bg4);}
-.settings-avatar-edit{position:absolute;bottom:0;right:0;width:26px;height:26px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;}
-.settings-profile-name{font-size:20px;font-weight:800}
-.settings-profile-sub{font-size:13px;color:var(--txt2)}
-.settings-edit-btn{background:var(--bg3);border:1px solid var(--border);color:var(--txt2);border-radius:20px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
-.settings-edit-btn:active{background:var(--bg4)}
-.settings-section{padding:16px 16px 4px;flex-shrink:0}
-.settings-section-label{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
-.settings-field{display:flex;align-items:center;background:var(--bg2);border-radius:12px;padding:14px 16px;margin-bottom:8px;gap:12px;}
-.settings-field-icon{color:var(--txt3);flex-shrink:0}
-.settings-field-content{flex:1;min-width:0}
-.settings-field-label{font-size:11px;color:var(--txt3);margin-bottom:2px}
-.settings-field-value{font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.settings-field-action{color:var(--txt3);flex-shrink:0}
-.logout-btn{margin:20px 16px;background:rgba(255,100,100,.1);border:1px solid rgba(255,100,100,.2);color:#ff6b6b;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;width:calc(100% - 32px);display:flex;align-items:center;justify-content:center;gap:8px;}
-.logout-btn:active{background:rgba(255,100,100,.2)}
-.stats-row{display:flex;gap:10px;margin:0 16px 8px}
-.stat-card{flex:1;background:var(--bg2);border-radius:12px;padding:14px;text-align:center;}
-.stat-num{font-size:26px;font-weight:800;color:var(--accent)}
-.stat-label{font-size:11px;color:var(--txt2);margin-top:2px}
-.pl-detail-overlay{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column;overflow:hidden;}
-.pl-detail-overlay.open{display:flex}
-.pl-detail-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.pl-detail-scroll::-webkit-scrollbar{display:none}
-.pl-detail-topbar{height:var(--topbar-h);display:flex;align-items:center;gap:12px;padding:0 16px;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:5;}
-.pl-back-btn{background:none;border:none;cursor:pointer;color:var(--txt2);padding:6px;display:flex;align-items:center;min-width:34px;}
-.pl-detail-hero{padding:24px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:16px;background:linear-gradient(180deg,rgba(29,185,84,.08) 0%,transparent 100%);}
-.pl-detail-art{width:170px;height:170px;border-radius:16px;background:var(--bg3);overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.6);flex-shrink:0;}
-.pl-detail-art img{width:100%;height:100%;object-fit:cover}
-.pl-detail-meta{text-align:center}
-.pl-detail-meta h1{font-size:26px;font-weight:800;margin-bottom:4px}
-.pl-detail-meta p{font-size:13px;color:var(--txt2)}
-.pl-detail-actions{display:flex;align-items:center;gap:10px;width:100%;justify-content:center;padding:0 20px;}
-.pl-play-btn{height:48px;padding:0 28px;border-radius:24px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;color:#000;font-family:inherit;box-shadow:0 4px 16px rgba(29,185,84,.4);flex:1;justify-content:center;}
-.pl-play-btn:active{transform:scale(.97);opacity:.9}
-.pl-add-songs-btn{height:48px;padding:0 20px;background:var(--bg3);border:1px solid var(--border);color:var(--txt);border-radius:24px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;flex:1;justify-content:center;}
-.pl-add-songs-btn:active{background:var(--bg4)}
-.pl-delete-btn{width:48px;height:48px;border-radius:50%;background:rgba(255,100,100,.1);border:1px solid rgba(255,100,100,.2);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--err);flex-shrink:0;}
-.pl-delete-btn:active{background:rgba(255,100,100,.25)}
-.pl-detail-tracks-section{padding:0 8px 80px;}
-.pl-detail-tracks-label{font-size:13px;font-weight:700;color:var(--txt3);padding:16px 8px 8px;text-transform:uppercase;letter-spacing:.06em;}
-.stats-overlay{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column;overflow:hidden;}
-.stats-overlay.open{display:flex}
-.stats-topbar{height:var(--topbar-h);display:flex;align-items:center;gap:12px;padding:0 16px;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--bg);}
-.stats-back-btn{background:none;border:none;cursor:pointer;color:var(--txt2);padding:6px;display:flex;align-items:center;min-width:34px;}
-.stats-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px;}
-.stats-scroll::-webkit-scrollbar{display:none}
-.stats-hero{margin:16px;border-radius:20px;padding:24px 20px;background:linear-gradient(135deg,#1a2a1a 0%,#0d1f0d 100%);border:1px solid rgba(29,185,84,.2);position:relative;overflow:hidden;}
-.stats-hero::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(29,185,84,.15) 0%,transparent 70%);}
-.stats-period-tabs{display:flex;gap:6px;margin-bottom:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
-.stats-period-tabs::-webkit-scrollbar{display:none}
-.stats-period-tab{padding:6px 14px;border-radius:16px;border:1px solid var(--border);font-size:12px;color:var(--txt2);cursor:pointer;transition:.15s;font-family:inherit;background:transparent;white-space:nowrap;flex-shrink:0;}
-.stats-period-tab.active{background:rgba(29,185,84,.15);border-color:var(--accent);color:var(--accent);}
-.stats-hero-row{display:flex;align-items:flex-start;gap:20px;}
-.stats-hero-main{flex:1}
-.stats-big-num{font-size:52px;font-weight:800;line-height:1;color:var(--accent);letter-spacing:-2px;}
-.stats-big-label{font-size:12px;color:var(--txt3);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;}
-.stats-hero-side{display:flex;flex-direction:column;gap:16px;align-items:flex-end;}
-.stats-side-item{text-align:right;}
-.stats-side-num{font-size:22px;font-weight:800;color:var(--txt);}
-.stats-side-label{font-size:11px;color:var(--txt3);font-weight:600;}
-.stats-cards-row{display:flex;gap:10px;padding:0 16px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
-.stats-cards-row::-webkit-scrollbar{display:none}
-.stats-mini-card{flex-shrink:0;width:120px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 12px;}
-.stats-mini-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:16px;}
-.stats-mini-num{font-size:20px;font-weight:800;}
-.stats-mini-label{font-size:11px;color:var(--txt2);margin-top:2px;line-height:1.3;}
-.stats-section{padding:0 16px 8px;}
-.stats-section-title{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-.stats-section-title .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;}
-.stats-song-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
-.stats-song-item:last-child{border-bottom:none}
-.stats-song-rank{width:24px;text-align:center;font-size:13px;font-weight:800;color:var(--txt3);flex-shrink:0;}
-.stats-song-rank.top1{color:var(--stats-gold);}
-.stats-song-rank.top2{color:var(--txt2);}
-.stats-song-rank.top3{color:#cd7f32;}
-.stats-song-art{width:46px;height:46px;border-radius:8px;background:var(--bg3);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.stats-song-art img{width:100%;height:100%;object-fit:cover}
-.stats-song-info{flex:1;min-width:0}
-.stats-song-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.stats-song-artist{font-size:12px;color:var(--txt2);margin-top:1px;}
-.stats-song-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
-.stats-play-count{font-size:13px;font-weight:700;color:var(--accent);}
-.stats-play-label{font-size:10px;color:var(--txt3);}
-.stats-time-label{font-size:11px;color:var(--txt3);}
-.stats-prog-wrap{height:3px;background:var(--bg4);border-radius:2px;margin-top:6px;}
-.stats-prog-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .5s ease;}
-.stats-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;color:var(--txt3);}
-.stats-empty-icon{font-size:48px;margin-bottom:12px;opacity:.5;}
-.nowplaying-overlay{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;align-items:center;}
-.nowplaying-overlay.open{display:flex}
-.np-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(60px) brightness(.25) saturate(1.8);transform:scale(1.1);transition:background-image .6s;}
-.np-solid{position:absolute;inset:0;background:rgba(0,0,0,.55)}
-.np-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%;flex:1;padding:0 24px 24px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.np-content::-webkit-scrollbar{display:none}
-.np-topbar{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 0 20px;flex-shrink:0;}
-.np-close{background:rgba(255,255,255,.1);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--txt2);}
-.np-close:active{background:rgba(255,255,255,.2)}
-.np-title-center{font-size:13px;font-weight:700;color:rgba(255,255,255,.6)}
-.np-art{width:min(280px,80vw);height:min(280px,80vw);border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.7);margin-bottom:28px;flex-shrink:0;}
-.np-art.playing{animation:artPulse 3s ease-in-out infinite alternate}
-@keyframes artPulse{from{transform:scale(1)}to{transform:scale(1.03)}}
-.np-art img{width:100%;height:100%;object-fit:cover}
-.np-art-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:72px}
-.np-meta-row{width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.np-name{font-size:20px;font-weight:800;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.np-artist{font-size:14px;color:rgba(255,255,255,.6);margin-top:2px}
-.np-like-btn{background:none;border:none;cursor:pointer;padding:6px;color:rgba(255,255,255,.5)}
-.np-like-btn:active{transform:scale(.9)}
-.np-progress{width:100%;margin-bottom:20px}
-.np-prog-bar{width:100%;height:5px;background:rgba(255,255,255,.15);border-radius:3px;cursor:pointer;margin-bottom:8px;position:relative;}
-.np-prog-fill{height:100%;background:#fff;border-radius:3px;pointer-events:none}
-.np-times{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.5)}
-.np-controls{width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.np-ctrl{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);display:flex;align-items:center;padding:4px}
-.np-ctrl:active{color:#fff}
-.np-ctrl.active{color:var(--accent)}
-.np-main-play{width:60px;height:60px;border-radius:50%;background:#fff;color:#000;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);}
-.np-main-play:active{transform:scale(.95);background:#f0f0f0}
-.np-vol-row{width:100%;display:flex;align-items:center;gap:10px}
-.np-vol-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);padding:4px}
-.np-vol-bar{flex:1;height:4px;background:rgba(255,255,255,.15);border-radius:2px;cursor:pointer;position:relative}
-.np-vol-fill{height:100%;background:rgba(255,255,255,.6);border-radius:2px}
-.ctx-sheet{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.6);display:none;align-items:flex-end;}
-.ctx-sheet.open{display:flex}
-.ctx-sheet-inner{width:100%;background:var(--bg3);border-radius:20px 20px 0 0;padding:8px 0 calc(16px + var(--safe-bottom));transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
-.ctx-sheet.open .ctx-sheet-inner{transform:translateY(0)}
-.ctx-sheet-handle{width:40px;height:4px;background:var(--bg5);border-radius:2px;margin:8px auto 16px}
-.ctx-track-info{display:flex;align-items:center;gap:12px;padding:8px 20px 16px;border-bottom:1px solid var(--border);margin-bottom:8px}
-.ctx-track-art{width:44px;height:44px;border-radius:8px;background:var(--bg4);overflow:hidden;flex-shrink:0}
-.ctx-track-art img{width:100%;height:100%;object-fit:cover}
-.ctx-track-name{font-size:14px;font-weight:700}
-.ctx-track-artist{font-size:12px;color:var(--txt2)}
-.ctx-item{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;font-size:15px;font-weight:500;color:var(--txt2);transition:.1s;}
-.ctx-item:active{background:var(--bg4);color:var(--txt)}
-.ctx-item.danger{color:var(--err)}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:400;display:none;align-items:flex-end;backdrop-filter:blur(4px);}
-.modal-overlay.open{display:flex}
-.modal{background:var(--bg3);border:1px solid var(--border);border-radius:20px 20px 0 0;padding:20px 20px calc(24px + var(--safe-bottom));width:100%;max-height:85vh;display:flex;flex-direction:column;gap:14px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.modal::-webkit-scrollbar{display:none}
-.modal-handle{width:40px;height:4px;background:var(--bg5);border-radius:2px;margin:-4px auto 6px}
-.modal h3{font-size:18px;font-weight:800}
-.modal-row{display:flex;flex-direction:column;gap:6px}
-.modal-row label{font-size:12px;color:var(--txt2);font-weight:600}
-.modal-row input{background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--txt);font-size:15px;font-family:inherit;outline:none;transition:.2s;}
-.modal-row input:focus{border-color:var(--accent)}
-.modal-art-row{display:flex;align-items:center;gap:14px}
-.modal-art-preview{width:72px;height:72px;border-radius:10px;background:var(--bg4);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex-shrink:0;}
-.modal-art-preview img{width:100%;height:100%;object-fit:cover}
-.modal-songs-list{overflow-y:auto;max-height:40vh;border:1px solid var(--border);border-radius:10px}
-.modal-songs-list::-webkit-scrollbar{display:none}
-.modal-song-row{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:.1s;}
-.modal-song-row:last-child{border-bottom:none}
-.modal-song-row:active{background:var(--bg4)}
-.modal-song-check{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.15s;}
-.modal-song-check.checked{background:var(--accent);border-color:var(--accent)}
-.modal-song-thumb{width:38px;height:38px;border-radius:6px;background:var(--bg4);flex-shrink:0;overflow:hidden}
-.modal-song-thumb img{width:100%;height:100%;object-fit:cover}
-.modal-btns{display:flex;gap:10px}
-.modal-btn{flex:1;padding:13px;border-radius:20px;border:none;cursor:pointer;font-size:15px;font-weight:700;font-family:inherit;transition:.15s;}
-.modal-btn.cancel{background:var(--bg5);color:var(--txt2)}
-.modal-btn.cancel:active{color:var(--txt)}
-.modal-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000}
-.modal-btn.primary:active{opacity:.9}
-.sleep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.sleep-opt{padding:14px 10px;border-radius:10px;background:var(--bg4);border:1px solid var(--border);text-align:center;cursor:pointer;font-size:13px;font-weight:600;transition:.15s;}
-.sleep-opt:active{background:var(--bg5)}
-.sleep-opt.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
-.pl-submenu-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.7);display:none;align-items:flex-end;}
-.pl-submenu-overlay.open{display:flex}
-.pl-submenu{width:100%;background:var(--bg3);border-radius:20px 20px 0 0;padding:8px 0 calc(24px + var(--safe-bottom));}
-.pl-submenu-title{padding:14px 20px 10px;font-size:14px;font-weight:700;color:var(--txt2);border-bottom:1px solid var(--border);margin-bottom:6px}
-.delete-confirm-modal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
-.delete-confirm-modal.open{display:flex}
-.delete-confirm-inner{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;max-width:320px;text-align:center;}
-.delete-confirm-icon{font-size:40px;margin-bottom:12px;}
-.delete-confirm-title{font-size:18px;font-weight:800;margin-bottom:8px;}
-.delete-confirm-sub{font-size:13px;color:var(--txt2);margin-bottom:24px;line-height:1.5;}
-.delete-confirm-btns{display:flex;gap:10px;}
-.delete-confirm-cancel{flex:1;padding:13px;border-radius:14px;border:1px solid var(--border);background:var(--bg4);color:var(--txt2);cursor:pointer;font-size:14px;font-weight:700;font-family:inherit;}
-.delete-confirm-ok{flex:1;padding:13px;border-radius:14px;border:none;background:var(--err);color:#fff;cursor:pointer;font-size:14px;font-weight:700;font-family:inherit;}
-.delete-confirm-ok:active{opacity:.85}
-.toast{position:fixed;bottom:calc(var(--bottomnav-h) + var(--player-h) + 12px);left:50%;transform:translateX(-50%) translateY(8px);background:var(--bg4);color:var(--txt);padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:999;border:1px solid var(--border);white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.4);}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.sleep-indicator{display:none;align-items:center;gap:5px;background:rgba(29,185,84,.1);border:1px solid rgba(29,185,84,.2);border-radius:16px;padding:4px 10px;font-size:11px;color:var(--accent);font-weight:600;}
-.sleep-indicator.active{display:flex}
-.topbar-stats-btn{width:36px;height:36px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--txt3);transition:.15s;flex-shrink:0;}
-.topbar-stats-btn:active{color:var(--accent);background:var(--accent-dim);border-color:rgba(29,185,84,.3);}
-.topbar-right{display:flex;align-items:center;gap:8px;}
-
-/* ════════════════════════════════
-   IMAGE CROP MODAL
-════════════════════════════════ */
-.crop-modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 800;
-  background: rgba(0,0,0,.92);
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(12px);
-}
-.crop-modal-overlay.open { display: flex; }
-
-.crop-modal {
-  width: 100%;
-  max-width: 420px;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  max-height: 100dvh;
-  overflow: hidden;
-}
-
-.crop-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px 14px;
-  flex-shrink: 0;
-}
-.crop-title {
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: -.3px;
-}
-.crop-close-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--bg4);
-  border: none;
-  cursor: pointer;
-  color: var(--txt2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 300;
-  line-height: 1;
-}
-.crop-close-btn:active { background: var(--bg5); color: var(--txt); }
-
-/* Viewport: circular crop mask */
-.crop-viewport-wrap {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  margin: 0 auto;
-  flex-shrink: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 0 9999px rgba(0,0,0,.72);
-  touch-action: none;
-  cursor: grab;
-}
-.crop-viewport-wrap:active { cursor: grabbing; }
-
-.crop-canvas {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  border-radius: 50%;
-}
-
-/* Crop guide lines (rule of thirds) */
-.crop-guides {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: 50%;
-  z-index: 2;
-}
-.crop-guide-h, .crop-guide-v {
-  position: absolute;
-  background: rgba(255,255,255,.08);
-}
-.crop-guide-h { width: 100%; height: 1px; }
-.crop-guide-h:first-child { top: 33.33%; }
-.crop-guide-h:nth-child(2) { top: 66.66%; }
-.crop-guide-v { height: 100%; width: 1px; }
-.crop-guide-v:nth-child(3) { left: 33.33%; }
-.crop-guide-v:nth-child(4) { left: 66.66%; }
-
-/* Circle border pulse when dragging */
-.crop-viewport-wrap.dragging {
-  border-color: var(--accent2);
-  box-shadow: 0 0 0 9999px rgba(0,0,0,.72), 0 0 0 3px rgba(29,185,84,.3);
-}
-
-/* Controls section */
-.crop-controls {
-  padding: 20px 24px 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  flex-shrink: 0;
-}
-
-.crop-control-row {
-  display: flex;
-  align-items: center;
-  gap:12px;
-}
-.crop-ctrl-icon {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--txt3);
-  flex-shrink: 0;
-}
-.crop-ctrl-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--txt3);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  width: 52px;
-  flex-shrink: 0;
-}
-.crop-slider {
-  flex: 1;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--bg5);
-  outline: none;
-  cursor: pointer;
-}
-.crop-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--accent);
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(29,185,84,.4);
-  transition: transform .1s;
-}
-.crop-slider:active::-webkit-slider-thumb { transform: scale(1.2); }
-.crop-slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--accent);
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 2px 8px rgba(29,185,84,.4);
-}
-.crop-slider-val {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--txt2);
-  width: 36px;
-  text-align: right;
-  flex-shrink: 0;
-}
-
-/* Rotation control */
-.crop-rotate-btns {
-  display: flex;
-  gap: 6px;
-  padding: 0 24px 4px;
-  flex-shrink: 0;
-}
-.crop-rotate-btn {
-  flex: 1;
-  height: 40px;
-  border-radius: 10px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--txt2);
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 700;
-  font-family: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: .15s;
-}
-.crop-rotate-btn:active { background: var(--bg4); color: var(--txt); }
-.crop-rotate-btn.reset-btn {
-  background: var(--accent-dim);
-  border-color: rgba(29,185,84,.25);
-  color: var(--accent);
-}
-.crop-rotate-btn.reset-btn:active { background: rgba(29,185,84,.2); }
-
-/* Bottom action buttons */
-.crop-actions {
-  display: flex;
-  gap: 10px;
-  padding: 12px 20px calc(20px + var(--safe-bottom));
-  flex-shrink: 0;
-  border-top: 1px solid var(--border);
-  margin-top: 4px;
-}
-.crop-cancel-btn {
-  flex: 1;
-  padding: 14px;
-  border-radius: 24px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--txt2);
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 700;
-  font-family: inherit;
-}
-.crop-cancel-btn:active { background: var(--bg4); }
-.crop-save-btn {
-  flex: 2;
-  padding: 14px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border: none;
-  color: #000;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 800;
-  font-family: inherit;
-  box-shadow: 0 4px 16px rgba(29,185,84,.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.crop-save-btn:active { transform: scale(.98); opacity: .9; }
-
-/* Flip buttons */
-.crop-flip-row {
-  display: flex;
-  gap: 6px;
-  padding: 0 24px 4px;
-  flex-shrink: 0;
-}
-.crop-flip-btn {
-  flex: 1;
-  height: 36px;
-  border-radius: 8px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--txt3);
-  cursor: pointer;
-  font-size: 11px;
-  font-weight: 700;
-  font-family: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  transition: .15s;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-.crop-flip-btn:active { background: var(--bg4); color: var(--txt); }
-.crop-flip-btn.active {
-  background: var(--accent-dim);
-  border-color: rgba(29,185,84,.3);
-  color: var(--accent);
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MY Song</title>
+  <link href="logo.png" rel="icon">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="screen active" id="authScreen">
-  <div class="auth-logo">
-    <div class="auth-logo-mark">
-      <img src="logo.png" alt="">
-    </div>
-    <span>MY Song</span>
-  </div>
-  <div class="auth-box">
-    <h2>Welcome to MY Song</h2>
-    <p>Your personal music universe</p>
-    <div class="auth-tabs">
-      <div class="auth-tab active" id="loginTab" onclick="switchAuthTab('login')">Log In</div>
-      <div class="auth-tab" id="signupTab" onclick="switchAuthTab('signup')">Sign Up</div>
-    </div>
-    <div class="auth-err" id="authErr"></div>
-    <div id="loginForm" class="auth-form">
-      <div class="input-group">
-        <label>Username</label>
-        <div class="input-wrap">
-          <input type="text" id="loginUsername" placeholder="Enter your username" autocomplete="username" autocapitalize="none">
-          <span class="input-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-        </div>
-        <div class="field-err" id="loginUsernameErr"></div>
+  <div class="screen active" id="authScreen">
+    <!-- AUTH SCREEN -->
+    <div class="auth-logo">
+      <div class="auth-logo-mark">
+        <img src="logo.png" alt="">
       </div>
-      <div class="input-group">
-        <label>Password</label>
-        <div class="input-wrap">
-          <input type="password" id="loginPass" placeholder="Enter your password" autocomplete="current-password">
-          <span class="input-icon clickable" onclick="togglePassVis('loginPass',this)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </span>
-        </div>
-        <div class="field-err" id="loginPassErr"></div>
-      </div>
-      <button class="auth-btn" id="loginBtn" onclick="doLogin()">
-        <span id="loginBtnText">Log In</span>
-        <div class="auth-spinner" id="loginSpinner"></div>
-      </button>
-    </div>
-    <div id="signupForm" class="auth-form" style="display:none">
-      <div class="auth-avatar-row">
-        <div class="auth-avatar-preview" id="avatarPreviewCircle" onclick="document.getElementById('avatarUpload').click()">
-          <img id="avatarPreviewImg" src="" alt="" style="display:none">
-          <svg id="avatarPlaceholderSvg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <input type="file" id="avatarUpload" accept="image/*" style="display:none" onchange="openCropModal(this,'signup')">
-        </div>
-        <div style="font-size:12px;color:var(--txt2)"><strong style="color:var(--txt)">Profile Picture</strong><br><span style="color:var(--txt3)">Tap to upload (optional)</span></div>
-      </div>
-      <div class="input-group">
-        <label>Username <span style="color:var(--err)">*</span></label>
-        <div class="input-wrap">
-          <input type="text" id="signupUsername" placeholder="Choose a username" autocapitalize="none" oninput="validateUsername(this)">
-          <span class="input-icon" id="usernameCheckIcon" style="display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
-        </div>
-        <div class="field-err" id="signupUsernameErr"></div>
-      </div>
-      <div class="input-group">
-        <label>Mobile Number <span style="color:var(--err)">*</span></label>
-        <div class="input-wrap">
-          <input type="tel" id="signupPhone" placeholder="Enter mobile number">
-          <span class="input-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.89-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-        </div>
-        <div class="field-err" id="signupPhoneErr"></div>
-      </div>
-      <div class="input-group">
-        <label>Password <span style="color:var(--err)">*</span></label>
-        <div class="input-wrap">
-          <input type="password" id="signupPass" placeholder="Min. 6 characters" oninput="checkPwStrength(this)">
-          <span class="input-icon clickable" onclick="togglePassVis('signupPass',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
-        </div>
-        <div class="pw-strength"><div class="pw-strength-fill" id="pwStrengthFill"></div></div>
-        <div class="field-err" id="signupPassErr"></div>
-      </div>
-      <div class="input-group">
-        <label>Confirm Password <span style="color:var(--err)">*</span></label>
-        <div class="input-wrap">
-          <input type="password" id="signupConfirm" placeholder="Re-enter password">
-          <span class="input-icon clickable" onclick="togglePassVis('signupConfirm',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
-        </div>
-        <div class="field-err" id="signupConfirmErr"></div>
-      </div>
-      <button class="auth-btn" id="signupBtn" onclick="doSignup()">
-        <span id="signupBtnText">Create Account</span>
-        <div class="auth-spinner" id="signupSpinner"></div>
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="screen" id="appScreen">
-  <div class="topbar">
-    <div class="topbar-logo">
-      <div class="topbar-logo-mark"><img src="logo.png" alt=""></div>
       <span>MY Song</span>
     </div>
-    <div class="topbar-right">
-      <div id="sleepIndicator" class="sleep-indicator">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span id="sleepLabel">30m</span>
+    <div class="auth-box">
+      <h2>Welcome to MY Song</h2>
+      <p>Your personal music universe</p>
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="loginTab" onclick="switchAuthTab('login')">Log In</div>
+        <div class="auth-tab" id="signupTab" onclick="switchAuthTab('signup')">Sign Up</div>
       </div>
-      <button class="topbar-stats-btn" onclick="openStatsPage()" title="Listening Stats">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-      </button>
-      <div class="topbar-profile" onclick="goTab('settings')" id="topbarProfileBtn">
-        <img id="topbarAvatar" src="" alt="" style="width:100%;height:100%;object-fit:cover">
-      </div>
-    </div>
-  </div>
-  <div class="content-area">
-    <div class="page active" id="homePage">
-      <div class="home-filter" id="homeFilter">
-        <button class="filter-chip active" onclick="filterTracks('all',this)">All</button>
-        <button class="filter-chip" onclick="filterTracks('tamil',this)">Tamil</button>
-        <button class="filter-chip" onclick="filterTracks('english',this)">English</button>
-        <button class="filter-chip" onclick="filterTracks('liked',this)">Liked</button>
-      </div>
-      <div class="now-playing-card" id="nowPlayingCard" onclick="openNowPlaying()">
-        <div class="now-playing-art" id="npCardArt">
-          <img id="npCardArtImg" src="" alt="" style="display:none">
-          <svg id="npCardArtPlaceholder" width="28" height="28" viewBox="0 0 24 24" fill="rgba(29,185,84,.4)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-        </div>
-        <div class="now-playing-info" style="flex:1;min-width:0">
-          <div class="now-playing-tag">Now Playing</div>
-          <div class="now-playing-title" id="npCardTitle">Select a song</div>
-          <div class="now-playing-sub" id="npCardSub">Artist · Album</div>
-          <div class="now-playing-actions" onclick="event.stopPropagation()">
-            <button class="np-play-fab" onclick="togglePlay()">
-              <svg id="npCardPlaySvg" width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            <button class="np-icon-btn" id="npCardLikeBtn" onclick="toggleLike()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-            <button class="np-icon-btn" onclick="openNowPlaying()">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><path d="M9.00002 3.99998H4.00004L4 9M20 8.99999V4L15 3.99997M15 20H20L20 15M4 15L4 20L9.00002 20" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            </button>
+      <div class="auth-err" id="authErr"></div>
+      <div id="loginForm" class="auth-form">
+        <div class="input-group">
+          <label>Username</label>
+          <div class="input-wrap">
+            <input type="text" id="loginUsername" placeholder="Enter your username" autocomplete="username" autocapitalize="none">
+            <span class="input-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
           </div>
+          <div class="field-err" id="loginUsernameErr"></div>
         </div>
-      </div>
-      <div class="section-label" id="sectionLabel">All Tracks</div>
-      <div class="track-list" id="trackList"></div>
-      <div style="height:8px;flex-shrink:0"></div>
-    </div>
-    <div class="page" id="searchPage">
-      <div class="search-header">
-        <h2>Search</h2>
-        <div class="search-input-wrap">
-          <svg class="search-icon-pos" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="text" id="searchInput" placeholder="Songs, artists, albums…" oninput="doSearch(this.value)">
+        <div class="input-group">
+          <label>Password</label>
+          <div class="input-wrap">
+            <input type="password" id="loginPass" placeholder="Enter your password" autocomplete="current-password">
+            <span class="input-icon clickable" onclick="togglePassVis('loginPass',this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
+          </div>
+          <div class="field-err" id="loginPassErr"></div>
         </div>
-      </div>
-      <div id="searchResults" class="search-results"></div>
-      <div class="search-empty" id="searchEmpty">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <div style="font-size:16px;font-weight:700;color:var(--txt2)">Search songs</div>
-        <div style="font-size:13px">Find by name, artist, or album</div>
-      </div>
-    </div>
-    <div class="page" id="libraryPage">
-      <div class="lib-header">
-        <h2>Your Library</h2>
-        <button class="btn-new-pl" onclick="openNewPlaylistModal()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-          New Playlist
+        <button class="auth-btn" id="loginBtn" onclick="doLogin()">
+          <span id="loginBtnText">Log In</span>
+          <div class="auth-spinner" id="loginSpinner"></div>
         </button>
       </div>
-      <div class="lib-tabs">
-        <button class="lib-tab active" onclick="switchLibTab('playlists',this)">Playlists</button>
-        <button class="lib-tab" onclick="switchLibTab('liked',this)">Liked Songs</button>
-      </div>
-      <div class="lib-content" id="libContent"></div>
-    </div>
-    <div class="page" id="settingsPage">
-      <div class="settings-profile-section">
-        <div class="settings-avatar-wrap" onclick="document.getElementById('settingsAvatarInput').click()">
-          <img class="settings-avatar" id="settingsAvatar" src="" alt="">
-          <div class="settings-avatar-edit">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      <div id="signupForm" class="auth-form" style="display:none">
+        <div class="auth-avatar-row">
+          <div class="auth-avatar-preview" id="avatarPreviewCircle" onclick="document.getElementById('avatarUpload').click()">
+            <img id="avatarPreviewImg" src="" alt="" style="display:none">
+            <svg id="avatarPlaceholderSvg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="file" id="avatarUpload" accept="image/*" style="display:none" onchange="openCropModal(this,'signup')">
           </div>
+          <div style="font-size:12px;color:var(--txt2)"><strong style="color:var(--txt)">Profile Picture</strong><br><span style="color:var(--txt3)">Tap to upload (optional)</span></div>
         </div>
-        <input type="file" id="settingsAvatarInput" accept="image/*" style="display:none" onchange="openCropModal(this,'settings')">
-        <div class="settings-profile-name" id="settingsProfileName">User</div>
-        <div class="settings-profile-sub" id="settingsProfileSub">@username</div>
-        <button class="settings-edit-btn" onclick="openEditProfileModal()">Edit Profile</button>
-      </div>
-      <div style="padding:16px 16px 8px;display:flex;gap:10px">
-        <div class="stat-card">
-          <div class="stat-num" id="likedCount">0</div>
-          <div class="stat-label">Liked Songs</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num" id="playlistCount">0</div>
-          <div class="stat-label">Playlists</div>
-        </div>
-        <div class="stat-card" onclick="openStatsPage()" style="cursor:pointer">
-          <div class="stat-num" style="color:var(--stats-blue)" id="totalPlaysCount">0</div>
-          <div class="stat-label">Total Plays</div>
-        </div>
-      </div>
-      <div class="settings-section">
-        <div class="settings-section-label">Account</div>
-        <div class="settings-field">
-          <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-          <div class="settings-field-content">
-            <div class="settings-field-label">Username</div>
-            <div class="settings-field-value" id="settingsUsername">—</div>
+        <div class="input-group">
+          <label>Username <span style="color:var(--err)">*</span></label>
+          <div class="input-wrap">
+            <input type="text" id="signupUsername" placeholder="Choose a username" autocapitalize="none" oninput="validateUsername(this)">
+            <span class="input-icon" id="usernameCheckIcon" style="display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
           </div>
+          <div class="field-err" id="signupUsernameErr"></div>
         </div>
-        <div class="settings-field">
-          <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.89-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          <div class="settings-field-content">
-            <div class="settings-field-label">Mobile</div>
-            <div class="settings-field-value" id="settingsPhone">—</div>
+        <div class="input-group">
+          <label>Mobile Number <span style="color:var(--err)">*</span></label>
+          <div class="input-wrap">
+            <input type="tel" id="signupPhone" placeholder="Enter mobile number">
+            <span class="input-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.89-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
           </div>
+          <div class="field-err" id="signupPhoneErr"></div>
         </div>
+        <div class="input-group">
+          <label>Password <span style="color:var(--err)">*</span></label>
+          <div class="input-wrap">
+            <input type="password" id="signupPass" placeholder="Min. 6 characters" oninput="checkPwStrength(this)">
+            <span class="input-icon clickable" onclick="togglePassVis('signupPass',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          </div>
+          <div class="pw-strength"><div class="pw-strength-fill" id="pwStrengthFill"></div></div>
+          <div class="field-err" id="signupPassErr"></div>
+        </div>
+        <div class="input-group">
+          <label>Confirm Password <span style="color:var(--err)">*</span></label>
+          <div class="input-wrap">
+            <input type="password" id="signupConfirm" placeholder="Re-enter password">
+            <span class="input-icon clickable" onclick="togglePassVis('signupConfirm',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          </div>
+          <div class="field-err" id="signupConfirmErr"></div>
+        </div>
+        <button class="auth-btn" id="signupBtn" onclick="doSignup()">
+          <span id="signupBtnText">Create Account</span>
+          <div class="auth-spinner" id="signupSpinner"></div>
+        </button>
       </div>
-      <div class="settings-section">
-        <div class="settings-section-label">Playback</div>
-        <div class="settings-field" onclick="openSleepModal()" style="cursor:pointer">
-          <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div class="settings-field-content">
-            <div class="settings-field-label">Sleep Timer</div>
-            <div class="settings-field-value" id="sleepFieldValue">Off</div>
-          </div>
-          <div class="settings-field-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
-        </div>
-        <div class="settings-field" onclick="openStatsPage()" style="cursor:pointer">
-          <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-          <div class="settings-field-content">
-            <div class="settings-field-label">Listening Stats</div>
-            <div class="settings-field-value">View your stats</div>
-          </div>
-          <div class="settings-field-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
-        </div>
-      </div>
-      <button class="logout-btn" onclick="doLogout()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Log Out
-      </button>
-      <div style="height:12px"></div>
     </div>
   </div>
-  <div class="mini-player" id="miniPlayer" onclick="openNowPlaying()">
-    <div class="mini-player-art" id="miniArt">
-      <img id="miniArtImg" src="" alt="" style="display:none">
-      <svg id="miniArtPlaceholder" width="18" height="18" viewBox="0 0 24 24" fill="var(--txt3)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+
+  <div class="screen" id="appScreen">
+    <!-- APP SCREEN -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="topbar-logo-mark"><img src="logo.png" alt=""></div>
+        <span>MY Song</span>
+      </div>
+      <div class="topbar-right">
+        <div id="sleepIndicator" class="sleep-indicator">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="sleepLabel">30m</span>
+        </div>
+        <button class="topbar-stats-btn" onclick="openStatsPage()" title="Listening Stats">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </button>
+        <div class="topbar-profile" onclick="goTab('settings')" id="topbarProfileBtn">
+          <img id="topbarAvatar" src="" alt="" style="width:100%;height:100%;object-fit:cover">
+        </div>
+      </div>
     </div>
-    <div class="mini-player-info">
-      <div class="mini-player-name" id="miniName">—</div>
-      <div class="mini-player-artist" id="miniArtist">Select a track</div>
+    <div class="content-area">
+      <div class="page active" id="homePage">
+        <div class="home-filter" id="homeFilter">
+          <button class="filter-chip active" onclick="filterTracks('all',this)">All</button>
+          <button class="filter-chip" onclick="filterTracks('tamil',this)">Tamil</button>
+          <button class="filter-chip" onclick="filterTracks('english',this)">English</button>
+          <button class="filter-chip" onclick="filterTracks('liked',this)">Liked</button>
+        </div>
+        <div class="now-playing-card" id="nowPlayingCard" onclick="openNowPlaying()">
+          <div class="now-playing-art" id="npCardArt">
+            <img id="npCardArtImg" src="" alt="" style="display:none">
+            <svg id="npCardArtPlaceholder" width="28" height="28" viewBox="0 0 24 24" fill="rgba(29,185,84,.4)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+          </div>
+          <div class="now-playing-info" style="flex:1;min-width:0">
+            <div class="now-playing-tag">Now Playing</div>
+            <div class="now-playing-title" id="npCardTitle">Select a song</div>
+            <div class="now-playing-sub" id="npCardSub">Artist · Album</div>
+            <div class="now-playing-actions" onclick="event.stopPropagation()">
+              <button class="np-play-fab" onclick="togglePlay()">
+                <svg id="npCardPlaySvg" width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <button class="np-icon-btn" id="npCardLikeBtn" onclick="toggleLike()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+              <button class="np-icon-btn" onclick="openNowPlaying()">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><path d="M9.00002 3.99998H4.00004L4 9M20 8.99999V4L15 3.99997M15 20H20L20 15M4 15L4 20L9.00002 20" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="section-label" id="sectionLabel">All Tracks</div>
+        <div class="track-list" id="trackList"></div>
+        <div style="height:8px;flex-shrink:0"></div>
+      </div>
+      <div class="page" id="searchPage">
+        <div class="search-header">
+          <h2>Search</h2>
+          <div class="search-input-wrap">
+            <svg class="search-icon-pos" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="searchInput" placeholder="Songs, artists, albums…" oninput="doSearch(this.value)">
+          </div>
+        </div>
+        <div id="searchResults" class="search-results"></div>
+        <div class="search-empty" id="searchEmpty">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <div style="font-size:16px;font-weight:700;color:var(--txt2)">Search songs</div>
+          <div style="font-size:13px">Find by name, artist, or album</div>
+        </div>
+      </div>
+      <div class="page" id="libraryPage">
+        <div class="lib-header">
+          <h2>Your Library</h2>
+          <button class="btn-new-pl" onclick="openNewPlaylistModal()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            New Playlist
+          </button>
+        </div>
+        <div class="lib-tabs">
+          <button class="lib-tab active" onclick="switchLibTab('playlists',this)">Playlists</button>
+          <button class="lib-tab" onclick="switchLibTab('liked',this)">Liked Songs</button>
+        </div>
+        <div class="lib-content" id="libContent"></div>
+      </div>
+      <div class="page" id="settingsPage">
+        <div class="settings-profile-section">
+          <div class="settings-avatar-wrap" onclick="document.getElementById('settingsAvatarInput').click()">
+            <img class="settings-avatar" id="settingsAvatar" src="" alt="">
+            <div class="settings-avatar-edit">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+          </div>
+          <input type="file" id="settingsAvatarInput" accept="image/*" style="display:none" onchange="openCropModal(this,'settings')">
+          <div class="settings-profile-name" id="settingsProfileName">User</div>
+          <div class="settings-profile-sub" id="settingsProfileSub">@username</div>
+          <button class="settings-edit-btn" onclick="openEditProfileModal()">Edit Profile</button>
+        </div>
+        <div style="padding:16px 16px 8px;display:flex;gap:10px">
+          <div class="stat-card">
+            <div class="stat-num" id="likedCount">0</div>
+            <div class="stat-label">Liked Songs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="playlistCount">0</div>
+            <div class="stat-label">Playlists</div>
+          </div>
+          <div class="stat-card" onclick="openStatsPage()" style="cursor:pointer">
+            <div class="stat-num" style="color:var(--stats-blue)" id="totalPlaysCount">0</div>
+            <div class="stat-label">Total Plays</div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-label">Account</div>
+          <div class="settings-field">
+            <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="settings-field-content">
+              <div class="settings-field-label">Username</div>
+              <div class="settings-field-value" id="settingsUsername">—</div>
+            </div>
+          </div>
+          <div class="settings-field">
+            <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.89-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="settings-field-content">
+              <div class="settings-field-label">Mobile</div>
+              <div class="settings-field-value" id="settingsPhone">—</div>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-label">Playback</div>
+          <div class="settings-field" onclick="openSleepModal()" style="cursor:pointer">
+            <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="settings-field-content">
+              <div class="settings-field-label">Sleep Timer</div>
+              <div class="settings-field-value" id="sleepFieldValue">Off</div>
+            </div>
+            <div class="settings-field-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+          </div>
+          <div class="settings-field" onclick="openStatsPage()" style="cursor:pointer">
+            <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+            <div class="settings-field-content">
+              <div class="settings-field-label">Listening Stats</div>
+              <div class="settings-field-value">View your stats</div>
+            </div>
+            <div class="settings-field-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+          </div>
+        </div>
+        <button class="logout-btn" onclick="doLogout()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Log Out
+        </button>
+        <div style="height:12px"></div>
+      </div>
     </div>
-    <div class="mini-player-btns" onclick="event.stopPropagation()">
-      <button class="mini-btn" onclick="prevTrack()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+    <div class="mini-player" id="miniPlayer" onclick="openNowPlaying()">
+      <div class="mini-player-art" id="miniArt">
+        <img id="miniArtImg" src="" alt="" style="display:none">
+        <svg id="miniArtPlaceholder" width="18" height="18" viewBox="0 0 24 24" fill="var(--txt3)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      </div>
+      <div class="mini-player-info">
+        <div class="mini-player-name" id="miniName">—</div>
+        <div class="mini-player-artist" id="miniArtist">Select a track</div>
+      </div>
+      <div class="mini-player-btns" onclick="event.stopPropagation()">
+        <button class="mini-btn" onclick="prevTrack()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+        </button>
+        <button class="mini-play-btn" id="miniPlayBtn" onclick="togglePlay()">
+          <svg id="miniPlaySvg" width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="mini-btn" onclick="nextTrack()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+        <button class="mini-queue-btn" id="miniQueueBtn" onclick="openQueuePanel()" title="View Queue">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="mini-player-prog"><div class="mini-player-prog-fill" id="miniProgFill" style="width:0%"></div></div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-tab active" id="tab-home" onclick="goTab('home')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 3.247a1 1 0 0 0-1 0L4 7.577V20h4.5v-6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v6H20V7.577l-7.5-4.33z"/></svg>
+        Home
+      </div>
+      <div class="nav-tab" id="tab-search" onclick="goTab('search')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search
+      </div>
+      <div class="nav-tab" id="tab-library" onclick="goTab('library')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+        Library
+      </div>
+      <div class="nav-tab" id="tab-settings" onclick="goTab('settings')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </div>
+    </div>
+  </div>
+
+  <!-- QUEUE PANEL -->
+  <div class="queue-panel-overlay" id="queuePanelOverlay" onclick="closeQueuePanel()">
+    <div class="queue-panel" onclick="event.stopPropagation()">
+      <div class="queue-panel-handle"></div>
+      <div class="queue-panel-header">
+        <div class="queue-panel-title">Queue <span class="queue-count-badge" id="queueCountBadge">0</span></div>
+        <button class="queue-panel-close" onclick="closeQueuePanel()">✕</button>
+      </div>
+      <div class="queue-panel-body" id="queuePanelBody"></div>
+    </div>
+  </div>
+
+  <!-- PLAYLIST DETAIL -->
+  <div class="pl-detail-overlay" id="plDetailOverlay">
+    <div class="pl-detail-topbar">
+      <button class="pl-back-btn" onclick="closePlDetail()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <button class="mini-play-btn" id="miniPlayBtn" onclick="togglePlay()">
-        <svg id="miniPlaySvg" width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
+      <div style="flex:1;font-size:15px;font-weight:700;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="plDetailTopName">Playlist</div>
+      <div style="width:34px"></div>
+    </div>
+    <div class="pl-detail-scroll">
+      <div class="pl-detail-hero">
+        <div class="pl-detail-art"><img id="plDetailArt" src="" alt=""></div>
+        <div class="pl-detail-meta">
+          <h1 id="plDetailName">Playlist</h1>
+          <p id="plDetailSub">0 songs</p>
+        </div>
+        <div class="pl-detail-actions">
+          <button class="pl-play-btn" id="plPlayBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Play All
+          </button>
+          <button class="pl-add-songs-btn" id="plAddSongsBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Add Songs
+          </button>
+          <button class="pl-delete-btn" id="plDeleteBtn" title="Delete Playlist">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="pl-detail-tracks-section">
+        <div class="pl-detail-tracks-label">Songs</div>
+        <div class="track-list" id="plDetailTrackList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS PAGE -->
+  <div class="stats-overlay" id="statsOverlay">
+    <div class="stats-topbar">
+      <button class="stats-back-btn" onclick="closeStatsPage()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <button class="mini-btn" onclick="nextTrack()">
+      <div style="font-size:18px;font-weight:800;">Listening Stats</div>
+      <div style="width:34px"></div>
+    </div>
+    <div class="stats-scroll" id="statsScroll"></div>
+  </div>
+
+  <!-- FULLSCREEN NOW PLAYING -->
+  <div class="nowplaying-overlay" id="nowplayingOverlay">
+    <div class="np-bg" id="npBg"></div>
+    <div class="np-solid"></div>
+    <div class="np-content">
+      <div class="np-topbar">
+        <button class="np-close" onclick="closeNowPlaying()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+        <div class="np-title-center">Now Playing</div>
+        <button class="np-close" onclick="openSleepModal()" style="background:rgba(255,255,255,.06)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </button>
+      </div>
+      <div class="np-art" id="npArt">
+        <div class="np-art-placeholder" id="npArtPlaceholder">🎵</div>
+        <img id="npArtImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="np-meta-row">
+        <div>
+          <div class="np-name" id="npName">—</div>
+          <div class="np-artist" id="npArtist">Select a track</div>
+        </div>
+        <button class="np-like-btn" id="npLikeBtn" onclick="toggleLike()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </div>
+      <div class="np-progress">
+        <div class="np-prog-bar" id="npProgBar">
+          <div class="np-prog-fill" id="npProgFill" style="width:0%"></div>
+        </div>
+        <div class="np-times"><span id="npCurTime">0:00</span><span id="npTotTime">0:00</span></div>
+      </div>
+      <div class="np-controls">
+        <button class="np-ctrl" id="npShuffleBtn" onclick="toggleShuffle()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+        </button>
+        <button class="np-ctrl" onclick="prevTrack()">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+        </button>
+        <button class="np-main-play" id="npMainPlayBtn" onclick="togglePlay()">
+          <svg id="npMainPlaySvg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="np-ctrl" onclick="nextTrack()">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+        <button class="np-ctrl" id="npRepeatBtn" onclick="toggleRepeat()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </button>
+      </div>
+      <div class="np-vol-row">
+        <button class="np-vol-btn" id="npMuteBtn" onclick="toggleMute()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        </button>
+        <div class="np-vol-bar" onclick="setVolume(event)">
+          <div class="np-vol-fill" id="npVolFill" style="width:80%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE CROP MODAL -->
+  <div class="crop-modal-overlay" id="cropModalOverlay">
+    <div class="crop-modal">
+      <div class="crop-topbar">
+        <button class="crop-close-btn" onclick="closeCropModal()">✕</button>
+        <div class="crop-title">Crop Photo</div>
+        <div style="width:32px"></div>
+      </div>
+      <div class="crop-viewport-wrap" id="cropViewport">
+        <canvas id="cropCanvas" class="crop-canvas" width="300" height="300"></canvas>
+        <div class="crop-guides">
+          <div class="crop-guide-h"></div>
+          <div class="crop-guide-h"></div>
+          <div class="crop-guide-v"></div>
+          <div class="crop-guide-v"></div>
+        </div>
+      </div>
+      <div class="crop-controls">
+        <div class="crop-control-row">
+          <div class="crop-ctrl-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          </div>
+          <span class="crop-ctrl-label">Zoom</span>
+          <input type="range" class="crop-slider" id="zoomSlider" min="1" max="3" step="0.01" value="1" oninput="onZoomChange(this.value)">
+          <span class="crop-slider-val" id="zoomVal">1.0×</span>
+        </div>
+        <div class="crop-control-row">
+          <div class="crop-ctrl-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          </div>
+          <span class="crop-ctrl-label">Rotate</span>
+          <input type="range" class="crop-slider" id="rotateSlider" min="-180" max="180" step="1" value="0" oninput="onRotateChange(this.value)">
+          <span class="crop-slider-val" id="rotateVal">0°</span>
+        </div>
+        <div class="crop-control-row">
+          <div class="crop-ctrl-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          </div>
+          <span class="crop-ctrl-label">Bright</span>
+          <input type="range" class="crop-slider" id="brightnessSlider" min="-80" max="80" step="1" value="0" oninput="onBrightnessChange(this.value)">
+          <span class="crop-slider-val" id="brightnessVal">0</span>
+        </div>
+      </div>
+      <div class="crop-flip-row">
+        <button class="crop-flip-btn" id="flipHBtn" onclick="toggleFlipH()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3"/><path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"/><path d="M12 20v2M12 14v2M12 8v2M12 2v2"/></svg>
+          Flip H
+        </button>
+        <button class="crop-flip-btn" id="flipVBtn" onclick="toggleFlipV()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3"/><path d="M4 12H2M10 12H8M16 12h-2M22 12h-2"/></svg>
+          Flip V
+        </button>
+        <button class="crop-rotate-btn reset-btn" onclick="resetCrop()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Reset
+        </button>
+      </div>
+      <div class="crop-actions">
+        <button class="crop-cancel-btn" onclick="closeCropModal()">Cancel</button>
+        <button class="crop-save-btn" onclick="saveCrop()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Apply Photo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT SHEET -->
+  <div class="ctx-sheet" id="ctxSheet" onclick="closeCtxSheet()">
+    <div class="ctx-sheet-inner" onclick="event.stopPropagation()">
+      <div class="ctx-sheet-handle"></div>
+      <div class="ctx-track-info" id="ctxTrackInfo">
+        <div class="ctx-track-art"><img id="ctxTrackArt" src="" alt=""></div>
+        <div>
+          <div class="ctx-track-name" id="ctxTrackName">Song</div>
+          <div class="ctx-track-artist" id="ctxTrackArtist">Artist</div>
+        </div>
+      </div>
+      <div class="ctx-item" onclick="ctxAddToQueue();closeCtxSheet()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Add to Queue
+      </div>
+      <div class="ctx-item" onclick="ctxLike();closeCtxSheet()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span id="ctxLikeLabel">Like Song</span>
+      </div>
+      <div class="ctx-item" onclick="ctxAddToPlaylist()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        Add to Playlist
+      </div>
+      <div class="ctx-item" onclick="ctxPlayNext();closeCtxSheet()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-      </button>
-      <button class="mini-queue-btn" id="miniQueueBtn" onclick="openQueuePanel()" title="View Queue">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="mini-player-prog"><div class="mini-player-prog-fill" id="miniProgFill" style="width:0%"></div></div>
-  </div>
-  <div class="bottom-nav">
-    <div class="nav-tab active" id="tab-home" onclick="goTab('home')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 3.247a1 1 0 0 0-1 0L4 7.577V20h4.5v-6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v6H20V7.577l-7.5-4.33z"/></svg>
-      Home
-    </div>
-    <div class="nav-tab" id="tab-search" onclick="goTab('search')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      Search
-    </div>
-    <div class="nav-tab" id="tab-library" onclick="goTab('library')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
-      Library
-    </div>
-    <div class="nav-tab" id="tab-settings" onclick="goTab('settings')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      Settings
-    </div>
-  </div>
-</div>
-
-<!-- QUEUE PANEL -->
-<div class="queue-panel-overlay" id="queuePanelOverlay" onclick="closeQueuePanel()">
-  <div class="queue-panel" onclick="event.stopPropagation()">
-    <div class="queue-panel-handle"></div>
-    <div class="queue-panel-header">
-      <div class="queue-panel-title">Queue <span class="queue-count-badge" id="queueCountBadge">0</span></div>
-      <button class="queue-panel-close" onclick="closeQueuePanel()">✕</button>
-    </div>
-    <div class="queue-panel-body" id="queuePanelBody"></div>
-  </div>
-</div>
-
-<!-- PLAYLIST DETAIL -->
-<div class="pl-detail-overlay" id="plDetailOverlay">
-  <div class="pl-detail-topbar">
-    <button class="pl-back-btn" onclick="closePlDetail()">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <div style="flex:1;font-size:15px;font-weight:700;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="plDetailTopName">Playlist</div>
-    <div style="width:34px"></div>
-  </div>
-  <div class="pl-detail-scroll">
-    <div class="pl-detail-hero">
-      <div class="pl-detail-art"><img id="plDetailArt" src="" alt=""></div>
-      <div class="pl-detail-meta">
-        <h1 id="plDetailName">Playlist</h1>
-        <p id="plDetailSub">0 songs</p>
-      </div>
-      <div class="pl-detail-actions">
-        <button class="pl-play-btn" id="plPlayBtn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          Play All
-        </button>
-        <button class="pl-add-songs-btn" id="plAddSongsBtn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-          Add Songs
-        </button>
-        <button class="pl-delete-btn" id="plDeleteBtn" title="Delete Playlist">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="pl-detail-tracks-section">
-      <div class="pl-detail-tracks-label">Songs</div>
-      <div class="track-list" id="plDetailTrackList"></div>
-    </div>
-  </div>
-</div>
-
-<!-- STATS PAGE -->
-<div class="stats-overlay" id="statsOverlay">
-  <div class="stats-topbar">
-    <button class="stats-back-btn" onclick="closeStatsPage()">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <div style="font-size:18px;font-weight:800;">Listening Stats</div>
-    <div style="width:34px"></div>
-  </div>
-  <div class="stats-scroll" id="statsScroll"></div>
-</div>
-
-<!-- FULLSCREEN NOW PLAYING -->
-<div class="nowplaying-overlay" id="nowplayingOverlay">
-  <div class="np-bg" id="npBg"></div>
-  <div class="np-solid"></div>
-  <div class="np-content">
-    <div class="np-topbar">
-      <button class="np-close" onclick="closeNowPlaying()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-      </button>
-      <div class="np-title-center">Now Playing</div>
-      <button class="np-close" onclick="openSleepModal()" style="background:rgba(255,255,255,.06)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </button>
-    </div>
-    <div class="np-art" id="npArt">
-      <div class="np-art-placeholder" id="npArtPlaceholder">🎵</div>
-      <img id="npArtImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover">
-    </div>
-    <div class="np-meta-row">
-      <div>
-        <div class="np-name" id="npName">—</div>
-        <div class="np-artist" id="npArtist">Select a track</div>
-      </div>
-      <button class="np-like-btn" id="npLikeBtn" onclick="toggleLike()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </button>
-    </div>
-    <div class="np-progress">
-      <div class="np-prog-bar" id="npProgBar">
-        <div class="np-prog-fill" id="npProgFill" style="width:0%"></div>
-      </div>
-      <div class="np-times"><span id="npCurTime">0:00</span><span id="npTotTime">0:00</span></div>
-    </div>
-    <div class="np-controls">
-      <button class="np-ctrl" id="npShuffleBtn" onclick="toggleShuffle()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
-      </button>
-      <button class="np-ctrl" onclick="prevTrack()">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
-      </button>
-      <button class="np-main-play" id="npMainPlayBtn" onclick="togglePlay()">
-        <svg id="npMainPlaySvg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-      </button>
-      <button class="np-ctrl" onclick="nextTrack()">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-      </button>
-      <button class="np-ctrl" id="npRepeatBtn" onclick="toggleRepeat()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-      </button>
-    </div>
-    <div class="np-vol-row">
-      <button class="np-vol-btn" id="npMuteBtn" onclick="toggleMute()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-      </button>
-      <div class="np-vol-bar" onclick="setVolume(event)">
-        <div class="np-vol-fill" id="npVolFill" style="width:80%"></div>
+        Play Next
       </div>
     </div>
   </div>
-</div>
 
-<!-- ════════════════════════════════
-     IMAGE CROP MODAL
-════════════════════════════════ -->
-<div class="crop-modal-overlay" id="cropModalOverlay">
-  <div class="crop-modal">
-    <div class="crop-topbar">
-      <button class="crop-close-btn" onclick="closeCropModal()">✕</button>
-      <div class="crop-title">Crop Photo</div>
-      <div style="width:32px"></div>
+  <!-- PLAYLIST SUBMENU -->
+  <div class="pl-submenu-overlay" id="plSubmenuOverlay" onclick="document.getElementById('plSubmenuOverlay').classList.remove('open')">
+    <div class="pl-submenu" onclick="event.stopPropagation()">
+      <div class="pl-submenu-title">Add to Playlist</div>
+      <div id="plSubmenuList"></div>
     </div>
+  </div>
 
-    <!-- Circular crop viewport -->
-    <div class="crop-viewport-wrap" id="cropViewport">
-      <canvas id="cropCanvas" class="crop-canvas" width="300" height="300"></canvas>
-      <div class="crop-guides">
-        <div class="crop-guide-h"></div>
-        <div class="crop-guide-h"></div>
-        <div class="crop-guide-v"></div>
-        <div class="crop-guide-v"></div>
+  <!-- DELETE CONFIRM -->
+  <div class="delete-confirm-modal" id="deleteConfirmModal">
+    <div class="delete-confirm-inner">
+      <div class="delete-confirm-icon">🗑️</div>
+      <div class="delete-confirm-title">Delete Playlist?</div>
+      <div class="delete-confirm-sub" id="deleteConfirmSub">This will permanently delete the playlist. This action cannot be undone.</div>
+      <div class="delete-confirm-btns">
+        <button class="delete-confirm-cancel" onclick="closeDeleteConfirm()">Cancel</button>
+        <button class="delete-confirm-ok" id="deleteConfirmOk">Delete</button>
       </div>
     </div>
+  </div>
 
-    <!-- Controls -->
-    <div class="crop-controls">
-      <div class="crop-control-row">
-        <div class="crop-ctrl-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+  <!-- MODALS -->
+  <div class="modal-overlay" id="newPlaylistModal">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <h3>Create Playlist</h3>
+      <div class="modal-row"><label>Playlist Name</label><input type="text" id="newPlName" placeholder="My Playlist" maxlength="50"></div>
+      <div class="modal-art-row">
+        <div class="modal-art-preview" onclick="document.getElementById('plArtUpload').click()">
+          <img id="plArtPreview" src="" alt="" style="display:none">
+          <svg id="plArtPlaceholder" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <input type="file" id="plArtUpload" accept="image/*" style="display:none" onchange="previewPlArt(this)">
         </div>
-        <span class="crop-ctrl-label">Zoom</span>
-        <input type="range" class="crop-slider" id="zoomSlider" min="1" max="3" step="0.01" value="1" oninput="onZoomChange(this.value)">
-        <span class="crop-slider-val" id="zoomVal">1.0×</span>
+        <div style="font-size:13px;color:var(--txt2)">Tap to upload cover<br><span style="color:var(--txt3);font-size:12px">Optional</span></div>
       </div>
-      <div class="crop-control-row">
-        <div class="crop-ctrl-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-        </div>
-        <span class="crop-ctrl-label">Rotate</span>
-        <input type="range" class="crop-slider" id="rotateSlider" min="-180" max="180" step="1" value="0" oninput="onRotateChange(this.value)">
-        <span class="crop-slider-val" id="rotateVal">0°</span>
-      </div>
-      <div class="crop-control-row">
-        <div class="crop-ctrl-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-        </div>
-        <span class="crop-ctrl-label">Bright</span>
-        <input type="range" class="crop-slider" id="brightnessSlider" min="-80" max="80" step="1" value="0" oninput="onBrightnessChange(this.value)">
-        <span class="crop-slider-val" id="brightnessVal">0</span>
+      <div class="modal-btns">
+        <button class="modal-btn cancel" onclick="closeModal('newPlaylistModal')">Cancel</button>
+        <button class="modal-btn primary" onclick="createPlaylist()">Create</button>
       </div>
     </div>
-
-    <!-- Flip & quick rotate buttons -->
-    <div class="crop-flip-row">
-      <button class="crop-flip-btn" id="flipHBtn" onclick="toggleFlipH()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3"/><path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"/><path d="M12 20v2M12 14v2M12 8v2M12 2v2"/></svg>
-        Flip H
-      </button>
-      <button class="crop-flip-btn" id="flipVBtn" onclick="toggleFlipV()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3"/><path d="M4 12H2M10 12H8M16 12h-2M22 12h-2"/></svg>
-        Flip V
-      </button>
-      <button class="crop-rotate-btn reset-btn" onclick="resetCrop()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-        Reset
-      </button>
-    </div>
-
-    <div class="crop-actions">
-      <button class="crop-cancel-btn" onclick="closeCropModal()">Cancel</button>
-      <button class="crop-save-btn" onclick="saveCrop()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Apply Photo
-      </button>
-    </div>
   </div>
-</div>
-
-<!-- CONTEXT SHEET -->
-<div class="ctx-sheet" id="ctxSheet" onclick="closeCtxSheet()">
-  <div class="ctx-sheet-inner" onclick="event.stopPropagation()">
-    <div class="ctx-sheet-handle"></div>
-    <div class="ctx-track-info" id="ctxTrackInfo">
-      <div class="ctx-track-art"><img id="ctxTrackArt" src="" alt=""></div>
-      <div>
-        <div class="ctx-track-name" id="ctxTrackName">Song</div>
-        <div class="ctx-track-artist" id="ctxTrackArtist">Artist</div>
+  <div class="modal-overlay" id="addSongsModal">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <h3>Add Songs</h3>
+      <div class="modal-row"><input type="text" id="addSongsSearch" placeholder="Search songs…" oninput="filterAddSongs(this.value)"></div>
+      <div class="modal-songs-list" id="addSongsList"></div>
+      <div class="modal-btns">
+        <button class="modal-btn cancel" onclick="closeModal('addSongsModal')">Cancel</button>
+        <button class="modal-btn primary" onclick="saveAddedSongs()">Add Selected</button>
       </div>
     </div>
-    <div class="ctx-item" onclick="ctxAddToQueue();closeCtxSheet()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-      Add to Queue
-    </div>
-    <div class="ctx-item" onclick="ctxLike();closeCtxSheet()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <span id="ctxLikeLabel">Like Song</span>
-    </div>
-    <div class="ctx-item" onclick="ctxAddToPlaylist()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      Add to Playlist
-    </div>
-    <div class="ctx-item" onclick="ctxPlayNext();closeCtxSheet()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-      Play Next
-    </div>
   </div>
-</div>
-
-<!-- PLAYLIST SUBMENU -->
-<div class="pl-submenu-overlay" id="plSubmenuOverlay" onclick="document.getElementById('plSubmenuOverlay').classList.remove('open')">
-  <div class="pl-submenu" onclick="event.stopPropagation()">
-    <div class="pl-submenu-title">Add to Playlist</div>
-    <div id="plSubmenuList"></div>
-  </div>
-</div>
-
-<!-- DELETE CONFIRM -->
-<div class="delete-confirm-modal" id="deleteConfirmModal">
-  <div class="delete-confirm-inner">
-    <div class="delete-confirm-icon">🗑️</div>
-    <div class="delete-confirm-title">Delete Playlist?</div>
-    <div class="delete-confirm-sub" id="deleteConfirmSub">This will permanently delete the playlist. This action cannot be undone.</div>
-    <div class="delete-confirm-btns">
-      <button class="delete-confirm-cancel" onclick="closeDeleteConfirm()">Cancel</button>
-      <button class="delete-confirm-ok" id="deleteConfirmOk">Delete</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODALS -->
-<div class="modal-overlay" id="newPlaylistModal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h3>Create Playlist</h3>
-    <div class="modal-row"><label>Playlist Name</label><input type="text" id="newPlName" placeholder="My Playlist" maxlength="50"></div>
-    <div class="modal-art-row">
-      <div class="modal-art-preview" onclick="document.getElementById('plArtUpload').click()">
-        <img id="plArtPreview" src="" alt="" style="display:none">
-        <svg id="plArtPlaceholder" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--txt3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <input type="file" id="plArtUpload" accept="image/*" style="display:none" onchange="previewPlArt(this)">
+  <div class="modal-overlay" id="sleepModal">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <h3>Sleep Timer</h3>
+      <p style="font-size:13px;color:var(--txt2)">Music stops after selected time.</p>
+      <div class="sleep-grid">
+        <div class="sleep-opt" onclick="setSleepTimer(5,this)">5 min</div>
+        <div class="sleep-opt" onclick="setSleepTimer(10,this)">10 min</div>
+        <div class="sleep-opt" onclick="setSleepTimer(15,this)">15 min</div>
+        <div class="sleep-opt" onclick="setSleepTimer(30,this)">30 min</div>
+        <div class="sleep-opt" onclick="setSleepTimer(45,this)">45 min</div>
+        <div class="sleep-opt" onclick="setSleepTimer(60,this)">1 hour</div>
       </div>
-      <div style="font-size:13px;color:var(--txt2)">Tap to upload cover<br><span style="color:var(--txt3);font-size:12px">Optional</span></div>
-    </div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="closeModal('newPlaylistModal')">Cancel</button>
-      <button class="modal-btn primary" onclick="createPlaylist()">Create</button>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="addSongsModal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h3>Add Songs</h3>
-    <div class="modal-row"><input type="text" id="addSongsSearch" placeholder="Search songs…" oninput="filterAddSongs(this.value)"></div>
-    <div class="modal-songs-list" id="addSongsList"></div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="closeModal('addSongsModal')">Cancel</button>
-      <button class="modal-btn primary" onclick="saveAddedSongs()">Add Selected</button>
+      <div class="modal-btns">
+        <button class="modal-btn cancel" onclick="cancelSleepTimer()">Cancel Timer</button>
+        <button class="modal-btn primary" onclick="closeModal('sleepModal')">Done</button>
+      </div>
     </div>
   </div>
-</div>
-<div class="modal-overlay" id="sleepModal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h3>Sleep Timer</h3>
-    <p style="font-size:13px;color:var(--txt2)">Music stops after selected time.</p>
-    <div class="sleep-grid">
-      <div class="sleep-opt" onclick="setSleepTimer(5,this)">5 min</div>
-      <div class="sleep-opt" onclick="setSleepTimer(10,this)">10 min</div>
-      <div class="sleep-opt" onclick="setSleepTimer(15,this)">15 min</div>
-      <div class="sleep-opt" onclick="setSleepTimer(30,this)">30 min</div>
-      <div class="sleep-opt" onclick="setSleepTimer(45,this)">45 min</div>
-      <div class="sleep-opt" onclick="setSleepTimer(60,this)">1 hour</div>
-    </div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="cancelSleepTimer()">Cancel Timer</button>
-      <button class="modal-btn primary" onclick="closeModal('sleepModal')">Done</button>
+  <div class="modal-overlay" id="editProfileModal">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <h3>Edit Profile</h3>
+      <div class="modal-row"><label>Username</label><input type="text" id="editUsername" placeholder="Username" disabled style="opacity:.5;cursor:not-allowed"></div>
+      <div class="modal-row"><label>Display Name</label><input type="text" id="editName" placeholder="Your name"></div>
+      <div class="modal-row"><label>Mobile</label><input type="tel" id="editPhone" placeholder="Mobile number"></div>
+      <div class="modal-btns">
+        <button class="modal-btn cancel" onclick="closeModal('editProfileModal')">Cancel</button>
+        <button class="modal-btn primary" onclick="saveProfile()">Save</button>
+      </div>
     </div>
   </div>
-</div>
-<div class="modal-overlay" id="editProfileModal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h3>Edit Profile</h3>
-    <div class="modal-row"><label>Username</label><input type="text" id="editUsername" placeholder="Username" disabled style="opacity:.5;cursor:not-allowed"></div>
-    <div class="modal-row"><label>Display Name</label><input type="text" id="editName" placeholder="Your name"></div>
-    <div class="modal-row"><label>Mobile</label><input type="tel" id="editPhone" placeholder="Mobile number"></div>
-    <div class="modal-btns">
-      <button class="modal-btn cancel" onclick="closeModal('editProfileModal')">Cancel</button>
-      <button class="modal-btn primary" onclick="saveProfile()">Save</button>
-    </div>
-  </div>
-</div>
 
-<div class="toast" id="toast"></div>
-<audio id="audioEl"></audio>
+  <div class="toast" id="toast"></div>
+  <audio id="audioEl"></audio>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDNVK5ZzsVpEVpeWo9X34QNQ0MbVKXYvZU",
-  authDomain: "song-491ab.firebaseapp.com",
-  databaseURL: "https://song-491ab-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "song-491ab",
-  storageBucket: "song-491ab.firebasestorage.app",
-  messagingSenderId: "219818476821",
-  appId: "1:219818476821:web:af092287536ca53a35d51c"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-async function hashPassword(password) {
-  const msgBuffer = new TextEncoder().encode(password);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  return Array.from(new Uint8Array(hashBuffer)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-
-const tracks = [
-  {id:1,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031240/Thaanaa_Serndha_Koottam_-_Engae_Endru_Povathu_Official_Video___Suriya___Anirudh_l_Keerthi_Suresh_MP3_160K_fjh3ae.mp3",name:"Engae Endru Povathu",artist:"Anirudh Ravichander",album:"Thaanaa Serndha Koottam",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780034946/Engae_Endru_Povathu_jsrgtv.png",lang:"tamil"},
-  {id:2,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031237/Young_And_Beautiful_MP3_160K_rbjhnv.mp3",name:"Young And Beautiful",artist:"Lana Del Rey",album:"The Great Gatsby OST",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045378/Young_And_Beautiful_pmk7ij.png",lang:"english"},
-  {id:3,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031237/Vaa_Veera_From__Maaveeran__MP3_160K_gbrnoy.mp3",name:"Vaa Veera",artist:"AR Rahman",album:"Maaveeran",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045377/Vaa_Veera_jmrmzi.png",lang:"tamil"},
-  {id:4,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031227/The_Life_of_Ram_Video_Song___96___Vijay_Sethupathi__Trisha___Govind_Vasantha___C._Prem_Kumar_MP3_160K_zbdqgr.mp3",name:"The Life of Ram",artist:"Govind Vasantha",album:"96",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045379/The_Life_of_Ram_thz4df.png",lang:"tamil"},
-  {id:5,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031226/Tony_s_Mayhem_MP3_160K_wnf6yh.mp3",name:"Tony's Mayhem",artist:"BGM",album:"Instrumental",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045372/Tony_s_Mayhem_oojnfg.png",lang:"english"},
-  {id:6,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031226/Think_Mashup_-_Ram_X_Yaar_Azhaippadhu___Vijay_Sethupathi___96___Maara___Ghibran_MP3_160K_f6bfkm.mp3",name:"Yaar Azhaippadhu",artist:"Ghibran",album:"Maara",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045374/Yaar_Azhaippadhu_unzgkw.png",lang:"tamil"},
-  {id:7,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031223/Pullinangal_From__2._0__MP3_160K_mmmbxy.mp3",name:"Pullinangal",artist:"AR Rahman",album:"2.0",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780034946/Pullinangal_m4z7rx.png",lang:"tamil"},
-  {id:8,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031220/Piravi_MP3_160K_dpp8t9.mp3",name:"Piravi",artist:"Unknown",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780034946/Piravi_az7tvm.png",lang:"tamil"},
-  {id:9,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031219/Sivappu_Manjal_Pachai___Usure_Video_Song___Siddharth__G.V.Prakash_Kumar___Sasi___Siddhu_Kumar_MP3_160K_h223i5.mp3",name:"Usure",artist:"Siddhu Kumar",album:"Sivappu Manjal Pachai",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045370/Usure_mnrpfj.png",lang:"tamil"},
-  {id:10,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031214/The_metro_proposal_MP3_160K_fiyaky.mp3",name:"The Metro Proposal",artist:"Instrumental",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045336/Dude_tmchot.png",lang:"english"},
-  {id:11,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031205/Thaangaadha_Baaram_Instrumental_MP3_160K_jjrq8p.mp3",name:"Thaangaadha Baaram",artist:"Instrumental",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045366/Thaangaadha_Baaram_hq5wsx.png",lang:"tamil"},
-  {id:12,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031199/Spyder_BGMs_-_Psycho_Music_Villain_Theme_MP3_160K_qywktu.mp3",name:"Psycho Villain Theme",artist:"Harris Jayaraj",album:"Spyder BGMs",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045363/Spyder_BGMs_heove2.png",lang:"tamil"},
-  {id:13,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031198/Something_In_The_Way_From__The_Batman__MP3_160K_y9homt.mp3",name:"Something In The Way",artist:"Nirvana / Batman OST",album:"The Batman",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045366/Something_In_The_Way_s06dtq.png",lang:"english"},
-  {id:14,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031196/KAAYI_MP3_160K_yzxw4b.mp3",name:"KAAYI",artist:"Unknown",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045326/KAAYI_ovzebv.png",lang:"tamil"},
-  {id:15,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031195/Puthu_Mazha_From__Sarvam_Maya__MP3_160K_hwx2tz.mp3",name:"Puthu Mazha",artist:"Unknown",album:"Sarvam Maya",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045368/Puthu_Mazha_y2iq2y.png",lang:"tamil"},
-  {id:16,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031191/Raga_of_Revenge_From__DC__MP3_160K_lbc1ot.mp3",name:"Raga of Revenge",artist:"BGM",album:"DC",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045366/Raga_of_Revenge_xjzhbt.png",lang:"tamil"},
-  {id:17,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031188/Oru_Oorula_From__Erumbu__MP3_160K_sxswdp.mp3",name:"Oru Oorula",artist:"Unknown",album:"Erumbu",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045359/Oru_Oorula_dpz8mj.png",lang:"tamil"},
-  {id:18,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031182/Narivetta_-_Minnalvala_Video_Song___Tovino_Thomas__Anuraj_Manohar__Jakes_Bejoy__Sid_Sriram__Sithara_MP3_160K_h9kzu4.mp3",name:"Minnalvala",artist:"Sid Sriram & Sithara",album:"Narivetta",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045354/Minnalvala_chr0pd.jpg",lang:"tamil"},
-  {id:19,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031180/Let_Her_Go_Anniversary_Edition_MP3_160K_saib7u.mp3",name:"Let Her Go",artist:"Passenger",album:"All The Little Lights",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045356/Let_Her_Go_ktjpbs.png",lang:"english"},
-  {id:20,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031176/Kalale_MP3_160K_ydmkfz.mp3",name:"Kalale",artist:"Unknown",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045342/Kalale_tmb0km.png",lang:"tamil"},
-  {id:21,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031173/Ilamai_Thirumbudhe_From__Petta__MP3_160K_nycrxg.mp3",name:"Ilamai Thirumbudhe",artist:"Anirudh Ravichander",album:"Petta",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045337/Ilamai_Thirumbudhe_b1suj4.png",lang:"tamil"},
-  {id:22,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031171/Kanneer_Sindha_From__Thiruchitrambalam__MP3_160K_jsrqce.mp3",name:"Kanneer Sindha",artist:"Anirudh Ravichander",album:"Thiruchitrambalam",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045363/Kanneer_Sindha_evpkv2.png",lang:"tamil"},
-  {id:23,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031171/Karuppa_Kooda_Va_From__Karuppu__MP3_160K_tbfdfc.mp3",name:"Karuppa Kooda Va",artist:"Unknown",album:"Karuppu",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045355/Karuppa_Kooda_Va_itd3r5.png",lang:"tamil"},
-  {id:24,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031165/Kannaana_Kanna_Madhava_MP3_160K_r1ro82.mp3",name:"Kannaana Kanna Madhava",artist:"Unknown",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045348/Kannaana_Kanna_Madhava_auesbk.png",lang:"tamil"},
-  {id:25,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031156/Kadhalaada_From__Vivegam__MP3_160K_pecm3t.mp3",name:"Kadhalaada",artist:"Anirudh Ravichander",album:"Vivegam",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045319/Kadhalaada_uply08.png",lang:"tamil"},
-  {id:26,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031156/Kaathalae_Kaathalae_From__96__MP3_160K_gkfpoa.mp3",name:"Kaathalae Kaathalae",artist:"Govind Vasantha",album:"96",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045344/Kaathalae_Kaathalae_j5gcsp.png",lang:"tamil"},
-  {id:27,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031150/Desaandhiri_MP3_160K_m366h1.mp3",name:"Desaandhiri",artist:"Unknown",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045342/Desaandhiri_b5up3t.png",lang:"tamil"},
-  {id:28,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031140/Delulu_Delulu_From__Athi_Bheekara_Kaamukan__MP3_160K_m8usj2.mp3",name:"Delulu Delulu",artist:"Unknown",album:"Athi Bheekara Kaamukan",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045354/Delulu_Delulu_fehtzo.png",lang:"tamil"},
-  {id:29,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031139/Athu_Thalore_Video_Song___Suriya_s_Karuppu___RJ_Balaji____SaiAbhyankkar___Dream_Warrior_Pictures_MP3_160K_wgxwnl.mp3",name:"Athu Thalore",artist:"SaiAbhyankkar",album:"Karuppu",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780034945/Athu_Thalore_rouwlh.png",lang:"tamil"},
-  {id:30,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031136/Ashubha_Mangalakaari_MP3_160K_pkibya.mp3",name:"Ashubha Mangalakaari",artist:"Unknown",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045345/Ashubha_Mangalakaari_k8fl2w.png",lang:"tamil"},
-  {id:31,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031133/Broken_Heart_MP3_160K_t3smap.mp3",name:"Broken Heart",artist:"Unknown",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045324/Broken_Heart_l6kigp.png",lang:"english"},
-  {id:32,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031131/Idhuvum_Kadandhu_Pogum_Reprise_MP3_160K_adqfqv.mp3",name:"Idhuvum Kadandhu Pogum",artist:"D. Imman",album:"Single",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045356/Idhuvum_Kadandhu_Pogum_qborpw.png",lang:"tamil"},
-  {id:33,url:"https://res.cloudinary.com/djb46dfzg/video/upload/v1780031129/Dude_Orchestral_Suite_MP3_160K_xvryii.mp3",name:"Dude Orchestral Suite",artist:"Unknown",album:"Orchestral",cover:"https://res.cloudinary.com/djb46dfzg/image/upload/v1780045336/Dude_tmchot.png",lang:"english"}
-];
-
-// ── STATE ──
-let currentUser=null,currentTrackIdx=-1,isPlaying=false,isShuffle=false,isRepeat=false,volume=0.8,isMuted=false;
-let likedSet=new Set(),playlists={},filteredTracks=[...tracks],currentFilter='all';
-let queue=[],ctxTrackIdx=-1,currentPlaylistId=null;
-let sleepTimer=null,sleepEnd=0,sleepInterval=null;
-let addSongModalPlaylistId=null,addSongModalSelected=new Set();
-let durations={},avatarDataUrl='',plArtDataUrl='';
-let currentLibTab='playlists';
-let playCounts={},listenSeconds={},sessionStarted={},statsPeriod='all',playHistory=[];
-const STATS_KEY='mova_stats_v1',HISTORY_KEY='mova_history_v1';
-
-function loadStats(){try{const s=localStorage.getItem(STATS_KEY);if(s){const d=JSON.parse(s);playCounts=d.playCounts||{};listenSeconds=d.listenSeconds||{};}const h=localStorage.getItem(HISTORY_KEY);if(h){playHistory=JSON.parse(h)||[];}}catch(e){}}
-function saveStats(){try{localStorage.setItem(STATS_KEY,JSON.stringify({playCounts,listenSeconds}));localStorage.setItem(HISTORY_KEY,JSON.stringify(playHistory.slice(-500)));}catch(e){}}
-function recordPlay(trackId){playCounts[trackId]=(playCounts[trackId]||0)+1;sessionStarted[trackId]=Date.now();playHistory.push({trackId,timestamp:Date.now(),duration:0});saveStats();updateTotalPlaysUI();}
-function recordListenTime(trackId,seconds){if(seconds<2)return;listenSeconds[trackId]=(listenSeconds[trackId]||0)+seconds;if(playHistory.length>0){const last=playHistory[playHistory.length-1];if(last.trackId===trackId)last.duration=seconds;}saveStats();}
-function updateTotalPlaysUI(){const total=Object.values(playCounts).reduce((a,b)=>a+b,0);const el=document.getElementById('totalPlaysCount');if(el)el.textContent=total;}
-
-const audio=document.getElementById('audioEl');
-audio.volume=volume;
-function userRef(u){return ref(db,'users/'+u);}
-const SESSION_KEY='mova_session_v2';
-function saveSession(u){localStorage.setItem(SESSION_KEY,u);}
-function clearSession(){localStorage.removeItem(SESSION_KEY);}
-function getSavedSession(){return localStorage.getItem(SESSION_KEY);}
-
-(async()=>{
-  const saved=getSavedSession();
-  if(saved){try{const snap=await get(userRef(saved));if(snap.exists()){await loginWithData(saved,snap.val());return;}}catch(e){}clearSession();}
-})();
-
-// ══════════════════════════════
-// IMAGE CROP ENGINE
-// ══════════════════════════════
-let cropImg=null,cropCtx=null,cropCallback=null;
-let cropState={x:0,y:0,zoom:1,rotation:0,brightness:0,flipH:false,flipV:false};
-let cropDrag={active:false,startX:0,startY:0,startImgX:0,startImgY:0};
-
-window.openCropModal = (inputEl, context) => {
-  const file = inputEl.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = new Image();
-    img.onload = () => {
-      cropImg = img;
-      cropState = {x:0,y:0,zoom:1,rotation:0,brightness:0,flipH:false,flipV:false};
-      document.getElementById('zoomSlider').value = 1;
-      document.getElementById('rotateSlider').value = 0;
-      document.getElementById('brightnessSlider').value = 0;
-      document.getElementById('zoomVal').textContent = '1.0×';
-      document.getElementById('rotateVal').textContent = '0°';
-      document.getElementById('brightnessVal').textContent = '0';
-      document.getElementById('flipHBtn').classList.remove('active');
-      document.getElementById('flipVBtn').classList.remove('active');
-      inputEl.value = '';
-      cropCallback = context;
-      setupCropCanvas();
-      document.getElementById('cropModalOverlay').classList.add('open');
-      drawCrop();
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-};
-
-function setupCropCanvas(){
-  const canvas=document.getElementById('cropCanvas');
-  cropCtx=canvas.getContext('2d');
-  canvas.width=300;canvas.height=300;
-  const vp=document.getElementById('cropViewport');
-  vp.addEventListener('mousedown',onCropDragStart,{passive:false});
-  vp.addEventListener('touchstart',onCropTouchStart,{passive:false});
-  document.addEventListener('mousemove',onCropDragMove);
-  document.addEventListener('mouseup',onCropDragEnd);
-  document.addEventListener('touchmove',onCropTouchMove,{passive:false});
-  document.addEventListener('touchend',onCropDragEnd);
-  vp.addEventListener('wheel',onCropWheel,{passive:false});
-}
-
-function drawCrop(){
-  if(!cropCtx||!cropImg)return;
-  const s=300;
-  cropCtx.clearRect(0,0,s,s);
-  cropCtx.save();
-  cropCtx.translate(s/2,s/2);
-  cropCtx.rotate(cropState.rotation*Math.PI/180);
-  cropCtx.scale(cropState.flipH?-1:1, cropState.flipV?-1:1);
-  const zoom=cropState.zoom;
-  const aspect=cropImg.width/cropImg.height;
-  let iw,ih;
-  if(aspect>=1){ih=s;iw=s*aspect;}else{iw=s;ih=s/aspect;}
-  iw*=zoom;ih*=zoom;
-  cropCtx.drawImage(cropImg,-iw/2+cropState.x,-ih/2+cropState.y,iw,ih);
-  if(cropState.brightness!==0){
-    const b=cropState.brightness;
-    if(b>0){cropCtx.globalCompositeOperation='screen';cropCtx.fillStyle=`rgba(255,255,255,${b/200})`;cropCtx.beginPath();cropCtx.arc(0,0,s/2,0,Math.PI*2);cropCtx.fill();}
-    else{cropCtx.globalCompositeOperation='multiply';cropCtx.fillStyle=`rgba(0,0,0,${-b/160})`;cropCtx.beginPath();cropCtx.arc(0,0,s/2,0,Math.PI*2);cropCtx.fill();}
-  }
-  cropCtx.restore();
-}
-
-function onCropDragStart(e){
-  e.preventDefault();
-  cropDrag.active=true;
-  cropDrag.startX=e.clientX;
-  cropDrag.startY=e.clientY;
-  cropDrag.startImgX=cropState.x;
-  cropDrag.startImgY=cropState.y;
-  document.getElementById('cropViewport').classList.add('dragging');
-}
-function onCropTouchStart(e){
-  if(e.touches.length!==1)return;
-  e.preventDefault();
-  const t=e.touches[0];
-  cropDrag.active=true;
-  cropDrag.startX=t.clientX;
-  cropDrag.startY=t.clientY;
-  cropDrag.startImgX=cropState.x;
-  cropDrag.startImgY=cropState.y;
-  document.getElementById('cropViewport').classList.add('dragging');
-}
-function onCropDragMove(e){
-  if(!cropDrag.active)return;
-  cropState.x=cropDrag.startImgX+(e.clientX-cropDrag.startX);
-  cropState.y=cropDrag.startImgY+(e.clientY-cropDrag.startY);
-  drawCrop();
-}
-function onCropTouchMove(e){
-  if(!cropDrag.active||e.touches.length!==1)return;
-  e.preventDefault();
-  const t=e.touches[0];
-  cropState.x=cropDrag.startImgX+(t.clientX-cropDrag.startX);
-  cropState.y=cropDrag.startImgY+(t.clientY-cropDrag.startY);
-  drawCrop();
-}
-function onCropDragEnd(){
-  cropDrag.active=false;
-  document.getElementById('cropViewport').classList.remove('dragging');
-}
-function onCropWheel(e){
-  e.preventDefault();
-  const delta=-e.deltaY*0.001;
-  cropState.zoom=Math.max(1,Math.min(3,cropState.zoom+delta));
-  document.getElementById('zoomSlider').value=cropState.zoom;
-  document.getElementById('zoomVal').textContent=cropState.zoom.toFixed(1)+'×';
-  drawCrop();
-}
-
-window.onZoomChange=(val)=>{cropState.zoom=parseFloat(val);document.getElementById('zoomVal').textContent=parseFloat(val).toFixed(1)+'×';drawCrop();};
-window.onRotateChange=(val)=>{cropState.rotation=parseInt(val);document.getElementById('rotateVal').textContent=val+'°';drawCrop();};
-window.onBrightnessChange=(val)=>{cropState.brightness=parseInt(val);const v=parseInt(val);document.getElementById('brightnessVal').textContent=(v>0?'+':'')+v;drawCrop();};
-window.toggleFlipH=()=>{cropState.flipH=!cropState.flipH;document.getElementById('flipHBtn').classList.toggle('active',cropState.flipH);drawCrop();};
-window.toggleFlipV=()=>{cropState.flipV=!cropState.flipV;document.getElementById('flipVBtn').classList.toggle('active',cropState.flipV);drawCrop();};
-window.resetCrop=()=>{
-  cropState={x:0,y:0,zoom:1,rotation:0,brightness:0,flipH:false,flipV:false};
-  document.getElementById('zoomSlider').value=1;
-  document.getElementById('rotateSlider').value=0;
-  document.getElementById('brightnessSlider').value=0;
-  document.getElementById('zoomVal').textContent='1.0×';
-  document.getElementById('rotateVal').textContent='0°';
-  document.getElementById('brightnessVal').textContent='0';
-  document.getElementById('flipHBtn').classList.remove('active');
-  document.getElementById('flipVBtn').classList.remove('active');
-  drawCrop();
-};
-
-window.closeCropModal=()=>{
-  document.getElementById('cropModalOverlay').classList.remove('open');
-  const vp=document.getElementById('cropViewport');
-  vp.removeEventListener('mousedown',onCropDragStart);
-  vp.removeEventListener('touchstart',onCropTouchStart);
-  document.removeEventListener('mousemove',onCropDragMove);
-  document.removeEventListener('mouseup',onCropDragEnd);
-  document.removeEventListener('touchmove',onCropTouchMove);
-  document.removeEventListener('touchend',onCropDragEnd);
-  vp.removeEventListener('wheel',onCropWheel);
-};
-
-window.saveCrop=async()=>{
-  if(!cropCtx)return;
-  const offscreen=document.createElement('canvas');
-  offscreen.width=400;offscreen.height=400;
-  const octx=offscreen.getContext('2d');
-  const scale=400/300;
-  octx.save();
-  octx.beginPath();
-  octx.arc(200,200,200,0,Math.PI*2);
-  octx.clip();
-  octx.translate(200,200);
-  octx.rotate(cropState.rotation*Math.PI/180);
-  octx.scale(cropState.flipH?-1:1,cropState.flipV?-1:1);
-  const zoom=cropState.zoom;
-  const aspect=cropImg.width/cropImg.height;
-  let iw,ih;
-  if(aspect>=1){ih=300;iw=300*aspect;}else{iw=300;ih=300/aspect;}
-  iw*=zoom*scale;ih*=zoom*scale;
-  octx.drawImage(cropImg,-iw/2+cropState.x*scale,-ih/2+cropState.y*scale,iw,ih);
-  if(cropState.brightness!==0){
-    const b=cropState.brightness;
-    if(b>0){octx.globalCompositeOperation='screen';octx.fillStyle=`rgba(255,255,255,${b/200})`;octx.beginPath();octx.arc(0,0,200,0,Math.PI*2);octx.fill();}
-    else{octx.globalCompositeOperation='multiply';octx.fillStyle=`rgba(0,0,0,${-b/160})`;octx.beginPath();octx.arc(0,0,200,0,Math.PI*2);octx.fill();}
-  }
-  octx.restore();
-  const croppedUrl=offscreen.toDataURL('image/jpeg',0.92);
-  const ctx=cropCallback;
-  closeCropModal();
-  if(ctx==='signup'){
-    avatarDataUrl=croppedUrl;
-    document.getElementById('avatarPreviewImg').src=croppedUrl;
-    document.getElementById('avatarPreviewImg').style.display='block';
-    document.getElementById('avatarPlaceholderSvg').style.display='none';
-    showToast('Photo cropped ✓');
-  } else if(ctx==='settings'){
-    document.getElementById('settingsAvatar').src=croppedUrl;
-    document.getElementById('topbarAvatar').src=croppedUrl;
-    if(currentUser){
-      currentUser.avatarUrl=croppedUrl;
-      try{await update(userRef(currentUser.username),{avatarUrl:croppedUrl});showToast('Profile picture updated ✓');}
-      catch{showToast('Saved locally — sync failed');}
-    }
-  }
-};
-
-// ── AUTH ──
-window.togglePassVis=(inputId,iconEl)=>{const inp=document.getElementById(inputId);if(inp.type==='password'){inp.type='text';iconEl.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;}else{inp.type='password';inputEl.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;}};
-window.validateUsername=(input)=>{const val=input.value,valid=/^[a-zA-Z0-9_]{3,20}$/.test(val);const e=document.getElementById('signupUsernameErr'),icon=document.getElementById('usernameCheckIcon');if(!val){e.style.display='none';icon.style.display='none';input.classList.remove('err');return;}if(!valid){e.textContent='3–20 chars, letters/numbers/underscore only';e.style.display='block';input.classList.add('err');icon.style.display='none';}else{e.style.display='none';input.classList.remove('err');icon.style.display='flex';}};
-window.checkPwStrength=(input)=>{const pw=input.value,fill=document.getElementById('pwStrengthFill');let s=0;if(pw.length>=6)s++;if(pw.length>=10)s++;if(/[A-Z]/.test(pw))s++;if(/[0-9]/.test(pw))s++;if(/[^a-zA-Z0-9]/.test(pw))s++;fill.style.width=(s/5*100)+'%';fill.style.background=['#ff4444','#ff8800','#ffcc00','#99dd00','#1db954'][Math.min(s-1,4)]||'transparent';};
-function showFieldErr(id,msg){const e=document.getElementById(id);e.textContent=msg;e.style.display='block';}
-function hideFieldErr(id){document.getElementById(id).style.display='none';}
-function setAuthLoading(type,loading){document.getElementById(type+'Btn').disabled=loading;document.getElementById(type+'BtnText').style.display=loading?'none':'block';document.getElementById(type+'Spinner').style.display=loading?'block':'none';}
-function showAuthErr(msg){const el=document.getElementById('authErr');el.textContent=msg;el.style.display='block';el.style.animation='none';requestAnimationFrame(()=>{el.style.animation='shake .35s ease';});}
-window.switchAuthTab=(tab)=>{document.getElementById('loginTab').classList.toggle('active',tab==='login');document.getElementById('signupTab').classList.toggle('active',tab==='signup');document.getElementById('loginForm').style.display=tab==='login'?'flex':'none';document.getElementById('signupForm').style.display=tab==='signup'?'flex':'none';document.getElementById('authErr').style.display='none';['loginUsernameErr','loginPassErr','signupUsernameErr','signupPhoneErr','signupPassErr','signupConfirmErr'].forEach(hideFieldErr);};
-
-window.doSignup=async()=>{
-  ['signupUsernameErr','signupPhoneErr','signupPassErr','signupConfirmErr'].forEach(hideFieldErr);
-  document.getElementById('authErr').style.display='none';
-  const username=document.getElementById('signupUsername').value.trim();
-  const phone=document.getElementById('signupPhone').value.trim();
-  const pass=document.getElementById('signupPass').value;
-  const confirm=document.getElementById('signupConfirm').value;
-  let e=false;
-  if(!username){showFieldErr('signupUsernameErr','Username is required');e=true;}
-  else if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)){showFieldErr('signupUsernameErr','3–20 chars, letters/numbers/underscore only');e=true;}
-  if(!phone){showFieldErr('signupPhoneErr','Mobile number is required');e=true;}
-  else if(!/^\d{7,15}$/.test(phone.replace(/[\s\-+]/g,''))){showFieldErr('signupPhoneErr','Enter a valid mobile number');e=true;}
-  if(!pass){showFieldErr('signupPassErr','Password is required');e=true;}
-  else if(pass.length<6){showFieldErr('signupPassErr','Password must be at least 6 characters');e=true;}
-  if(!confirm){showFieldErr('signupConfirmErr','Please confirm your password');e=true;}
-  else if(pass!==confirm){showFieldErr('signupConfirmErr','Passwords do not match');e=true;}
-  if(e)return;
-  setAuthLoading('signup',true);
-  try{const snap=await get(userRef(username));if(snap.exists()){showFieldErr('signupUsernameErr','Username already taken');setAuthLoading('signup',false);return;}const passwordHash=await hashPassword(pass);const userData={username,displayName:username,phone,passwordHash,avatarUrl:avatarDataUrl||'',liked:[],playlists:{},createdAt:Date.now()};await set(userRef(username),userData);saveSession(username);await loginWithData(username,userData);}
-  catch(ex){showAuthErr('Sign up failed: '+(ex.message||'Try again'));setAuthLoading('signup',false);}
-};
-
-window.doLogin=async()=>{
-  ['loginUsernameErr','loginPassErr'].forEach(hideFieldErr);
-  document.getElementById('authErr').style.display='none';
-  const username=document.getElementById('loginUsername').value.trim();
-  const pass=document.getElementById('loginPass').value;
-  if(!username){showFieldErr('loginUsernameErr','Username is required');return;}
-  if(!pass){showFieldErr('loginPassErr','Password is required');return;}
-  setAuthLoading('login',true);
-  try{const snap=await get(userRef(username));if(!snap.exists()){showFieldErr('loginUsernameErr','Username not found');setAuthLoading('login',false);return;}const data=snap.val();const passwordHash=await hashPassword(pass);if(data.passwordHash!==passwordHash){showFieldErr('loginPassErr','Incorrect password');setAuthLoading('login',false);return;}saveSession(username);await loginWithData(username,data);}
-  catch(ex){showAuthErr('Login failed: '+(ex.message||'Try again'));setAuthLoading('login',false);}
-};
-
-async function loginWithData(username,data){currentUser={username,displayName:data.displayName||username,phone:data.phone||'',avatarUrl:data.avatarUrl||''};likedSet=new Set(data.liked||[]);playlists=data.playlists||{};setAuthLoading('login',false);setAuthLoading('signup',false);loadStats();document.getElementById('authScreen').classList.remove('active');document.getElementById('appScreen').classList.add('active');applyUserUI();initApp();}
-
-function applyUserUI(){const{username,displayName,phone,avatarUrl}=currentUser;const fallback=`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(displayName)}`;const src=avatarUrl||fallback;document.getElementById('topbarAvatar').src=src;document.getElementById('settingsAvatar').src=src;document.getElementById('settingsProfileName').textContent=displayName;document.getElementById('settingsProfileSub').textContent=phone?` ${phone}`:`@${username}`;document.getElementById('settingsUsername').textContent=username;document.getElementById('settingsPhone').textContent=phone||'Not set';document.getElementById('likedCount').textContent=likedSet.size;document.getElementById('playlistCount').textContent=Object.keys(playlists).length;updateTotalPlaysUI();}
-
-window.doLogout=()=>{if(currentTrackIdx>=0&&sessionStarted[tracks[currentTrackIdx].id]){const el=(Date.now()-sessionStarted[tracks[currentTrackIdx].id])/1000;recordListenTime(tracks[currentTrackIdx].id,el);}audio.pause();isPlaying=false;currentUser=null;likedSet.clear();playlists={};queue=[];clearSession();document.getElementById('appScreen').classList.remove('active');document.getElementById('authScreen').classList.add('active');document.getElementById('loginUsername').value='';document.getElementById('loginPass').value='';avatarDataUrl='';document.getElementById('avatarPreviewImg').style.display='none';document.getElementById('avatarPlaceholderSvg').style.display='block';switchAuthTab('login');};
-
-async function saveUserData(){if(!currentUser)return;try{await update(userRef(currentUser.username),{liked:[...likedSet],playlists});}catch(e){}document.getElementById('likedCount').textContent=likedSet.size;document.getElementById('playlistCount').textContent=Object.keys(playlists).length;}
-
-function initApp(){renderLibContent();filterTracks('all',null);renderQueueState();document.getElementById('plPlayBtn').onclick=()=>{if(currentPlaylistId)playPlaylist(currentPlaylistId);};document.getElementById('plAddSongsBtn').onclick=()=>{if(currentPlaylistId)openAddSongsModal(currentPlaylistId);};document.getElementById('plDeleteBtn').onclick=()=>{if(currentPlaylistId)confirmDeletePlaylist(currentPlaylistId);};}
-
-window.goTab=(tab)=>{'home search library settings'.split(' ').forEach(t=>{document.getElementById('tab-'+t).classList.toggle('active',t===tab);document.getElementById(t+'Page').classList.toggle('active',t===tab);});if(tab==='search')setTimeout(()=>document.getElementById('searchInput').focus(),200);if(tab==='library')renderLibContent();if(tab==='settings')applyUserUI();};
-
-function getGradient(id){const h=(id*37)%360;return `linear-gradient(135deg,hsl(${h},40%,18%),hsl(${(h+40)%360},50%,10%))`;}
-function thumbHtml(track){if(track.cover)return `<img src="${track.cover}" alt="" onerror="this.style.display='none'">`;return `<div style="width:100%;height:100%;background:${getGradient(track.id)};display:flex;align-items:center;justify-content:center;font-size:18px">${['♪','♫','♬','♩'][track.id%4]}</div>`;}
-function eqHtml(){return `<div class="eq-bars"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>`;}
-
-function renderTrackRow(track,idx,globalIdx,container){const isActive=globalIdx===currentTrackIdx;const dur=durations[track.id]?fmtTime(durations[track.id]):'—';const row=document.createElement('div');row.className='track-item'+(isActive?' active':'');row.innerHTML=`<div class="track-num">${isActive&&isPlaying?eqHtml():`<span style="color:var(--txt3)">${idx+1}</span>`}</div><div class="track-item-art">${thumbHtml(track)}</div><div class="track-item-info"><div class="track-item-name">${track.name}</div><div class="track-item-artist">${track.artist}</div></div><div class="track-item-right"><span class="track-item-dur">${dur}</span><button class="track-more-btn" onclick="openCtxSheet(event,${globalIdx})"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button></div>`;row.addEventListener('click',e=>{if(e.target.closest('.track-more-btn'))return;playTrack(globalIdx);});container.appendChild(row);}
-function renderTracks(list){const c=document.getElementById('trackList');c.innerHTML='';list.forEach((t,i)=>renderTrackRow(t,i,tracks.indexOf(t),c));}
-
-window.playTrack=function(globalIdx){if(currentTrackIdx>=0&&sessionStarted[tracks[currentTrackIdx].id]){const el=(Date.now()-sessionStarted[tracks[currentTrackIdx].id])/1000;recordListenTime(tracks[currentTrackIdx].id,el);}currentTrackIdx=globalIdx;const track=tracks[globalIdx];audio.src=track.url;audio.load();audio.volume=isMuted?0:volume;audio.play().then(()=>{isPlaying=true;recordPlay(track.id);updateAllUI();renderTracks(filteredTracks);}).catch(()=>showToast('Could not load track'));};
-
-function updateAllUI(){if(currentTrackIdx<0)return;const t=tracks[currentTrackIdx];document.getElementById('miniName').textContent=t.name;document.getElementById('miniArtist').textContent=t.artist;if(t.cover){document.getElementById('miniArtImg').src=t.cover;document.getElementById('miniArtImg').style.display='block';document.getElementById('miniArtPlaceholder').style.display='none';}else{document.getElementById('miniArtImg').style.display='none';document.getElementById('miniArtPlaceholder').style.display='block';}document.getElementById('npCardTitle').textContent=t.name;document.getElementById('npCardSub').textContent=`${t.artist} · ${t.album}`;if(t.cover){document.getElementById('npCardArtImg').src=t.cover;document.getElementById('npCardArtImg').style.display='block';document.getElementById('npCardArtPlaceholder').style.display='none';}else{document.getElementById('npCardArtImg').style.display='none';document.getElementById('npCardArtPlaceholder').style.display='block';}document.getElementById('npName').textContent=t.name;document.getElementById('npArtist').textContent=t.artist;if(t.cover){document.getElementById('npArtImg').src=t.cover;document.getElementById('npArtImg').style.display='block';document.getElementById('npArtPlaceholder').style.display='none';document.getElementById('npBg').style.backgroundImage=`url(${t.cover})`;}else{document.getElementById('npArtImg').style.display='none';document.getElementById('npArtPlaceholder').style.display='flex';document.getElementById('npArtPlaceholder').textContent=['♪','♫','♬','♩'][t.id%4];document.getElementById('npBg').style.backgroundImage='';}updatePlayIcons(isPlaying);updateLikeBtns();if(isPlaying)document.getElementById('npArt').classList.add('playing');else document.getElementById('npArt').classList.remove('playing');}
-
-window.openNowPlaying=()=>{updateAllUI();document.getElementById('nowplayingOverlay').classList.add('open');};
-window.closeNowPlaying=()=>document.getElementById('nowplayingOverlay').classList.remove('open');
-window.openQueuePanel=()=>{renderQueuePanel();document.getElementById('queuePanelOverlay').classList.add('open');};
-window.closeQueuePanel=()=>document.getElementById('queuePanelOverlay').classList.remove('open');
-
-function renderQueuePanel(){const body=document.getElementById('queuePanelBody');body.innerHTML='';if(currentTrackIdx>=0){const t=tracks[currentTrackIdx];const ns=document.createElement('div');ns.innerHTML=`<div class="queue-now-playing"><div class="queue-now-label">Now Playing</div><div class="queue-now-track"><div class="queue-now-art">${thumbHtml(t)}</div><div><div class="queue-now-name">${t.name}</div><div class="queue-now-artist">${t.artist}</div></div></div></div>`;body.appendChild(ns);}const us=document.createElement('div');if(queue.length===0){us.innerHTML=`<div class="queue-up-next"><div class="queue-up-label">Up Next</div></div><div class="queue-empty"><div class="queue-empty-icon">🎵</div><div>Queue is empty</div><div style="font-size:11px;margin-top:4px;color:var(--txt3)">Use ⋮ on any song to add</div></div>`;}else{us.innerHTML=`<div class="queue-up-next"><div class="queue-up-label">Up Next — ${queue.length} song${queue.length!==1?'s':''}</div></div>`;queue.forEach((trackIdx,i)=>{const t=tracks[trackIdx];if(!t)return;const row=document.createElement('div');row.className='queue-track-item';row.innerHTML=`<div class="queue-track-art">${thumbHtml(t)}</div><div class="queue-track-info"><div class="queue-track-name">${t.name}</div><div class="queue-track-artist">${t.artist}</div></div><button class="queue-track-remove" onclick="removeFromQueue(${i})" title="Remove">✕</button>`;row.addEventListener('click',e=>{if(e.target.closest('.queue-track-remove'))return;queue.splice(0,i);const next=queue.shift();renderQueueState();playTrack(next);closeQueuePanel();});us.appendChild(row);});const cb=document.createElement('button');cb.className='queue-clear-btn';cb.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg> Clear Queue`;cb.onclick=()=>{queue=[];renderQueueState();renderQueuePanel();showToast('Queue cleared');};us.appendChild(cb);}body.appendChild(us);}
-window.removeFromQueue=(i)=>{queue.splice(i,1);renderQueueState();renderQueuePanel();showToast('Removed from queue');};
-function renderQueueState(){const btn=document.getElementById('miniQueueBtn');if(btn){btn.classList.toggle('has-queue',queue.length>0);btn.title=queue.length>0?`Queue (${queue.length})`:'Queue (empty)';}const badge=document.getElementById('queueCountBadge');if(badge)badge.textContent=queue.length;}
-
-function updatePlayIcons(play){const pause=`<svg width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;const playIcon=`<svg width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>`;document.getElementById('miniPlayBtn').innerHTML=play?pause:playIcon;document.getElementById('npMainPlayBtn').innerHTML=play?`<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`:`<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;document.querySelector('.np-play-fab').innerHTML=play?`<svg width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`:`<svg width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>`;}
-function updateLikeBtns(){if(currentTrackIdx<0)return;const liked=likedSet.has(tracks[currentTrackIdx].id);const f=liked?'var(--accent)':'none',s=liked?'var(--accent)':'currentColor';const heart=(sz)=>`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="${f}" stroke="${s}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;document.getElementById('npCardLikeBtn').innerHTML=heart(16);document.getElementById('npCardLikeBtn').classList.toggle('liked',liked);document.getElementById('npLikeBtn').innerHTML=heart(24);document.getElementById('npLikeBtn').style.color=liked?'var(--accent)':'rgba(255,255,255,.5)';}
-
-window.togglePlay=()=>{if(currentTrackIdx<0&&tracks.length){playTrack(0);return;}if(isPlaying){audio.pause();isPlaying=false;updatePlayIcons(false);document.getElementById('npArt').classList.remove('playing');if(currentTrackIdx>=0&&sessionStarted[tracks[currentTrackIdx].id]){const el=(Date.now()-sessionStarted[tracks[currentTrackIdx].id])/1000;recordListenTime(tracks[currentTrackIdx].id,el);delete sessionStarted[tracks[currentTrackIdx].id];}}else{audio.play();isPlaying=true;updatePlayIcons(true);document.getElementById('npArt').classList.add('playing');if(currentTrackIdx>=0)sessionStarted[tracks[currentTrackIdx].id]=Date.now();}};
-window.nextTrack=()=>{if(!tracks.length)return;if(queue.length>0){const next=queue.shift();renderQueueState();playTrack(next);return;}playTrack(isShuffle?Math.floor(Math.random()*tracks.length):(currentTrackIdx+1)%tracks.length);};
-window.prevTrack=()=>{if(audio.currentTime>3){audio.currentTime=0;return;}playTrack((currentTrackIdx-1+tracks.length)%tracks.length);};
-window.toggleShuffle=()=>{isShuffle=!isShuffle;document.getElementById('npShuffleBtn').classList.toggle('active',isShuffle);showToast(isShuffle?'Shuffle on':'Shuffle off');};
-window.toggleRepeat=()=>{isRepeat=!isRepeat;audio.loop=isRepeat;document.getElementById('npRepeatBtn').classList.toggle('active',isRepeat);showToast(isRepeat?'Repeat on':'Repeat off');};
-window.toggleLike=()=>{if(currentTrackIdx<0)return;const t=tracks[currentTrackIdx];if(likedSet.has(t.id)){likedSet.delete(t.id);showToast('Removed from Liked Songs');}else{likedSet.add(t.id);showToast('Added to Liked Songs ♥');}updateLikeBtns();saveUserData();if(currentFilter==='liked')filterTracks('liked',null);};
-document.getElementById('npProgBar').addEventListener('click',e=>{const pct=Math.max(0,Math.min(1,(e.clientX-e.currentTarget.getBoundingClientRect().left)/e.currentTarget.offsetWidth));if(audio.duration)audio.currentTime=pct*audio.duration;});
-window.setVolume=e=>{const bar=e.currentTarget;volume=Math.max(0,Math.min(1,(e.clientX-bar.getBoundingClientRect().left)/bar.offsetWidth));audio.volume=isMuted?0:volume;document.getElementById('npVolFill').style.width=(volume*100)+'%';};
-window.toggleMute=()=>{isMuted=!isMuted;audio.volume=isMuted?0:volume;document.getElementById('npMuteBtn').innerHTML=isMuted?`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>`:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;};
-audio.addEventListener('timeupdate',()=>{if(!audio.duration)return;const pct=(audio.currentTime/audio.duration)*100;document.getElementById('miniProgFill').style.width=pct+'%';document.getElementById('npProgFill').style.width=pct+'%';document.getElementById('npCurTime').textContent=fmtTime(audio.currentTime);});
-audio.addEventListener('loadedmetadata',()=>{document.getElementById('npTotTime').textContent=fmtTime(audio.duration);if(currentTrackIdx>=0)durations[tracks[currentTrackIdx].id]=audio.duration;});
-audio.addEventListener('ended',()=>{if(!isRepeat)nextTrack();});
-function fmtTime(s){if(!s||isNaN(s))return'0:00';return`${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;}
-function fmtTimeVerbose(secs){if(!secs||secs<60)return`${Math.round(secs||0)}s`;const h=Math.floor(secs/3600),m=Math.floor((secs%3600)/60);if(h>0)return`${h}h ${m}m`;return`${m}m`;}
-
-window.doSearch=(q)=>{const query=q.trim().toLowerCase();const empty=document.getElementById('searchEmpty'),results=document.getElementById('searchResults');if(!query){empty.style.display='flex';results.innerHTML='';return;}empty.style.display='none';results.innerHTML='';const found=tracks.filter(t=>t.name.toLowerCase().includes(query)||t.artist.toLowerCase().includes(query)||t.album.toLowerCase().includes(query));if(!found.length){results.innerHTML=`<div style="padding:24px;text-align:center;color:var(--txt3);font-size:14px">No results for "${q}"</div>`;return;}found.forEach((t,i)=>renderTrackRow(t,i,tracks.indexOf(t),results));};
-window.filterTracks=(type,el)=>{if(el){document.querySelectorAll('#homeFilter .filter-chip').forEach(b=>b.classList.remove('active'));el.classList.add('active');}currentFilter=type;if(type==='all')filteredTracks=[...tracks];else if(type==='tamil')filteredTracks=tracks.filter(t=>t.lang==='tamil');else if(type==='english')filteredTracks=tracks.filter(t=>t.lang==='english');else if(type==='liked')filteredTracks=tracks.filter(t=>likedSet.has(t.id));const titles={all:'All Tracks',tamil:'Tamil Hits',english:'English Vibes',liked:'Liked Songs'};document.getElementById('sectionLabel').textContent=titles[type]||'All Tracks';renderTracks(filteredTracks);};
-
-window.openCtxSheet=(e,idx)=>{e.stopPropagation();ctxTrackIdx=idx;const t=tracks[idx];document.getElementById('ctxTrackName').textContent=t.name;document.getElementById('ctxTrackArtist').textContent=t.artist;document.getElementById('ctxTrackArt').src=t.cover||'';document.getElementById('ctxLikeLabel').textContent=likedSet.has(t.id)?'Unlike Song':'Like Song';document.getElementById('ctxSheet').classList.add('open');};
-window.closeCtxSheet=()=>document.getElementById('ctxSheet').classList.remove('open');
-window.ctxAddToQueue=()=>{if(ctxTrackIdx<0)return;queue.push(ctxTrackIdx);renderQueueState();showToast(`"${tracks[ctxTrackIdx].name}" added to queue`);};
-window.ctxLike=()=>{const t=tracks[ctxTrackIdx];if(likedSet.has(t.id)){likedSet.delete(t.id);showToast('Removed from Liked Songs');}else{likedSet.add(t.id);showToast('Added to Liked Songs ♥');}if(ctxTrackIdx===currentTrackIdx)updateLikeBtns();saveUserData();if(currentFilter==='liked')filterTracks('liked',null);};
-window.ctxPlayNext=()=>{if(ctxTrackIdx<0)return;queue.unshift(ctxTrackIdx);renderQueueState();showToast('Playing next');};
-window.ctxAddToPlaylist=()=>{const ids=Object.keys(playlists);if(!ids.length){showToast('No playlists yet — create one in Library');closeCtxSheet();return;}const list=document.getElementById('plSubmenuList');list.innerHTML='';ids.forEach(id=>{const item=document.createElement('div');item.className='ctx-item';item.textContent=playlists[id].name;item.onclick=()=>{const pl=playlists[id];if(!pl.songIds)pl.songIds=[];if(!pl.songIds.includes(tracks[ctxTrackIdx].id)){pl.songIds.push(tracks[ctxTrackIdx].id);saveUserData();showToast(`Added to "${pl.name}"`);}else showToast('Already in playlist');document.getElementById('plSubmenuOverlay').classList.remove('open');closeCtxSheet();};list.appendChild(item);});document.getElementById('plSubmenuOverlay').classList.add('open');};
-
-window.openSleepModal=()=>{document.querySelectorAll('.sleep-opt').forEach(o=>o.classList.remove('active'));openModal('sleepModal');};
-window.setSleepTimer=(mins,el)=>{document.querySelectorAll('.sleep-opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');sleepEnd=Date.now()+mins*60000;clearTimeout(sleepTimer);clearInterval(sleepInterval);sleepTimer=setTimeout(()=>{audio.pause();isPlaying=false;updatePlayIcons(false);showToast('Sleep timer ended — music stopped');document.getElementById('sleepIndicator').classList.remove('active');document.getElementById('sleepFieldValue').textContent='Off';clearInterval(sleepInterval);sleepTimer=null;},mins*60000);document.getElementById('sleepIndicator').classList.add('active');document.getElementById('sleepLabel').textContent=`${mins}m`;document.getElementById('sleepFieldValue').textContent=`${mins} min`;clearInterval(sleepInterval);sleepInterval=setInterval(()=>{const rem=Math.max(0,Math.round((sleepEnd-Date.now())/60000));document.getElementById('sleepLabel').textContent=`${rem}m`;document.getElementById('sleepFieldValue').textContent=rem>0?`${rem} min`:'Off';if(rem<=0)clearInterval(sleepInterval);},30000);showToast(`Sleep timer: ${mins} minutes`);};
-window.cancelSleepTimer=()=>{clearTimeout(sleepTimer);clearInterval(sleepInterval);sleepTimer=null;document.getElementById('sleepIndicator').classList.remove('active');document.getElementById('sleepFieldValue').textContent='Off';document.querySelectorAll('.sleep-opt').forEach(o=>o.classList.remove('active'));closeModal('sleepModal');showToast('Sleep timer cancelled');};
-
-window.switchLibTab=(tab,el)=>{currentLibTab=tab;document.querySelectorAll('.lib-tab').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');renderLibContent();};
-function renderLibContent(){const c=document.getElementById('libContent');c.innerHTML='';if(currentLibTab==='playlists'){const lc=document.createElement('div');lc.className='pl-card';lc.innerHTML=`<div class="pl-card-art liked-card-art"><svg width="22" height="22" viewBox="0 0 24 24" fill="var(--accent)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="pl-card-info"><div class="pl-card-name">Liked Songs</div><div class="pl-card-sub">${likedSet.size} songs</div></div>`;lc.onclick=()=>{document.querySelectorAll('.lib-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.lib-tab')[1].classList.add('active');switchLibTab('liked',null);};c.appendChild(lc);Object.entries(playlists).forEach(([id,pl])=>{const songs=(pl.songIds||[]).length;const card=document.createElement('div');card.className='pl-card';card.innerHTML=`<div class="pl-card-art">${pl.cover?`<img src="${pl.cover}" alt="">`:`<div style="width:100%;height:100%;background:${getGradient(id.length)};display:flex;align-items:center;justify-content:center;font-size:22px">🎵</div>`}</div><div class="pl-card-info"><div class="pl-card-name">${pl.name}</div><div class="pl-card-sub">${songs} song${songs!==1?'s':''}</div></div><button class="pl-card-more" onclick="event.stopPropagation()"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>`;card.addEventListener('click',e=>{if(e.target.closest('.pl-card-more'))return;openPlDetail(id);});c.appendChild(card);});}else{const liked=tracks.filter(t=>likedSet.has(t.id));if(!liked.length){c.innerHTML='<div style="padding:40px;text-align:center;color:var(--txt3);font-size:14px">No liked songs yet</div>';return;}const tl=document.createElement('div');tl.className='track-list';liked.forEach((t,i)=>renderTrackRow(t,i,tracks.indexOf(t),tl));c.appendChild(tl);}}
-
-window.openPlDetail=(id)=>{currentPlaylistId=id;const pl=playlists[id];if(!pl)return;document.getElementById('plDetailTopName').textContent=pl.name;document.getElementById('plDetailName').textContent=pl.name;const songs=(pl.songIds||[]).map(sid=>tracks.find(t=>t.id===sid)).filter(Boolean);document.getElementById('plDetailSub').textContent=`${songs.length} song${songs.length!==1?'s':''}`;document.getElementById('plDetailArt').src=pl.cover||`https://api.dicebear.com/7.x/shapes/svg?seed=${pl.name}`;const c=document.getElementById('plDetailTrackList');c.innerHTML='';songs.forEach((t,i)=>renderTrackRow(t,i,tracks.indexOf(t),c));document.getElementById('plDetailOverlay').classList.add('open');};
-window.closePlDetail=()=>{document.getElementById('plDetailOverlay').classList.remove('open');renderLibContent();};
-window.playPlaylist=(id)=>{const pl=playlists[id];if(!pl||!pl.songIds?.length){showToast('No songs in playlist');return;}const first=tracks.findIndex(t=>t.id===pl.songIds[0]);if(first>=0)playTrack(first);queue=pl.songIds.slice(1).map(sid=>tracks.findIndex(t=>t.id===sid)).filter(i=>i>=0);renderQueueState();closePlDetail();};
-window.confirmDeletePlaylist=(id)=>{const pl=playlists[id];if(!pl)return;document.getElementById('deleteConfirmSub').textContent=`Delete "${pl.name}"? This cannot be undone.`;document.getElementById('deleteConfirmOk').onclick=()=>{delete playlists[id];saveUserData();closeDeleteConfirm();closePlDetail();showToast('Playlist deleted');};document.getElementById('deleteConfirmModal').classList.add('open');};
-window.closeDeleteConfirm=()=>document.getElementById('deleteConfirmModal').classList.remove('open');
-
-window.previewPlArt=(input)=>{const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{plArtDataUrl=e.target.result;document.getElementById('plArtPreview').src=plArtDataUrl;document.getElementById('plArtPreview').style.display='block';document.getElementById('plArtPlaceholder').style.display='none';};r.readAsDataURL(f);};
-window.openNewPlaylistModal=()=>{document.getElementById('newPlName').value='';plArtDataUrl='';document.getElementById('plArtPreview').style.display='none';document.getElementById('plArtPlaceholder').style.display='block';openModal('newPlaylistModal');};
-window.createPlaylist=()=>{const name=document.getElementById('newPlName').value.trim();if(!name){showToast('Enter a playlist name');return;}const id='pl_'+Date.now();playlists[id]={name,cover:plArtDataUrl,songIds:[]};saveUserData();renderLibContent();closeModal('newPlaylistModal');showToast(`Playlist "${name}" created`);openPlDetail(id);};
-window.openAddSongsModal=(plId)=>{addSongModalPlaylistId=plId;const pl=playlists[plId];addSongModalSelected=new Set(pl?.songIds||[]);document.getElementById('addSongsSearch').value='';renderAddSongsModal(tracks);openModal('addSongsModal');};
-function renderAddSongsModal(list){const c=document.getElementById('addSongsList');c.innerHTML='';list.forEach(t=>{const row=document.createElement('div');row.className='modal-song-row';const checked=addSongModalSelected.has(t.id);row.innerHTML=`<div class="modal-song-check ${checked?'checked':''}">${checked?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`:''}</div><div class="modal-song-thumb">${thumbHtml(t)}</div><div style="min-width:0;flex:1"><div style="font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.name}</div><div style="font-size:12px;color:var(--txt2)">${t.artist}</div></div>`;row.onclick=()=>{if(addSongModalSelected.has(t.id))addSongModalSelected.delete(t.id);else addSongModalSelected.add(t.id);renderAddSongsModal(list);};c.appendChild(row);});}
-window.filterAddSongs=(q)=>{const query=q.toLowerCase();renderAddSongsModal(query?tracks.filter(t=>t.name.toLowerCase().includes(query)||t.artist.toLowerCase().includes(query)):tracks);};
-window.saveAddedSongs=()=>{if(!addSongModalPlaylistId||!playlists[addSongModalPlaylistId])return;playlists[addSongModalPlaylistId].songIds=[...addSongModalSelected];saveUserData();if(currentPlaylistId===addSongModalPlaylistId)openPlDetail(addSongModalPlaylistId);closeModal('addSongsModal');showToast('Playlist updated');};
-
-window.updateProfileAvatar=async(input)=>{const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=async e=>{const url=e.target.result;document.getElementById('settingsAvatar').src=url;document.getElementById('topbarAvatar').src=url;if(currentUser){currentUser.avatarUrl=url;try{await update(userRef(currentUser.username),{avatarUrl:url});showToast('Profile picture updated');}catch{showToast('Failed to save');}}};r.readAsDataURL(f);};
-window.openEditProfileModal=()=>{document.getElementById('editUsername').value=currentUser?.username||'';document.getElementById('editName').value=currentUser?.displayName||'';document.getElementById('editPhone').value=currentUser?.phone||'';openModal('editProfileModal');};
-window.saveProfile=async()=>{const name=document.getElementById('editName').value.trim();const phone=document.getElementById('editPhone').value.trim();if(!name){showToast('Enter a display name');return;}try{await update(userRef(currentUser.username),{displayName:name,phone:phone||''});currentUser.displayName=name;currentUser.phone=phone;applyUserUI();closeModal('editProfileModal');showToast('Profile updated');}catch{showToast('Failed to update profile');}};
-
-window.openStatsPage=()=>{renderStatsPage();document.getElementById('statsOverlay').classList.add('open');};
-window.closeStatsPage=()=>document.getElementById('statsOverlay').classList.remove('open');
-function getFilteredHistory(period){const now=Date.now();let cutoff=0;if(period==='week')cutoff=now-7*24*3600*1000;else if(period==='month')cutoff=now-30*24*3600*1000;else if('3months'===period)cutoff=now-90*24*3600*1000;return playHistory.filter(h=>h.timestamp>=cutoff);}
-function getStatsForPeriod(period){if(period==='all'){const totalPlays=Object.values(playCounts).reduce((a,b)=>a+b,0);const totalSeconds=Object.values(listenSeconds).reduce((a,b)=>a+b,0);const songsPlayed=Object.keys(playCounts).filter(id=>playCounts[id]>0).length;const topTracks=Object.entries(playCounts).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([id,count])=>({track:tracks.find(t=>t.id==id),count,secs:listenSeconds[id]||0})).filter(x=>x.track);return{totalPlays,totalSeconds,songsPlayed,topTracks};}else{const hist=getFilteredHistory(period);const pc={},ps={};hist.forEach(h=>{pc[h.trackId]=(pc[h.trackId]||0)+1;ps[h.trackId]=(ps[h.trackId]||0)+(h.duration||0);});const totalPlays=hist.length;const totalSeconds=Object.values(ps).reduce((a,b)=>a+b,0);const songsPlayed=Object.keys(pc).length;const topTracks=Object.entries(pc).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([id,count])=>({track:tracks.find(t=>t.id==id),count,secs:ps[id]||0})).filter(x=>x.track);return{totalPlays,totalSeconds,songsPlayed,topTracks};}}
-
-function renderStatsPage(){const scroll=document.getElementById('statsScroll');scroll.innerHTML='';const stats=getStatsForPeriod(statsPeriod);const totalAllTimePlays=Object.values(playCounts).reduce((a,b)=>a+b,0);const periodTabsHtml=`<div style="padding:16px 16px 0;"><div class="stats-period-tabs"><button class="stats-period-tab ${statsPeriod==='week'?'active':''}" onclick="setStatsPeriod('week')">1 Week</button><button class="stats-period-tab ${statsPeriod==='month'?'active':''}" onclick="setStatsPeriod('month')">1 Month</button><button class="stats-period-tab ${statsPeriod==='3months'?'active':''}" onclick="setStatsPeriod('3months')">3 Months</button><button class="stats-period-tab ${statsPeriod==='all'?'active':''}" onclick="setStatsPeriod('all')">All Time</button></div></div>`;const heroHtml=`<div style="padding:0 16px 16px;"><div class="stats-hero"><div class="stats-hero-row"><div class="stats-hero-main"><div class="stats-big-num">${stats.totalPlays}</div><div class="stats-big-label">Total Plays</div></div><div class="stats-hero-side"><div class="stats-side-item"><div class="stats-side-num">${fmtTimeVerbose(stats.totalSeconds)}</div><div class="stats-side-label">Listening Time</div></div><div class="stats-side-item"><div class="stats-side-num">${stats.songsPlayed}</div><div class="stats-side-label">Songs Played</div></div></div></div></div></div>`;const avgPerDay=statsPeriod==='week'?(stats.totalPlays/7).toFixed(1):statsPeriod==='month'?(stats.totalPlays/30).toFixed(1):statsPeriod==='3months'?(stats.totalPlays/90).toFixed(1):(totalAllTimePlays/Math.max(1,Math.ceil((Date.now()-(playHistory[0]?.timestamp||Date.now()))/(86400000)))).toFixed(1);const miniCardsHtml=`<div class="stats-cards-row"><div class="stats-mini-card"><div class="stats-mini-icon" style="background:rgba(29,185,84,.12);"><svg width="18" height="18" viewBox="0 0 24 24" fill="var(--txt3)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div><div class="stats-mini-num" style="color:var(--accent)">${tracks.length}</div><div class="stats-mini-label">Songs in Library</div></div><div class="stats-mini-card"><div class="stats-mini-icon" style="background:rgba(74,158,255,.12);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg></div><div class="stats-mini-num" style="color:var(--stats-blue)">${avgPerDay}</div><div class="stats-mini-label">Avg plays/day</div></div><div class="stats-mini-card"><div class="stats-mini-icon" style="background:rgba(244,185,66,.12);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="stats-mini-num" style="color:var(--stats-gold)">${likedSet.size}</div><div class="stats-mini-label">Liked Songs</div></div><div class="stats-mini-card"><div class="stats-mini-icon" style="background:rgba(168,85,247,.12);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><div class="stats-mini-num" style="color:var(--stats-purple)">${Object.keys(playlists).length}</div><div class="stats-mini-label">Playlists</div></div></div>`;let topSongsHtml='';if(stats.topTracks.length===0){topSongsHtml=`<div class="stats-section"><div class="stats-section-title"> Top Songs <span class="badge" style="background:var(--bg3);color:var(--txt3)">0</span></div><div class="stats-empty"><div class="stats-empty-icon">🎧</div><div style="font-size:15px;font-weight:700;color:var(--txt2)">No plays yet</div><div style="font-size:13px;margin-top:6px">Start playing music to see your stats!</div></div></div>`;}else{const maxCount=stats.topTracks[0]?.count||1;const rankColors=['top1','top2','top3'];const songRows=stats.topTracks.map((item,i)=>{const pct=Math.round((item.count/maxCount)*100);return`<div class="stats-song-item"><div class="stats-song-rank ${rankColors[i]||''}">${i+1}</div><div class="stats-song-art">${thumbHtml(item.track)}</div><div class="stats-song-info"><div class="stats-song-name">${item.track.name}</div><div class="stats-song-artist">${item.track.artist}</div><div class="stats-prog-wrap"><div class="stats-prog-fill" style="width:${pct}%"></div></div></div><div class="stats-song-right"><div class="stats-play-count">${item.count}</div><div class="stats-play-label">play${item.count!==1?'s':''}</div>${item.secs>0?`<div class="stats-time-label">${fmtTimeVerbose(item.secs)}</div>`:''}</div></div>`;}).join('');topSongsHtml=`<div class="stats-section"><div class="stats-section-title"> Top Songs <span class="badge" style="background:var(--accent-dim);color:var(--accent)">${stats.topTracks.length}</span></div>${songRows}</div>`;}scroll.innerHTML=periodTabsHtml+heroHtml+miniCardsHtml+topSongsHtml;}
-window.setStatsPeriod=(period)=>{statsPeriod=period;renderStatsPage();};
-
-window.openModal=(id)=>document.getElementById(id).classList.add('open');
-window.closeModal=(id)=>document.getElementById(id).classList.remove('open');
-document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
-
-let toastT;
-window.showToast=(msg)=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2400);};
-document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.code==='Space'){e.preventDefault();togglePlay();}else if(e.code==='ArrowRight')nextTrack();else if(e.code==='ArrowLeft')prevTrack();else if(e.code==='Escape'){closeNowPlaying();closeQueuePanel();closeStatsPage();closeCropModal();}});
-tracks.forEach(t=>{const a=new Audio();a.preload='metadata';a.src=t.url;a.addEventListener('loadedmetadata',()=>{durations[t.id]=a.duration;});});
-</script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
