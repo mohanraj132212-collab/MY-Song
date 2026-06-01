@@ -6,7 +6,7 @@ export const tracks = [
     artist: "Anirudh Ravichander",
     album: "Thaanaa Serndha Koottam",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780034946/Engae_Endru_Povathu_jsrgtv.png",
-    lang: "tamil"
+    category: "motivation"
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const tracks = [
     artist: "Lana Del Rey",
     album: "The Great Gatsby OST",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045378/Young_And_Beautiful_pmk7ij.png",
-    lang: "english"
+    category: "love"
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ export const tracks = [
     artist: "AR Rahman",
     album: "Maaveeran",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045377/Vaa_Veera_jmrmzi.png",
-    lang: "tamil"
+    category: "motivation"
   },
   {
     id: 4,
@@ -33,7 +33,7 @@ export const tracks = [
     artist: "Govind Vasantha",
     album: "96",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045379/The_Life_of_Ram_thz4df.png",
-    lang: "tamil"
+    category: "sad"
   },
   {
     id: 5,
@@ -42,7 +42,7 @@ export const tracks = [
     artist: "BGM",
     album: "Instrumental",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045372/Tony_s_Mayhem_oojnfg.png",
-    lang: "english"
+    category: "emotion"
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ export const tracks = [
     artist: "Ghibran",
     album: "Maara",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045374/Yaar_Azhaippadhu_unzgkw.png",
-    lang: "tamil"
+    category: "sad"
   },
   {
     id: 7,
@@ -60,7 +60,7 @@ export const tracks = [
     artist: "AR Rahman",
     album: "2.0",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780034946/Pullinangal_m4z7rx.png",
-    lang: "tamil"
+    category: "motivation"
   },
   {
     id: 8,
@@ -69,7 +69,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780034946/Piravi_az7tvm.png",
-    lang: "tamil"
+    category: "sad"
   },
   {
     id: 9,
@@ -78,7 +78,7 @@ export const tracks = [
     artist: "Siddhu Kumar",
     album: "Sivappu Manjal Pachai",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045370/Usure_mnrpfj.png",
-    lang: "tamil"
+    category: "sad"
   },
   {
     id: 10,
@@ -87,7 +87,7 @@ export const tracks = [
     artist: "Instrumental",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045336/Dude_tmchot.png",
-    lang: "english"
+    category: "emotion"
   },
   {
     id: 11,
@@ -96,7 +96,7 @@ export const tracks = [
     artist: "Instrumental",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045366/Thaangaadha_Baaram_hq5wsx.png",
-    lang: "tamil"
+    category: "sad"
   },
   {
     id: 12,
@@ -105,7 +105,7 @@ export const tracks = [
     artist: "Harris Jayaraj",
     album: "Spyder BGMs",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045363/Spyder_BGMs_heove2.png",
-    lang: "tamil"
+    category: "emotion"
   },
   {
     id: 13,
@@ -114,7 +114,7 @@ export const tracks = [
     artist: "Nirvana / Batman OST",
     album: "The Batman",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045366/Something_In_The_Way_s06dtq.png",
-    lang: "english"
+    category: "sad"
   },
   {
     id: 14,
@@ -123,7 +123,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045326/KAAYI_ovzebv.png",
-    lang: "tamil"
+    category: "emotion"
   },
   {
     id: 15,
@@ -132,7 +132,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Sarvam Maya",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045368/Puthu_Mazha_y2iq2y.png",
-    lang: "tamil"
+    category: "sad"
   },
   {
     id: 16,
@@ -141,7 +141,7 @@ export const tracks = [
     artist: "BGM",
     album: "DC",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045366/Raga_of_Revenge_xjzhbt.png",
-    lang: "tamil"
+    category: "emotion"
   },
   {
     id: 17,
@@ -150,7 +150,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Erumbu",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045359/Oru_Oorula_dpz8mj.png",
-    lang: "tamil"
+    category: "motivation"
   },
   {
     id: 18,
@@ -159,7 +159,7 @@ export const tracks = [
     artist: "Sid Sriram & Sithara",
     album: "Narivetta",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045354/Minnalvala_chr0pd.jpg",
-    lang: "tamil"
+    category: "emotion"
   },
   {
     id: 19,
@@ -168,7 +168,7 @@ export const tracks = [
     artist: "Passenger",
     album: "All The Little Lights",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045356/Let_Her_Go_ktjpbs.png",
-    lang: "english"
+    category: "sad"
   },
   {
     id: 20,
@@ -177,7 +177,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045342/Kalale_tmb0km.png",
-    lang: "tamil"
+    category: "love"
   },
   {
     id: 21,
@@ -186,7 +186,7 @@ export const tracks = [
     artist: "Anirudh Ravichander",
     album: "Petta",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045337/Ilamai_Thirumbudhe_b1suj4.png",
-    lang: "tamil"
+    category: "motivation"
   },
   {
     id: 22,
@@ -195,7 +195,7 @@ export const tracks = [
     artist: "Anirudh Ravichander",
     album: "Thiruchitrambalam",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045363/Kanneer_Sindha_evpkv2.png",
-    lang: "tamil"
+    category: "sad"
   },
   {
     id: 23,
@@ -204,7 +204,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Karuppu",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045355/Karuppa_Kooda_Va_itd3r5.png",
-    lang: "tamil"
+    category: "motivation"
   },
   {
     id: 24,
@@ -213,7 +213,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045348/Kannaana_Kanna_Madhava_auesbk.png",
-    lang: "tamil"
+    category: "love"
   },
   {
     id: 25,
@@ -222,7 +222,7 @@ export const tracks = [
     artist: "Anirudh Ravichander",
     album: "Vivegam",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045319/Kadhalaada_uply08.png",
-    lang: "tamil"
+    category: "love"
   },
   {
     id: 26,
@@ -231,7 +231,7 @@ export const tracks = [
     artist: "Govind Vasantha",
     album: "96",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045344/Kaathalae_Kaathalae_j5gcsp.png",
-    lang: "tamil"
+    category: "love"
   },
   {
     id: 27,
@@ -240,7 +240,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045342/Desaandhiri_b5up3t.png",
-    lang: "tamil"
+    category: "motivation"
   },
   {
     id: 28,
@@ -249,7 +249,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Athi Bheekara Kaamukan",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045354/Delulu_Delulu_fehtzo.png",
-    lang: "tamil"
+    category: "emotion"
   },
   {
     id: 29,
@@ -258,7 +258,7 @@ export const tracks = [
     artist: "SaiAbhyankkar",
     album: "Karuppu",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780034945/Athu_Thalore_rouwlh.png",
-    lang: "tamil"
+    category: "motivation"
   },
   {
     id: 30,
@@ -267,7 +267,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045345/Ashubha_Mangalakaari_k8fl2w.png",
-    lang: "tamil"
+    category: "emotion"
   },
   {
     id: 31,
@@ -276,7 +276,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045324/Broken_Heart_l6kigp.png",
-    lang: "english"
+    category: "sad"
   },
   {
     id: 32,
@@ -285,7 +285,7 @@ export const tracks = [
     artist: "D. Imman",
     album: "Single",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045356/Idhuvum_Kadandhu_Pogum_qborpw.png",
-    lang: "tamil"
+    category: "sad"
   },
   {
     id: 33,
@@ -294,7 +294,7 @@ export const tracks = [
     artist: "Unknown",
     album: "Orchestral",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045336/Dude_tmchot.png",
-    lang: "english"
+    category: "emotion"
   },
   {
     id: 34,
@@ -303,186 +303,357 @@ export const tracks = [
     artist: "Dhanush",
     album: "VELS",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780210575/Kannamma_En_Kannamma_snvwc0.png",
-    lang: "tamil"
+    category: "love"
   },
   {
-  id: 35,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300518/Ayyayo_MP3_160K_tcgc8u.mp3",
-  name: "Ayyayo",
-  artist: "G. V. Prakash Kumar",
-  album: "Aadukalam",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301037/Ayyayo_ambzo2.png",
-  lang: "tamil"
-},
-{
-  id: 36,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300515/Thodarum_Intha_Payanam_MP3_160K_v6lwiz.mp3",
-  name: "Thodarum Intha Payanam",
-  artist: "Shakthisree Gopalan",
-  album: "Netrikann",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301038/Thodarum_Intha_Payanam_umi2xs.png",
-  lang: "tamil"
-},
-{
-  id: 37,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300512/Unakkenna_Venum_Sollu_MP3_160K_cbb1wc.mp3",
-  name: "Unakkenna Venum Sollu",
-  artist: "Anirudh Ravichander",
-  album: "Yennai Arindhaal",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301044/Unakkenna_Venum_Sollu_zgqb3n.png",
-  lang: "tamil"
-},
-{
-  id: 38,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300509/Nillayo_MP3_160K_gfudu0.mp3",
-  name: "Nillayo",
-  artist: "Haricharan",
-  album: "Bairavaa",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301036/Nillayo_yblxtb.png",
-  lang: "tamil"
-},
-{
-  id: 39,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300509/Venmegam_MP3_160K_dhalag.mp3",
-  name: "Venmegam",
-  artist: "Yuvan Shankar Raja",
-  album: "Yaaradi Nee Mohini",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301043/Venmegam_c0jbdu.png",
-  lang: "tamil"
-},
-{
-  id: 40,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300504/Usure_Pogudhey_MP3_160K_oicuzp.mp3",
-  name: "Usure Pogudhey",
-  artist: "Karthik",
-  album: "Raavanan",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301041/Usure_Pogudhey_liob0z.png",
-  lang: "tamil"
-},
-{
-  id: 41,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300496/Sandalee_MP3_160K_c3avwv.mp3",
-  name: "Sandalee",
-  artist: "Velmurugan",
-  album: "Sema",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301041/Sandalee_wowgbu.png",
-  lang: "tamil"
-},
-{
-  id: 42,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300491/Thodu_Vaanam_MP3_160K_xnvwsx.mp3",
-  name: "Thodu Vaanam",
-  artist: "Hariharan",
-  album: "Anegan",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301040/Thodu_Vaanam_ivzox8.png",
-  lang: "tamil"
-},
-{
-  id: 43,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300482/Kangal_Edho_From__Chithha__MP3_160K_huumgn.mp3",
-  name: "Kangal Edho",
-  artist: "Pradeep Kumar",
-  album: "Chithha",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301030/Kangal_Edho_jlvevy.png",
-  lang: "tamil"
-},
-{
-  id: 44,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300480/Sugar_Bomb_MP3_160K_zfe1yd.mp3",
-  name: "Sugar Bomb",
-  artist: "OfRo",
-  album: "Single",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301045/Sugar_Bomb_st4yno.png",
-  lang: "tamil"
-},
-{
-  id: 45,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300479/Nee_Kavithaigala_MP3_160K_pcultn.mp3",
-  name: "Nee Kavithaigala",
-  artist: "Pradeep Kumar",
-  album: "Maragatha Naanayam",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301036/Nee_Kavithaigala_ea8xuu.png",
-  lang: "tamil"
-},
-{
-  id: 46,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300472/Saagaa_Varam_MP3_160K_oeelgw.mp3",
-  name: "Saagaa Varam",
-  artist: "Sid Sriram",
-  album: "Single",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301035/Saagaa_Varam_k09y2v.png",
-  lang: "tamil"
-},
-{
-  id: 47,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300471/Adiyae_Azhagae_From__Oru_Naal_Koothu__MP3_160K_cl7mmh.mp3",
-  name: "Adiyae Azhagae",
-  artist: "Sean Roldan",
-  album: "Oru Naal Koothu",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301025/Adiyae_Azhagae_esetyv.png",
-  lang: "tamil"
-},
-{
-  id: 48,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300465/Innum_Konjam_Neram_MP3_160K_vf33qs.mp3",
-  name: "Innum Konjam Neram",
-  artist: "A. R. Rahman",
-  album: "Maryan",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301034/Innum_Konjam_Neram_sflepd.png",
-  lang: "tamil"
-},
-{
-  id: 49,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300459/Ei_Suzhali_MP3_160K_dwfsxb.mp3",
-  name: "Ei Suzhali",
-  artist: "A. R. Rahman",
-  album: "Kodi",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301030/Ei_Suzhali_okwgui.png",
-  lang: "tamil"
-},
-{
-  id: 50,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300457/Kadhal_Aasai_MP3_160K_njdqjg.mp3",
-  name: "Kadhal Aasai",
-  artist: "Yuvan Shankar Raja",
-  album: "Anjaan",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301028/Kadhal_Aasai_qwkiyu.png",
-  lang: "tamil"
-},
-{
-  id: 51,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300452/I_m_Just_Fine_MP3_160K_vzeqsv.mp3",
-  name: "I'm Just Fine",
-  artist: "Unknown",
-  album: "Single",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301029/I_m_Just_Fine_roq55t.png",
-  lang: "english"
-},
-{
-  id: 52,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300446/Mundhinam_MP3_160K_jcto0r.mp3",
-  name: "Mundhinam",
-  artist: "Harris Jayaraj",
-  album: "Vaaranam Aayiram",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301037/Mundhinam_pdqkvw.png",
-  lang: "tamil"
-},
-{
-  id: 53,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300432/Arakkiye_MP3_160K_sajrtx.mp3",
-  name: "Arakkiye",
-  artist: "Yuvan Shankar Raja",
-  album: "Single",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301027/Arakkiye_efkafn.png",
-  lang: "tamil"
-},
-{
-  id: 54,
-  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300427/Mayangi_Porene_MP3_160K_ohjy1c.mp3",
-  name: "Mayangi Porene",
-  artist: "D. Imman",
-  album: "Single",
-  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301032/Mayangi_Porene_xisw45.png",
-  lang: "tamil"
-}
+    id: 35,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300518/Ayyayo_MP3_160K_tcgc8u.mp3",
+    name: "Ayyayo",
+    artist: "G. V. Prakash Kumar",
+    album: "Aadukalam",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301037/Ayyayo_ambzo2.png",
+    category: "sad"
+  },
+  {
+    id: 36,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300515/Thodarum_Intha_Payanam_MP3_160K_v6lwiz.mp3",
+    name: "Thodarum Intha Payanam",
+    artist: "Shakthisree Gopalan",
+    album: "Netrikann",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301038/Thodarum_Intha_Payanam_umi2xs.png",
+    category: "emotion"
+  },
+  {
+    id: 37,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300512/Unakkenna_Venum_Sollu_MP3_160K_cbb1wc.mp3",
+    name: "Unakkenna Venum Sollu",
+    artist: "Anirudh Ravichander",
+    album: "Yennai Arindhaal",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301044/Unakkenna_Venum_Sollu_zgqb3n.png",
+    category: "love"
+  },
+  {
+    id: 38,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300509/Nillayo_MP3_160K_gfudu0.mp3",
+    name: "Nillayo",
+    artist: "Haricharan",
+    album: "Bairavaa",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301036/Nillayo_yblxtb.png",
+    category: "love"
+  },
+  {
+    id: 39,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300509/Venmegam_MP3_160K_dhalag.mp3",
+    name: "Venmegam",
+    artist: "Yuvan Shankar Raja",
+    album: "Yaaradi Nee Mohini",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301043/Venmegam_c0jbdu.png",
+    category: "love"
+  },
+  {
+    id: 40,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300504/Usure_Pogudhey_MP3_160K_oicuzp.mp3",
+    name: "Usure Pogudhey",
+    artist: "Karthik",
+    album: "Raavanan",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301041/Usure_Pogudhey_liob0z.png",
+    category: "sad"
+  },
+  {
+    id: 41,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300496/Sandalee_MP3_160K_c3avwv.mp3",
+    name: "Sandalee",
+    artist: "Velmurugan",
+    album: "Sema",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301041/Sandalee_wowgbu.png",
+    category: "emotion"
+  },
+  {
+    id: 42,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300491/Thodu_Vaanam_MP3_160K_xnvwsx.mp3",
+    name: "Thodu Vaanam",
+    artist: "Hariharan",
+    album: "Anegan",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301040/Thodu_Vaanam_ivzox8.png",
+    category: "love"
+  },
+  {
+    id: 43,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300482/Kangal_Edho_From__Chithha__MP3_160K_huumgn.mp3",
+    name: "Kangal Edho",
+    artist: "Pradeep Kumar",
+    album: "Chithha",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301030/Kangal_Edho_jlvevy.png",
+    category: "love"
+  },
+  {
+    id: 44,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300480/Sugar_Bomb_MP3_160K_zfe1yd.mp3",
+    name: "Sugar Bomb",
+    artist: "OfRo",
+    album: "Single",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301045/Sugar_Bomb_st4yno.png",
+    category: "emotion"
+  },
+  {
+    id: 45,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300479/Nee_Kavithaigala_MP3_160K_pcultn.mp3",
+    name: "Nee Kavithaigala",
+    artist: "Pradeep Kumar",
+    album: "Maragatha Naanayam",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301036/Nee_Kavithaigala_ea8xuu.png",
+    category: "love"
+  },
+  {
+    id: 46,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300472/Saagaa_Varam_MP3_160K_oeelgw.mp3",
+    name: "Saagaa Varam",
+    artist: "Sid Sriram",
+    album: "Single",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301035/Saagaa_Varam_k09y2v.png",
+    category: "sad"
+  },
+  {
+    id: 47,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300471/Adiyae_Azhagae_From__Oru_Naal_Koothu__MP3_160K_cl7mmh.mp3",
+    name: "Adiyae Azhagae",
+    artist: "Sean Roldan",
+    album: "Oru Naal Koothu",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301025/Adiyae_Azhagae_esetyv.png",
+    category: "love"
+  },
+  {
+    id: 48,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300465/Innum_Konjam_Neram_MP3_160K_vf33qs.mp3",
+    name: "Innum Konjam Neram",
+    artist: "A. R. Rahman",
+    album: "Maryan",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301034/Innum_Konjam_Neram_sflepd.png",
+    category: "love"
+  },
+  {
+    id: 49,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300459/Ei_Suzhali_MP3_160K_dwfsxb.mp3",
+    name: "Ei Suzhali",
+    artist: "A. R. Rahman",
+    album: "Kodi",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301030/Ei_Suzhali_okwgui.png",
+    category: "emotion"
+  },
+  {
+    id: 50,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300457/Kadhal_Aasai_MP3_160K_njdqjg.mp3",
+    name: "Kadhal Aasai",
+    artist: "Yuvan Shankar Raja",
+    album: "Anjaan",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301028/Kadhal_Aasai_qwkiyu.png",
+    category: "love"
+  },
+  {
+    id: 51,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300452/I_m_Just_Fine_MP3_160K_vzeqsv.mp3",
+    name: "I'm Just Fine",
+    artist: "Unknown",
+    album: "Single",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301029/I_m_Just_Fine_roq55t.png",
+    category: "emotion"
+  },
+  {
+    id: 52,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300446/Mundhinam_MP3_160K_jcto0r.mp3",
+    name: "Mundhinam",
+    artist: "Harris Jayaraj",
+    album: "Vaaranam Aayiram",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301037/Mundhinam_pdqkvw.png",
+    category: "love"
+  },
+  {
+    id: 53,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300432/Arakkiye_MP3_160K_sajrtx.mp3",
+    name: "Arakkiye",
+    artist: "Yuvan Shankar Raja",
+    album: "Single",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301027/Arakkiye_efkafn.png",
+    category: "love"
+  },
+  {
+    id: 54,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300427/Mayangi_Porene_MP3_160K_ohjy1c.mp3",
+    name: "Mayangi Porene",
+    artist: "D. Imman",
+    album: "Single",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301032/Mayangi_Porene_xisw45.png",
+    category: "love"
+  },
+  {
+    id: 55,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306148/Nila_MP3_160K_z1w3kw.mp3",
+    name: "Nila",
+    artist: "Unknown",
+    album: "Single",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306179/Nila_zyeajw.png",
+    category: "love"
+  },
+  {
+    id: 56,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306148/Vennilave_Vennilave_Vinnai_MP3_160K_u6rikk.mp3",
+    name: "Vennilave Vennilave",
+    artist: "A. R. Rahman",
+    album: "Minsara Kanavu",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306196/Vennilavae_vqv6zn.png",
+    category: "love"
+  },
+  {
+    id: 57,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306146/Yaanji_MP3_160K_rbkasv.mp3",
+    name: "Yaanji",
+    artist: "Anirudh Ravichander",
+    album: "Vikram Vedha",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306198/Yaanji_irr22e.png",
+    category: "love"
+  },
+  {
+    id: 58,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306143/Kadhaippoma_MP3_160K_gjjjpr.mp3",
+    name: "Kadhaippoma",
+    artist: "Sid Sriram",
+    album: "Oh My Kadavule",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306176/Kadhaippoma_uk0pja.png",
+    category: "love"
+  },
+  {
+    id: 59,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306141/Thaarame_Thaarame_MP3_160K_ikznt5.mp3",
+    name: "Thaarame Thaarame",
+    artist: "Sid Sriram",
+    album: "Kadaram Kondan",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306191/Thaarame_Thaarme_dvn8f2.png",
+    category: "love"
+  },
+  {
+    id: 60,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306136/Thuli_Thuli_MP3_160K__1_qxywxc.mp3",
+    name: "Thuli Thuli",
+    artist: "Haricharan",
+    album: "Paiyaa",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306195/Thuli_Thuli_ltive0.png",
+    category: "love"
+  },
+  {
+    id: 61,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306134/Thedi_Pogudhe_MP3_160K_le5s6d.mp3",
+    name: "Thedi Pogudhe",
+    artist: "Sean Roldan",
+    album: "Single",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306193/Thedi_Pogudhe_rrhyxr.png",
+    category: "sad"
+  },
+  {
+    id: 62,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306119/Pazhaya_Soru_MP3_160K__1_ikyluy.mp3",
+    name: "Pazhaya Soru",
+    artist: "Unknown",
+    album: "Single",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306187/Pazhaya_Soru_c8iaq1.png",
+    category: "emotion"
+  },
+  {
+    id: 63,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306117/Raati_Madras_Gig_MP3_160K_junj32.mp3",
+    name: "Raati",
+    artist: "Santhosh Narayanan",
+    album: "Madras Gig",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306189/Raati_n7mpuf.png",
+    category: "love"
+  },
+  {
+    id: 64,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306116/Ninaithu_Ninaithu_From__7G_Rainbow_Colony__MP3_160K_gzxsxx.mp3",
+    name: "Ninaithu Ninaithu",
+    artist: "K. K.",
+    album: "7G Rainbow Colony",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306180/Ninaithu_Ninaithu_h2frky.png",
+    category: "sad"
+  },
+  {
+    id: 65,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306114/Onnum_Puriyala_MP3_160K_zzq3xc.mp3",
+    name: "Onnum Puriyala",
+    artist: "D. Imman",
+    album: "Kumki",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306182/Onnum_Puriyala_bmmvoi.png",
+    category: "sad"
+  },
+  {
+    id: 66,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306106/Othaiyadi_Pathayila_MP3_160K_cnjkye.mp3",
+    name: "Othaiyadi Pathayila",
+    artist: "Anirudh Ravichander",
+    album: "Kanaa",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306185/Othaiyadi_Pathayila_qxtuux.png",
+    category: "love"
+  },
+  {
+    id: 67,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306105/Oru_Devathai_MP3_160K_sbqjbo.mp3",
+    name: "Oru Devathai",
+    artist: "Yuvan Shankar Raja",
+    album: "Vaamanan",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306184/Oru_Devathai_agrra0.png",
+    category: "love"
+  },
+  {
+    id: 68,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306092/Kanave_Kanave_MP3_160K_l5zoth.mp3",
+    name: "Kanave Kanave",
+    artist: "Anirudh Ravichander",
+    album: "David",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306177/Kanave_Kanave_u5hlcv.png",
+    category: "sad"
+  },
+  {
+    id: 69,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306084/Engeyo_Paartha_MP3_160K_v9ptbp.mp3",
+    name: "Engeyo Paartha",
+    artist: "Yuvan Shankar Raja",
+    album: "Yaaradi Nee Mohini",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306172/Engeyo_Paartha_sfiaos.png",
+    category: "love"
+  },
+  {
+    id: 70,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306083/Kaadhal_Vaithu_MP3_160K_vsz5vv.mp3",
+    name: "Kaadhal Vaithu",
+    artist: "Yuvan Shankar Raja",
+    album: "Deepavali",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306175/Kaadhal_Vaithu_ihe8fh.png",
+    category: "love"
+  },
+  {
+    id: 71,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306079/Idhayathai_Yedho_Ondru_MP3_160K_hwmdvc.mp3",
+    name: "Idhayathai Yedho Ondru",
+    artist: "Harris Jayaraj",
+    album: "Yennai Arindhaal",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301044/Unakkenna_Venum_Sollu_zgqb3n.png",
+    category: "sad"
+  },
+  {
+    id: 72,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306068/A_Life_Full_of_Love_Theme_Instrumental_MP3_160K_ngof4x.mp3",
+    name: "A Life Full of Love Theme",
+    artist: "Instrumental",
+    album: "Theme",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306172/A_Life_Full_of_Love_Theme_u0d4ia.png",
+    category: "emotion"
+  },
+  {
+    id: 73,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780306063/Kaadhal_Endral_MP3_160K_qcluc6.mp3",
+    name: "Kaadhal Endral",
+    artist: "Yuvan Shankar Raja",
+    album: "Goa",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306173/Kaadhal_Endral_n8eiwt.png",
+    category: "emotion"
+  }
 ];
