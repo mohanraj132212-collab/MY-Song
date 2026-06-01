@@ -653,6 +653,66 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
     height: 72px;
   }
 }
+/* =========================
+   MOBILE NOW PLAYING FIX
+   ========================= */
+
+@media (max-width: 768px) {
+
+  .np-content{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-height:100vh;
+  }
+
+  .np-topbar{
+    margin-bottom:12px;
+  }
+
+  .np-art{
+    width:min(320px,78vw);
+    height:min(320px,78vw);
+
+    /* Center Image */
+    margin:0 auto 24px auto !important;
+
+    flex-shrink:0;
+  }
+
+  .np-meta-row{
+    margin-bottom:14px;
+  }
+
+  .np-progress{
+    margin-bottom:18px;
+  }
+
+  .np-controls{
+    margin-bottom:18px;
+  }
+
+}
+
+/* Extra Small Phones */
+@media (max-width: 480px){
+
+  .np-content{
+    justify-content:center;
+    padding-top:20px;
+    padding-bottom:20px;
+  }
+
+  .np-art{
+    width:300px;
+    height:300px;
+    max-width:78vw;
+    max-height:78vw;
+
+    margin:0 auto 20px auto !important;
+  }
+
+}
 
 
 /* ── CONTEXT SHEET ── */
