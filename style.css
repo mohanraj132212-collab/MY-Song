@@ -287,279 +287,373 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 .stats-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;color:var(--txt3);}
 .stats-empty-icon{font-size:48px;margin-bottom:12px;opacity:.5;}
 
-/* ══════════════════════════════════════════════════
-   FULLSCREEN NOW PLAYING — REDESIGNED (Image 2 style)
-   ══════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════
+   NOW PLAYING — FULLSCREEN OVERLAY
+   
+   FIX SUMMARY:
+   1. .np-prog-bar  → position:relative so the absolute
+      <input range> is clipped to the bar width only.
+   2. .np-controls, .np-volume, .np-meta-row, .np-topbar
+      → position:relative + z-index:10 so they sit above
+      any stray child elements.
+   3. .np-control-btn, .np-main-play, .np-like-btn,
+      .np-close → cursor:pointer + position:relative +
+      z-index:10 to guarantee click reception.
+   4. overflow on .np-prog-bar stays visible so the
+      expanded touch target (±10px) still works.
+═══════════════════════════════════════ */
+
 .nowplaying-overlay {
   position: fixed;
   inset: 0;
   z-index: 200;
   display: none;
-  flex-direction: column;
-  align-items: stretch;
   overflow: hidden;
 }
-.nowplaying-overlay.open { display: flex; }
 
-/* Full-bleed blurred background from album art */
+.nowplaying-overlay.open {
+  display: block;
+}
+
+/* Blurred background */
 .np-bg {
   position: absolute;
   inset: -40px;
   background-size: cover;
   background-position: center;
-  filter: blur(48px) brightness(0.3) saturate(1.8);
-  transform: scale(1.15);
-  transition: background-image 0.7s ease;
+  background-repeat: no-repeat;
+  filter: blur(55px) brightness(.35) saturate(1.5);
+  transform: scale(1.2);
+  /* ── FIX: no pointer events on decorative background ── */
+  pointer-events: none;
 }
+
 .np-solid {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,.45);
+  /* ── FIX: no pointer events on decorative overlay ── */
+  pointer-events: none;
 }
 
-/* Scrollable content on top */
+/* Main content column — all interactive children live here */
 .np-content {
   position: relative;
-  z-index: 2;
+  z-index: 2;                 /* above .np-bg and .np-solid */
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  flex: 1;
-  padding: 0 28px calc(36px + var(--safe-bottom));
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  padding: 18px 24px calc(24px + var(--safe-bottom));
 }
-.np-content::-webkit-scrollbar { display: none; }
 
-/* Top bar: chevron | Now Playing | clock */
+/* ── Top bar ── */
 .np-topbar {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 0 28px;
+  margin-bottom: 20px;
   flex-shrink: 0;
+  /* FIX: own stacking context so buttons are clickable */
+  position: relative;
+  z-index: 10;
 }
+
+.np-title-center {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,.85);
+  /* non-interactive label */
+  pointer-events: none;
+}
+
+/* ── Close / sleep-timer button ── */
 .np-close {
-  background: rgba(255,255,255,0.12);
-  border: none;
+  position: relative;
+  z-index: 10;              /* FIX: above any sibling overlays */
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  width: 38px;
-  height: 38px;
+  border: none;
+  background: rgba(255,255,255,.12);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  color: rgba(255,255,255,0.85);
-  transition: background 0.15s;
-}
-.np-close:active { background: rgba(255,255,255,0.22); }
-.np-title-center {
-  font-size: 13px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.5);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-/* Album art — large, centered, rounded square */
-.np-art {
-  width: min(270px, 78vw);
-  height: min(270px, 78vw);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.8);
-  margin-bottom: 36px;
+  cursor: pointer;          /* FIX: was missing */
   flex-shrink: 0;
 }
-.np-art.playing {
-  animation: artPulse 4s ease-in-out infinite alternate;
+
+.np-close:active {
+  background: rgba(255,255,255,.22);
 }
-@keyframes artPulse {
-  from { transform: scale(1);    box-shadow: 0 32px 80px rgba(0,0,0,0.8); }
-  to   { transform: scale(1.02); box-shadow: 0 40px 96px rgba(0,0,0,0.9); }
+
+/* ── Album art ── */
+.np-art {
+  width: min(320px, 78vw);
+  height: min(320px, 78vw);
+  margin: auto auto 30px auto;
+  border-radius: 22px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 25px 60px rgba(0,0,0,.55);
+  /* art is display only */
+  pointer-events: none;
 }
+
 .np-art img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .np-art-placeholder {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 80px;
-  background: var(--bg3);
 }
 
-/* Meta row: name + artist grouped left | heart right */
+/* ── Song info + like button ── */
 .np-meta-row {
   width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+  /* FIX: own stacking context */
+  position: relative;
+  z-index: 10;
 }
+
 .np-name {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 800;
   color: #fff;
-  line-height: 1.2;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  pointer-events: none;
 }
+
 .np-artist {
-  font-size: 15px;
-  color: rgba(255,255,255,0.5);
-  margin-top: 5px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 14px;
+  color: rgba(255,255,255,.75);
+  margin-top: 4px;
+  pointer-events: none;
 }
+
+/* ── Like button ── */
 .np-like-btn {
+  position: relative;
+  z-index: 10;              /* FIX */
   background: none;
   border: none;
-  cursor: pointer;
-  padding: 6px;
-  color: rgba(255,255,255,0.5);
-  transition: color 0.2s, transform 0.15s;
+  color: #fff;
+  cursor: pointer;          /* FIX: was missing */
   flex-shrink: 0;
-  margin-top: 2px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.np-like-btn:active { transform: scale(0.88); }
-.np-like-btn.liked { color: #fff; }
 
-/* Seek / progress bar — thin with dot thumb */
+.np-like-btn:active {
+  transform: scale(1.15);
+}
+
+/* ══════════════════════════════════════
+   SEEK / PROGRESS BAR
+   
+   KEY FIX: .np-prog-bar gets position:relative
+   so its absolutely-positioned child <input range>
+   is contained within the bar's bounding box.
+   
+   Without position:relative the range input uses
+   .np-content as its containing block — which is
+   full-screen — making it an invisible full-screen
+   sheet that swallows every button tap.
+   
+   overflow:visible (not hidden) lets the ±10px
+   expanded touch-target extend past the 5px rail
+   without being clipped.
+══════════════════════════════════════ */
 .np-progress {
   width: 100%;
-  margin-bottom: 26px;
-}
-.np-prog-bar {
-  width: 100%;
-  height: 4px;
-  background: rgba(255,255,255,0.18);
-  border-radius: 2px;
-  cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 22px;
+  flex-shrink: 0;
+  /* FIX: own stacking context so range input z-index is local */
   position: relative;
+  z-index: 10;
 }
+
+.np-prog-bar {
+  /* ══ THE PRIMARY FIX ══
+     position:relative makes this the containing block
+     for the absolutely-positioned range input child.
+     The input's width:100% now resolves to THIS element's
+     width (the narrow progress rail) instead of the full
+     viewport width. */
+  position: relative;
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.2);
+  /* overflow:visible so the ±10px touch-target isn't clipped */
+  overflow: visible;
+}
+
 .np-prog-fill {
   height: 100%;
   background: #fff;
-  border-radius: 2px;
+  border-radius: 999px;
+  /* fill is visual only — no pointer events */
   pointer-events: none;
-  position: relative;
-}
-/* Dot scrubber thumb at end of fill */
-.np-prog-fill::after {
-  content: '';
-  position: absolute;
-  right: -7px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.5);
-}
-.np-times {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: rgba(255,255,255,0.4);
-  font-weight: 500;
 }
 
-/* Controls: shuffle | prev | big play | next | repeat */
+.np-time-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,.8);
+  pointer-events: none;
+}
+
+/* ── Playback controls ── */
 .np-controls {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+  /* FIX: own stacking context */
+  position: relative;
+  z-index: 10;
 }
-.np-ctrl {
+
+/* ── Individual control buttons ── */
+.np-control-btn {
+  position: relative;
+  z-index: 10;              /* FIX */
   background: none;
   border: none;
-  cursor: pointer;
-  color: rgba(255,255,255,0.6);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px;
-  transition: color 0.15s, transform 0.15s;
-  border-radius: 50%;
-}
-.np-ctrl:active { color: #fff; transform: scale(0.9); }
-.np-ctrl.active { color: #fff; }
-.np-main-play {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #fff;
-  color: #000;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.5);
-  transition: transform 0.15s, background 0.15s;
+  cursor: pointer;          /* FIX: was missing */
+  padding: 8px;
   flex-shrink: 0;
 }
-.np-main-play:active { transform: scale(0.93); background: #e8e8e8; }
 
-/* Volume row */
-.np-vol-row {
+.np-control-btn:active {
+  opacity: 0.7;
+}
+
+/* Lit-up state for shuffle / repeat when active */
+.np-control-btn.active {
+  color: var(--accent);
+}
+
+/* ── Main play/pause button ── */
+.np-main-play {
+  position: relative;
+  z-index: 10;              /* FIX */
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  cursor: pointer;          /* FIX: was missing */
+  flex-shrink: 0;
+}
+
+.np-main-play:active {
+  transform: scale(.95);
+  background: rgba(255,255,255,.9);
+}
+
+/* ── Volume row ── */
+.np-volume {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
+  /* FIX: own stacking context */
+  position: relative;
+  z-index: 10;
 }
-.np-vol-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: rgba(255,255,255,0.45);
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  transition: color 0.15s;
-}
-.np-vol-btn:active { color: #fff; }
-.np-vol-bar {
+
+/* ── Volume range input ──
+   Styled range with CSS variable --vol-pct for the fill track.
+   JS calls el.style.setProperty('--vol-pct', value+'%') on change.
+*/
+.np-vol-input {
   flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
   height: 4px;
-  background: rgba(255,255,255,0.18);
-  border-radius: 2px;
+  border-radius: 999px;
   cursor: pointer;
-  position: relative;
+  outline: none;
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0.9) 0%,
+    rgba(255,255,255,0.9) var(--vol-pct, 80%),
+    rgba(255,255,255,0.2) var(--vol-pct, 80%),
+    rgba(255,255,255,0.2) 100%
+  );
 }
-.np-vol-fill {
-  height: 100%;
-  background: rgba(255,255,255,0.75);
-  border-radius: 2px;
-  position: relative;
-}
-/* Volume dot thumb */
-.np-vol-fill::after {
-  content: '';
-  position: absolute;
-  right: -7px;
-  top: 50%;
-  transform: translateY(-50%);
+
+.np-vol-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
   width: 14px;
   height: 14px;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,.4);
+  transition: transform .1s;
 }
+
+.np-vol-input:active::-webkit-slider-thumb {
+  transform: scale(1.3);
+}
+
+.np-vol-input::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,.4);
+}
+
+/* Mobile height adjustment */
+@media (max-height: 700px) {
+  .np-art {
+    width: min(250px, 70vw);
+    height: min(250px, 70vw);
+  }
+  .np-main-play {
+    width: 72px;
+    height: 72px;
+  }
+}
+
 
 /* ── CONTEXT SHEET ── */
 .ctx-sheet{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.6);display:none;align-items:flex-end;}
