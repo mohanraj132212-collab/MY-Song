@@ -363,16 +363,21 @@
     <div class="stats-scroll" id="statsScroll"></div>
   </div>
 
-  <!-- FULLSCREEN NOW PLAYING — REDESIGNED -->
+  <!-- ═══════════════════════════════════════════
+       FULLSCREEN NOW PLAYING
+       FIX: np-progress uses position:relative so the
+       absolutely-positioned range input is contained
+       within the progress bar only, not the full screen.
+  ════════════════════════════════════════════ -->
   <div class="nowplaying-overlay" id="nowplayingOverlay">
     <div class="np-bg" id="npBg"></div>
     <div class="np-solid"></div>
     <div class="np-content">
 
-      <!-- Top bar: chevron-down | Now Playing | clock -->
+      <!-- Top bar -->
       <div class="np-topbar">
         <button class="np-close" onclick="closeNowPlaying()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
         </button>
         <div class="np-title-center">Now Playing</div>
         <button class="np-close" onclick="openSleepModal()" style="background:rgba(255,255,255,.08)">
@@ -380,13 +385,13 @@
         </button>
       </div>
 
-      <!-- Album art — large, centered -->
+      <!-- Album art -->
       <div class="np-art" id="npArt">
         <div class="np-art-placeholder" id="npArtPlaceholder">🎵</div>
         <img id="npArtImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover">
       </div>
 
-      <!-- Meta row: name + artist left | heart right -->
+      <!-- Song info + like -->
       <div class="np-meta-row">
         <div style="flex:1;min-width:0">
           <div class="np-name" id="npName">—</div>
@@ -397,49 +402,118 @@
         </button>
       </div>
 
-      <!-- Seek bar with dot thumb -->
+      <!-- ══════════════════════════════════════
+           SEEK BAR — FIX APPLIED HERE
+           
+           The <input range> is position:absolute inside
+           .np-prog-bar which is position:relative.
+           This CONTAINS the input to the bar's dimensions.
+           
+           Key fix: use left:0; top:-10px (NOT inset:-10px 0)
+           "inset" sets all 4 sides — right:0 + width:100%
+           caused the input to span the full viewport width,
+           making it an invisible screen-wide overlay that
+           swallowed every button tap below it.
+      ══════════════════════════════════════ -->
       <div class="np-progress">
         <div class="np-prog-bar" id="npProgBar">
           <div class="np-prog-fill" id="npProgFill" style="width:0%"></div>
+          <input
+            type="range"
+            id="npProgInput"
+            min="0" max="100" value="0"
+            step="0.1"
+            style="
+              position:absolute;
+              left:0;
+              top:-10px;
+              width:100%;
+              height:calc(100% + 20px);
+              opacity:0;
+              cursor:pointer;
+              margin:0;
+              z-index:3;
+            "
+            oninput="seekFromInput(this.value)"
+          >
         </div>
-        <div class="np-times">
+        <div class="np-time-row">
           <span id="npCurTime">0:00</span>
           <span id="npTotTime">0:00</span>
         </div>
       </div>
 
-      <!-- Controls: shuffle | prev | play/pause | next | repeat -->
+      <!-- PLAYBACK CONTROLS -->
       <div class="np-controls">
-        <button class="np-ctrl" id="npShuffleBtn" onclick="toggleShuffle()">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+
+        <!-- Shuffle -->
+        <button class="np-control-btn" id="npShuffleBtn" onclick="toggleShuffle()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 3 21 3 21 8"/>
+            <line x1="4" y1="20" x2="21" y2="3"/>
+            <polyline points="21 16 21 21 16 21"/>
+            <line x1="15" y1="15" x2="21" y2="21"/>
+          </svg>
         </button>
-        <button class="np-ctrl" onclick="prevTrack()">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+
+        <!-- Previous -->
+        <button class="np-control-btn" onclick="prevTrack()">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
+          </svg>
         </button>
+
+        <!-- Play / Pause -->
         <button class="np-main-play" id="npMainPlayBtn" onclick="togglePlay()">
-          <svg id="npMainPlaySvg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <svg id="npMainPlaySvg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
         </button>
-        <button class="np-ctrl" onclick="nextTrack()">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+
+        <!-- Next -->
+        <button class="np-control-btn" onclick="nextTrack()">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+          </svg>
         </button>
-        <button class="np-ctrl" id="npRepeatBtn" onclick="toggleRepeat()">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+
+        <!-- Repeat -->
+        <button class="np-control-btn" id="npRepeatBtn" onclick="toggleRepeat()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="17 1 21 5 17 9"/>
+            <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+            <polyline points="7 23 3 19 7 15"/>
+            <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+          </svg>
         </button>
+
       </div>
 
-      <!-- Volume row -->
-      <div class="np-vol-row">
-        <button class="np-vol-btn" id="npMuteBtn" onclick="toggleMute()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      <!-- VOLUME ROW -->
+      <div class="np-volume">
+        <button class="np-control-btn" id="npMuteBtn" onclick="toggleMute()" style="opacity:0.6">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          </svg>
         </button>
-        <div class="np-vol-bar" onclick="setVolume(event)">
-          <div class="np-vol-fill" id="npVolFill" style="width:80%"></div>
-        </div>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+
+        <input
+          type="range"
+          class="np-vol-input"
+          id="npVolInput"
+          min="0" max="100" value="80"
+          oninput="setVolumeFromInput(this.value)"
+        >
+
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
       </div>
 
-    </div>
-  </div>
+    </div><!-- /.np-content -->
+  </div><!-- /.nowplaying-overlay -->
 
   <!-- IMAGE CROP MODAL -->
   <div class="crop-modal-overlay" id="cropModalOverlay">
