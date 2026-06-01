@@ -304,5 +304,185 @@ export const tracks = [
     album: "VELS",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780210575/Kannamma_En_Kannamma_snvwc0.png",
     lang: "tamil"
-  }
+  },
+  {
+  id: 35,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300518/Ayyayo_MP3_160K_tcgc8u.mp3",
+  name: "Ayyayo",
+  artist: "G. V. Prakash Kumar",
+  album: "Aadukalam",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301037/Ayyayo_ambzo2.png",
+  lang: "tamil"
+},
+{
+  id: 36,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300515/Thodarum_Intha_Payanam_MP3_160K_v6lwiz.mp3",
+  name: "Thodarum Intha Payanam",
+  artist: "Shakthisree Gopalan",
+  album: "Netrikann",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301038/Thodarum_Intha_Payanam_umi2xs.png",
+  lang: "tamil"
+},
+{
+  id: 37,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300512/Unakkenna_Venum_Sollu_MP3_160K_cbb1wc.mp3",
+  name: "Unakkenna Venum Sollu",
+  artist: "Anirudh Ravichander",
+  album: "Yennai Arindhaal",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301044/Unakkenna_Venum_Sollu_zgqb3n.png",
+  lang: "tamil"
+},
+{
+  id: 38,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300509/Nillayo_MP3_160K_gfudu0.mp3",
+  name: "Nillayo",
+  artist: "Haricharan",
+  album: "Bairavaa",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301036/Nillayo_yblxtb.png",
+  lang: "tamil"
+},
+{
+  id: 39,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300509/Venmegam_MP3_160K_dhalag.mp3",
+  name: "Venmegam",
+  artist: "Yuvan Shankar Raja",
+  album: "Yaaradi Nee Mohini",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301043/Venmegam_c0jbdu.png",
+  lang: "tamil"
+},
+{
+  id: 40,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300504/Usure_Pogudhey_MP3_160K_oicuzp.mp3",
+  name: "Usure Pogudhey",
+  artist: "Karthik",
+  album: "Raavanan",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301041/Usure_Pogudhey_liob0z.png",
+  lang: "tamil"
+},
+{
+  id: 41,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300496/Sandalee_MP3_160K_c3avwv.mp3",
+  name: "Sandalee",
+  artist: "Velmurugan",
+  album: "Sema",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301041/Sandalee_wowgbu.png",
+  lang: "tamil"
+},
+{
+  id: 42,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300491/Thodu_Vaanam_MP3_160K_xnvwsx.mp3",
+  name: "Thodu Vaanam",
+  artist: "Hariharan",
+  album: "Anegan",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301040/Thodu_Vaanam_ivzox8.png",
+  lang: "tamil"
+},
+{
+  id: 43,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300482/Kangal_Edho_From__Chithha__MP3_160K_huumgn.mp3",
+  name: "Kangal Edho",
+  artist: "Pradeep Kumar",
+  album: "Chithha",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301030/Kangal_Edho_jlvevy.png",
+  lang: "tamil"
+},
+{
+  id: 44,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300480/Sugar_Bomb_MP3_160K_zfe1yd.mp3",
+  name: "Sugar Bomb",
+  artist: "OfRo",
+  album: "Single",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301045/Sugar_Bomb_st4yno.png",
+  lang: "tamil"
+},
+{
+  id: 45,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300479/Nee_Kavithaigala_MP3_160K_pcultn.mp3",
+  name: "Nee Kavithaigala",
+  artist: "Pradeep Kumar",
+  album: "Maragatha Naanayam",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301036/Nee_Kavithaigala_ea8xuu.png",
+  lang: "tamil"
+},
+{
+  id: 46,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300472/Saagaa_Varam_MP3_160K_oeelgw.mp3",
+  name: "Saagaa Varam",
+  artist: "Sid Sriram",
+  album: "Single",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301035/Saagaa_Varam_k09y2v.png",
+  lang: "tamil"
+},
+{
+  id: 47,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300471/Adiyae_Azhagae_From__Oru_Naal_Koothu__MP3_160K_cl7mmh.mp3",
+  name: "Adiyae Azhagae",
+  artist: "Sean Roldan",
+  album: "Oru Naal Koothu",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301025/Adiyae_Azhagae_esetyv.png",
+  lang: "tamil"
+},
+{
+  id: 48,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300465/Innum_Konjam_Neram_MP3_160K_vf33qs.mp3",
+  name: "Innum Konjam Neram",
+  artist: "A. R. Rahman",
+  album: "Maryan",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301034/Innum_Konjam_Neram_sflepd.png",
+  lang: "tamil"
+},
+{
+  id: 49,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300459/Ei_Suzhali_MP3_160K_dwfsxb.mp3",
+  name: "Ei Suzhali",
+  artist: "A. R. Rahman",
+  album: "Kodi",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301030/Ei_Suzhali_okwgui.png",
+  lang: "tamil"
+},
+{
+  id: 50,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300457/Kadhal_Aasai_MP3_160K_njdqjg.mp3",
+  name: "Kadhal Aasai",
+  artist: "Yuvan Shankar Raja",
+  album: "Anjaan",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301028/Kadhal_Aasai_qwkiyu.png",
+  lang: "tamil"
+},
+{
+  id: 51,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300452/I_m_Just_Fine_MP3_160K_vzeqsv.mp3",
+  name: "I'm Just Fine",
+  artist: "Unknown",
+  album: "Single",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301029/I_m_Just_Fine_roq55t.png",
+  lang: "english"
+},
+{
+  id: 52,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300446/Mundhinam_MP3_160K_jcto0r.mp3",
+  name: "Mundhinam",
+  artist: "Harris Jayaraj",
+  album: "Vaaranam Aayiram",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301037/Mundhinam_pdqkvw.png",
+  lang: "tamil"
+},
+{
+  id: 53,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300432/Arakkiye_MP3_160K_sajrtx.mp3",
+  name: "Arakkiye",
+  artist: "Yuvan Shankar Raja",
+  album: "Single",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301027/Arakkiye_efkafn.png",
+  lang: "tamil"
+},
+{
+  id: 54,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780300427/Mayangi_Porene_MP3_160K_ohjy1c.mp3",
+  name: "Mayangi Porene",
+  artist: "D. Imman",
+  album: "Single",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301032/Mayangi_Porene_xisw45.png",
+  lang: "tamil"
+}
 ];
