@@ -338,8 +338,19 @@ function fmtTime(s){if(!s||isNaN(s))return'0:00';return`${Math.floor(s/60)}:${Ma
 function fmtTimeVerbose(secs){if(!secs||secs<60)return`${Math.round(secs||0)}s`;const h=Math.floor(secs/3600),m=Math.floor((secs%3600)/60);if(h>0)return`${h}h ${m}m`;return`${m}m`;}
 
 window.doSearch=(q)=>{const query=q.trim().toLowerCase();const empty=document.getElementById('searchEmpty'),results=document.getElementById('searchResults');if(!query){empty.style.display='flex';results.innerHTML='';return;}empty.style.display='none';results.innerHTML='';const found=tracks.filter(t=>t.name.toLowerCase().includes(query)||t.artist.toLowerCase().includes(query)||t.album.toLowerCase().includes(query));if(!found.length){results.innerHTML=`<div style="padding:24px;text-align:center;color:var(--txt3);font-size:14px">No results for "${q}"</div>`;return;}found.forEach((t,i)=>renderTrackRow(t,i,tracks.indexOf(t),results));};
-window.filterTracks=(type,el)=>{if(el){document.querySelectorAll('#homeFilter .filter-chip').forEach(b=>b.classList.remove('active'));el.classList.add('active');}currentFilter=type;if(type==='all')filteredTracks=[...tracks];else if(type==='tamil')filteredTracks=tracks.filter(t=>t.lang==='tamil');else if(type==='english')filteredTracks=tracks.filter(t=>t.lang==='english');else if(type==='liked')filteredTracks=tracks.filter(t=>likedSet.has(t.id));const titles={all:'All Tracks',tamil:'Tamil Hits',english:'English Vibes',liked:'Liked Songs'};document.getElementById('sectionLabel').textContent=titles[type]||'All Tracks';renderTracks(filteredTracks);};
-
+window.filterTracks=(type,el)=>{
+  if(el){document.querySelectorAll('#homeFilter .filter-chip').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
+  currentFilter=type;
+  if(type==='all')filteredTracks=[...tracks];
+  else if(type==='love')filteredTracks=tracks.filter(t=>t.category==='love');
+  else if(type==='sad')filteredTracks=tracks.filter(t=>t.category==='sad');
+  else if(type==='motivation')filteredTracks=tracks.filter(t=>t.category==='motivation');
+  else if(type==='emotion')filteredTracks=tracks.filter(t=>t.category==='emotion');
+  else if(type==='liked')filteredTracks=tracks.filter(t=>likedSet.has(t.id));
+  const titles={all:'All Tracks',love:'Love Songs',sad:'Sad Songs',motivation:'Motivation',emotion:'Emotion',liked:'Liked Songs'};
+  document.getElementById('sectionLabel').textContent=titles[type]||'All Tracks';
+  renderTracks(filteredTracks);
+};
 window.openCtxSheet=(e,idx)=>{e.stopPropagation();ctxTrackIdx=idx;const t=tracks[idx];document.getElementById('ctxTrackName').textContent=t.name;document.getElementById('ctxTrackArtist').textContent=t.artist;document.getElementById('ctxTrackArt').src=t.cover||'';document.getElementById('ctxLikeLabel').textContent=likedSet.has(t.id)?'Unlike Song':'Like Song';document.getElementById('ctxSheet').classList.add('open');};
 window.closeCtxSheet=()=>document.getElementById('ctxSheet').classList.remove('open');
 window.ctxAddToQueue=()=>{if(ctxTrackIdx<0)return;queue.push(ctxTrackIdx);renderQueueState();showToast(`"${tracks[ctxTrackIdx].name}" added to queue`);};
