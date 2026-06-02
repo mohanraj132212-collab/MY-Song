@@ -212,7 +212,7 @@ export const tracks = [
     name: "Kannaana Kanna Madhava",
     artist: "Unknown",
     album: "Single",
-    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045348/Kannaana_Kanna_Madhava_auesbk.png",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780390510/Kannaana_Kanne_rsuxhq.png",
     category: "love"
   },
   {
