@@ -655,5 +655,509 @@ export const tracks = [
     album: "Goa",
     cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306173/Kaadhal_Endral_n8eiwt.png",
     category: "emotion"
+  },
+  {
+    "id": 74,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379446/Uyire_Uyire_MP3_160K_axmesd.mp3",
+    "name": "Uyire Uyire",
+    "artist": "A. R. Rahman",
+    "album": "Bombay",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382009/Uyire_Uyire_lpewoc.png",
+    "category": "love"
+  },
+  {
+    "id": 75,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379443/Marandaaye_Unplugged_Version_MP3_160K_pe5nx8.mp3",
+    "name": "Marandaaye",
+    "artist": "Unknown",
+    "album": "Unplugged",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382003/Nanbiye_abwi0t.png",
+    "category": "sad"
+  },
+  {
+    "id": 76,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379442/Neerparavai_-_Para_Para_Video___N.R._Raghunanthan_MP3_160K_lhodli.mp3",
+    "name": "Para Para",
+    "artist": "N. R. Raghunanthan",
+    "album": "Neerparavai",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382004/Para_Para_xcl1bn.png",
+    "category": "motivation"
+  },
+  {
+    "id": 77,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379438/Yaar_Indha_Saalai_Oram_MP3_160K_fud1yh.mp3",
+    "name": "Yaar Indha Saalai Oram",
+    "artist": "G. V. Prakash Kumar",
+    "album": "Thalaivaa",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382012/Yaar_Indha_Saalai_Oram_w2ohof.png",
+    "category": "sad"
+  },
+  {
+    "id": 78,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379430/Yedhedho_Pennae_MP3_160K_iqjpid.mp3",
+    "name": "Yedhedho Pennae",
+    "artist": "G. V. Prakash Kumar",
+    "album": "Meendum Oru Kadhal Kadhai",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382014/Yedhedho_Pennae_v0jhin.png",
+    "category": "love"
+  },
+  {
+    "id": 79,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780385873/Anbenum_From__Leo___spotdown.org_zqn9j3.mp3",
+    "name": "Anbenum",
+    "artist": "Anirudh Ravichander",
+    "album": "Leo",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780386050/Anbenum_muvabi.jpg",
+    "category": "love"
+  },
+  {
+    "id": 80,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379421/Yaaro_Yaaro_MP3_160K_fipfap.mp3",
+    "name": "Yaaro Yaaro",
+    "artist": "Unknown",
+    "album": "Single",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382013/Yaaro_Yaaro_ygbn7r.png",
+    "category": "emotion"
+  },
+  {
+    "id": 81,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379409/Virumaandi_Movie_Songs___Onnavida_indha_song___Kamal_Haasan___Abhirami___Nassar_MP3_160K_dhd8i4.mp3",
+    "name": "Unna Vida",
+    "artist": "Ilaiyaraaja",
+    "album": "Virumaandi",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382011/Unna_Vida_pfpr3h.png",
+    "category": "love"
+  },
+  {
+    "id": 82,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379398/Oliyile_Therivadhu_Devadhaya_4k_Video_Song_Azhagi___Ilaiyaraaja___Parthiban___Nandita_Das_MP3_160K_uxs03u.mp3",
+    "name": "Oliyile Therivadhu Devadhaya",
+    "artist": "Ilaiyaraaja",
+    "album": "Azhagi",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382003/Oliyile_Therivadhu_gt9gd5.png",
+    "category": "sad"
+  },
+  {
+    "id": 83,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379397/VADACHENNAI_-_Kaarkuzhal_Kadavaiye_Lyric_Video___Dhanush___Vetri_Maaran___Santhosh_Narayanan_MP3_160K_dcv144.mp3",
+    "name": "Kaarkuzhal Kadavaiye",
+    "artist": "Santhosh Narayanan",
+    "album": "Vadachennai",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381980/Kan_Pesum_Varthaigal_m2emcv.png",
+    "category": "motivation"
+  },
+  {
+    "id": 84,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379387/Oru_Naalaikkul_MP3_160K_e9lrua.mp3",
+    "name": "Oru Naalaikkul",
+    "artist": "Yuvan Shankar Raja",
+    "album": "Yaaradi Nee Mohini",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306172/Engeyo_Paartha_sfiaos.png",
+    "category": "love"
+  },
+  {
+    "id": 85,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379386/VADACHENNAI_-_Ennadi_Maayavi_Nee_Redux_Video_Song___Dhanush___Vetri_Maaran___Santhosh_Narayanan_MP3_160K_l2704e.mp3",
+    "name": "Ennadi Maayavi Nee",
+    "artist": "Santhosh Narayanan",
+    "album": "Vadachennai",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381980/Kan_Pesum_Varthaigal_m2emcv.png",
+    "category": "emotion"
+  },
+  {
+    "id": 86,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379376/Vaartha_Onnu_-_Video_Song___Thaamirabharani___Vishal___Muktha___Sun_Music_MP3_160K_tzfbig.mp3",
+    "name": "Vaartha Onnu",
+    "artist": "Yuvan Shankar Raja",
+    "album": "Thaamirabharani",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382010/Vaartha_Onnu_cprnbe.jpg",
+    "category": "emotion"
+  },
+  {
+    "id": 87,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379365/Thangameenkal_-_Aanandha_Yaazhai_Video___Ram___Yuvanshankar_Raja_MP3_160K_a9drx7.mp3",
+    "name": "Aanandha Yaazhai",
+    "artist": "Yuvan Shankar Raja",
+    "album": "Thangameenkal",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381961/Aanandha_Yaazhai_rhkn6s.png",
+    "category": "emotion"
+  },
+  {
+    "id": 88,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379359/Elangathu_From__Pithamagan__MP3_160K_zloxco.mp3",
+    "name": "Elangathu",
+    "artist": "Ilaiyaraaja",
+    "album": "Pithamagan",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381971/Elangathu_Duet_qtvivc.png",
+    "category": "emotion"
+  },
+  {
+    "id": 89,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379359/Sollitaley_Ava_Kaadhala_MP3_160K_qw85ho.mp3",
+    "name": "Sollitaley Ava Kaadhala",
+    "artist": "D. Imman",
+    "album": "Kumki",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306182/Onnum_Puriyala_bmmvoi.png",
+    "category": "sad"
+  },
+  {
+    "id": 90,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379349/Pirai_Thedum_MP3_160K_bfyk8n.mp3",
+    "name": "Pirai Thedum",
+    "artist": "G. V. Prakash Kumar",
+    "album": "Mayakkam Enna",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382015/Naan_Sonnadhum_Mazhai_zpld0h.png",
+    "category": "sad"
+  },
+  {
+    "id": 91,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379339/Partha_Mudhal_-_4K_Video_Song___Vettaiyaadu_Vilaiyaadu___Kamal_Hassan_Harris_Jayaraj_MP3_160K_ncqmhf.mp3",
+    "name": "Paartha Mudhal",
+    "artist": "Harris Jayaraj",
+    "album": "Vettaiyaadu Vilaiyaadu",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382002/Paartha_Mudhal_kbxmsu.png",
+    "category": "love"
+  },
+  {
+    "id": 92,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379329/Oru_Manam_From__Dhruva_Natchathiram__MP3_160K_jtkdnc.mp3",
+    "name": "Oru Manam",
+    "artist": "Harris Jayaraj",
+    "album": "Dhruva Natchathiram",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381998/Oru_Manam_ef6maa.png",
+    "category": "love"
+  },
+  {
+    "id": 93,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379324/Enna_Solla_Pogirai_Official_Video_Song___Kandukondain_Kandukondain___Ajith_Kumar___AR_Rahman___Tabu_MP3_160K_kjttgv.mp3",
+    "name": "Enna Solla Pogirai",
+    "artist": "A. R. Rahman",
+    "album": "Kandukondain Kandukondain",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381968/Enna_Solla_Pogirai_cre1n9.jpg",
+    "category": "love"
+  },
+  {
+    "id": 94,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379317/Official__Poo_Avizhum_Pozhudhil_Full_Song_with_Lyrics___Enakkul_Oruvan___Siddharth__Deepa_Sannidhi_MP3_160K_ymsfjg.mp3",
+    "name": "Poo Avizhum Pozhudhil",
+    "artist": "Santhosh Narayanan",
+    "album": "Enakkul Oruvan",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382011/Poo_Avizhum_Pozhudhil_lvkgla.png",
+    "category": "emotion"
+  },
+  {
+    "id": 95,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379316/Konjam_-1_MP3_160K_tiuram.mp3",
+    "name": "Konjam",
+    "artist": "Unknown",
+    "album": "Single",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381977/Konjam_-_1_lfy0ux.png",
+    "category": "love"
+  },
+  {
+    "id": 96,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379309/Nenjukulle_Nee_From__Vadacurry__MP3_160K_yqltab.mp3",
+    "name": "Nenjukulle Nee",
+    "artist": "Vivek-Mervin",
+    "album": "Vadacurry",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381995/Nenjukulla_Nee_gy29mv.png",
+    "category": "love"
+  },
+  {
+    "id": 97,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379299/Neethaane_En_Ponvasantham_-_Vaanam_Mella_Tamil_Lyric___Jiiva__Samantha___Ilaiyaraaja_MP3_160K_uhbmen.mp3",
+    "name": "Vaanam Mella",
+    "artist": "Ilaiyaraaja",
+    "album": "Neethaane En Ponvasantham",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382010/Vaanam_Mella_srkrfa.jpg",
+    "category": "love"
+  },
+  {
+    "id": 98,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379284/Nee_Yeppo_Pulla_MP3_160K_zck6tr.mp3",
+    "name": "Nee Yeppo Pulla",
+    "artist": "D. Imman",
+    "album": "Kumki",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306182/Onnum_Puriyala_bmmvoi.png",
+    "category": "love"
+  },
+  {
+    "id": 99,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379283/Naan_Sonnadhum_Mazhaivandhucha_MP3_160K_ubsxsg.mp3",
+    "name": "Naan Sonnadhum Mazhai Vandhucha",
+    "artist": "D. Imman",
+    "album": "Kumki",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382015/Naan_Sonnadhum_Mazhai_zpld0h.png",
+    "category": "emotion"
+  },
+  {
+    "id": 100,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379277/Nee_Paartha_Vizhigal_The_Touch_of_Love_MP3_160K_qkxssv.mp3",
+    "name": "Nee Paartha Vizhigal",
+    "artist": "Anirudh Ravichander",
+    "album": "3",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780306172/A_Life_Full_of_Love_Theme_u0d4ia.png",
+    "category": "love"
+  },
+  {
+    "id": 101,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379270/Nanbiye_Unplugged_Version_MP3_160K_l3sznc.mp3",
+    "name": "Nanbiye",
+    "artist": "Anirudh Ravichander",
+    "album": "Unplugged",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382003/Nanbiye_abwi0t.png",
+    "category": "emotion"
+  },
+  {
+    "id": 102,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379264/Nadhiye_Nadhiye_Video_Song___Rhythm_Tamil_Movie_Songs__Arjun_A._R._Rahman_Pyramid_Music_MP3_160K_kpwami.mp3",
+    "name": "Nadhiye Nadhiye",
+    "artist": "A. R. Rahman",
+    "album": "Rhythm",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381991/Nadhiye_Nadhiye_uvrvnw.png",
+    "category": "love"
+  },
+  {
+    "id": 103,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379254/Munbe_Vaa_MP3_160K_hcb8ry.mp3",
+    "name": "Munbe Vaa",
+    "artist": "A. R. Rahman",
+    "album": "Sillunu Oru Kaadhal",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382003/Munbe_Vaa_cmjjhg.png",
+    "category": "love"
+  },
+  {
+    "id": 104,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379252/Manasellam_Mazhaiyae_Video_Song___Saguni___Karthi___Pranitha___Santhanam_MP3_160K_ldeias.mp3",
+    "name": "Manasellam Mazhaiye",
+    "artist": "G. V. Prakash Kumar",
+    "album": "Saguni",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381989/Manasellam_Mazhaiye_re08wl.png",
+    "category": "emotion"
+  },
+  {
+    "id": 105,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379240/Malare_MP3_160K_qhvgrh.mp3",
+    "name": "Malare",
+    "artist": "Vijay Yesudas",
+    "album": "Premam",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381984/Malare_fl0c2n.png",
+    "category": "love"
+  },
+  {
+    "id": 106,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379239/Lovendra_Cassandra_From__Think_Indie__MP3_160K_v1bko7.mp3",
+    "name": "Lovendra Cassandra",
+    "artist": "Think Indie",
+    "album": "Single",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381980/Lovendra_Cassandra_dwwguz.png",
+    "category": "love"
+  },
+  {
+    "id": 107,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379237/Maari_s_Aanandhi_MP3_160K_hrgl4a.mp3",
+    "name": "Maari's Aanandhi",
+    "artist": "Anirudh Ravichander",
+    "album": "Maari 2",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381989/Maari_s_Aanandhi_nemd0g.png",
+    "category": "love"
+  },
+  {
+    "id": 108,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379224/LKG___Thimiru_Kaattaadha_Di_Video_Song___RJ_Balaji__Priya_Anand___Leon_James___K.R._Prabhu_MP3_160K_kdmopn.mp3",
+    "name": "Thimiru Kaattaadha Di",
+    "artist": "Leon James",
+    "album": "LKG",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382006/Thimiru_Kaattaadha_Di_kfkoc6.png",
+    "category": "motivation"
+  },
+  {
+    "id": 109,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379220/Konjum_Kili_MP3_160K_x961yy.mp3",
+    "name": "Konjum Kili",
+    "artist": "D. Imman",
+    "album": "Kedi Billa Killadi Ranga",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381989/Konjum_Kili_tsh47j.png",
+    "category": "love"
+  },
+  {
+    "id": 110,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379217/Kan_Pesum_Varthaigal_-_Video_Song___7G_Rainbow_Colony___Ravi_Krishna___Sonia_Agarwal___Sun_Music_MP3_160K_c40lkt.mp3",
+    "name": "Kan Pesum Varthaigal",
+    "artist": "Yuvan Shankar Raja",
+    "album": "7G Rainbow Colony",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381980/Kan_Pesum_Varthaigal_m2emcv.png",
+    "category": "emotion"
+  },
+  {
+    "id": 111,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379209/Kaathodu_Kaathanen_From__Jail__MP3_160K_y15cwi.mp3",
+    "name": "Kaathodu Kaathanen",
+    "artist": "G. V. Prakash Kumar",
+    "album": "Jail",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381973/Kaathodu_Kaathanen_ags3mk.png",
+    "category": "love"
+  },
+  {
+    "id": 112,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379207/Kaadhal_Kaditham_MP3_160K_vcztzh.mp3",
+    "name": "Kaadhal Kaditham",
+    "artist": "S. A. Rajkumar",
+    "album": "Jodi",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381980/Kaadhal_Kaditham_eiskto.png",
+    "category": "love"
+  },
+  {
+    "id": 113,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379203/Kaathellam_MP3_160K_d8yudq.mp3",
+    "name": "Kaathellam",
+    "artist": "Pradeep Kumar",
+    "album": "Single",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045342/Desaandhiri_b5up3t.png",
+    "category": "emotion"
+  },
+  {
+    "id": 114,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379195/Kadhal_En_Kadhal_MP3_160K_tgysuv.mp3",
+    "name": "Kadhal En Kadhal",
+    "artist": "Yuvan Shankar Raja",
+    "album": "Mayakkam Enna",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780382015/Naan_Sonnadhum_Mazhai_zpld0h.png",
+    "category": "sad"
+  },
+  {
+    "id": 115,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379177/Ennuyire_MP3_160K_m1tcw2.mp3",
+    "name": "Ennuyire",
+    "artist": "A. R. Rahman",
+    "album": "Single",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381970/Ennuyire_hfivra.png",
+    "category": "love"
+  },
+  {
+    "id": 116,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379177/Azhage_Bhramanidam_MP3_160K_qwvrj4.mp3",
+    "name": "Azhage Bhramanidam",
+    "artist": "Unknown",
+    "album": "Single",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381968/Azhage_Bhramanidam_tdtxhh.png",
+    "category": "emotion"
+  },
+  {
+    "id": 117,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379176/En_Rojaa_Neeye___Kushi___Vijay_Deverakonda__Samantha_Ruth_Prabhu___Hesham_Abdul_Wahab___Lyrical_MP3_160K_esoyld.mp3",
+    "name": "En Rojaa Neeye",
+    "artist": "Hesham Abdul Wahab",
+    "album": "Kushi",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381972/En_Rojaa_Neeye_dwz8f8.png",
+    "category": "love"
+  },
+  {
+    "id": 118,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379175/Arabu_Naadu_MP3_160K_pvgnek.mp3",
+    "name": "Arabu Naadu",
+    "artist": "A. R. Rahman",
+    "album": "Thottal Poo Malarum",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381961/Arabu_Naadu_dujonl.png",
+    "category": "emotion"
+  },
+  {
+    "id": 119,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379158/Anegan_-_Aathadi_Aathadi_Video___Dhanush___Harris_Jayaraj_MP3_160K_vlfrb4.mp3",
+    "name": "Aathadi Aathadi",
+    "artist": "Harris Jayaraj",
+    "album": "Anegan",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780301040/Thodu_Vaanam_ivzox8.png",
+    "category": "motivation"
+  },
+  {
+    "id": 120,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379157/Eiffel_Melay_MP3_160K_ndnbvo.mp3",
+    "name": "Eiffel Melay",
+    "artist": "G. V. Prakash Kumar",
+    "album": "Aayirathil Oruvan",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381965/Eiffel_Melay_ac9msj.png",
+    "category": "motivation"
+  },
+  {
+    "id": 121,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379144/Akkam_Pakkam___HD_Video_Song___Kireedam_MP3_160K_ly0jlw.mp3",
+    "name": "Akkam Pakkam",
+    "artist": "G. V. Prakash Kumar",
+    "album": "Kireedam",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381964/Akkam_Pakkam_piirqm.png",
+    "category": "emotion"
+  },
+  {
+    "id": 122,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379144/Agayam_Theepiditha_MP3_160K_as6npx.mp3",
+    "name": "Agayam Theepiditha",
+    "artist": "Yuvan Shankar Raja",
+    "album": "Madrasapattinam",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381968/Agayam_Theepiditha_dz3dxn.png",
+    "category": "motivation"
+  },
+  {
+    "id": 123,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780379144/Ariyadha_Vayasu_MP3_160K_irfd61.mp3",
+    "name": "Ariyadha Vayasu",
+    "artist": "Yuvan Shankar Raja",
+    "album": "Paruthiveeran",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780381983/Ariyadha_Vayasu_weissv.png",
+    "category": "emotion"
+  },
+  {
+    "id": 124,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780387676/Vinmeen_-_From__Thegidi__spotdown.org_gt8bhw.mp3",
+    "name": "Vinmeen",
+    "artist": "Nivas K. Prasanna",
+    "album": "Thegidi",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780387707/Vinmeen_dg9o5f.png",
+    "category": "love"
+  },
+  {
+    "id": 125,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780387673/Nenjame_Nenjame_spotdown.org_kuyoz7.mp3",
+    "name": "Nenjame Nenjame",
+    "artist": "A. R. Rahman",
+    "album": "Maamannan",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780387709/Nenjame_Nenjame_pdonw9.png",
+    "category": "motivation"
+  },
+  {
+    "id": 126,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780387669/Shades_of_Kadhal_spotdown.org_cbgyww.mp3",
+    "name": "Shades of Kadhal",
+    "artist": "Sean Roldan",
+    "album": "Single",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780387706/Shades_of_Kadhal_ur477g.png",
+    "category": "motivation"
+  },
+  {
+    "id": 127,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780387662/Vannarapettayila_From__Maaveeran___spotdown.org_stfga8.mp3",
+    "name": "Vannarapettayila",
+    "artist": "Bharath Sankar",
+    "album": "Maaveeran",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780387797/Vannarapettayila_From_Maaveeran_cover_juchpn.jpg",
+    "category": "motivation"
+  },
+  {
+    "id": 128,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780387661/Velagaadha_-_From__Lover__spotdown.org_t6fxlk.mp3",
+    "name": "Velagaadha",
+    "artist": "Sean Roldan",
+    "album": "Lover",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780387711/Velagaadha_efk9iq.png",
+    "category": "motivation"
+  },
+  {
+    "id": 129,
+    "url": "https://res.cloudinary.com/djb46dfzg/video/upload/v1780387646/Kadhaipoma_Title_track_MP3_160K_wbfx9q.mp3",
+    "name": "Kadhaipoma",
+    "artist": "Leon James",
+    "album": "Kadhaipoma",
+    "cover": "https://res.cloudinary.com/djb46dfzg/image/upload/v1780387702/Kadhaipoma_Title_track_cover_hstxs8.jpg",
+    "category": "motivation"
   }
 ];
