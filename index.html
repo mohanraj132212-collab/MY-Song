@@ -639,7 +639,7 @@
   <div class="screen" id="appScreen">
     <div class="topbar">
       <div class="topbar-logo">
-        <div class="topbar-logo-mark"><img src="logo1.png" alt=""></div>
+        <div class="topbar-logo-mark"><img src="logo.png" alt=""></div>
         <span>MY Song</span>
       </div>
       <div class="topbar-right">
@@ -1156,8 +1156,8 @@
       });
 
       // ── 2. ACTION HANDLERS ───────────────────────────────────
-     // These fire when the user taps controls on the lock screen,
-     //notification panel, Bluetooth headset buttons, smartwatch, etc.
+      // These fire when the user taps controls on the lock screen,
+      //notification panel, Bluetooth headset buttons, smartwatch, etc.
 
       navigator.mediaSession.setActionHandler('play', () => {
         if (!isPlaying) togglePlay();
