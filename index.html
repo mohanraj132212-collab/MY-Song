@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MY Song</title>
-  <link href="logo.png" rel="icon">
+  <link href="logo1.png" rel="icon">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#000000">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: var(--bg);
+    background:#000;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,7 +110,7 @@
   .auth-logo-mark img{width:130px;height:100px;object-fit:contain;}
   .topbar-logo-mark{width:32px;height:32px;border-radius:8px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .topbar-logo-mark img{width:50px;height:60px;object-fit:contain;}
-  #authScreen{background:var(--bg);align-items:center;justify-content:center;overflow-y:auto;padding:20px 16px;}
+  #authScreen{background:#000;align-items:center;justify-content:center;overflow-y:auto;padding:20px 16px;}
   .auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px;}
   .auth-logo span{font-size:38px;font-weight:800;letter-spacing:-2px;color:#fff}
   .auth-box{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;max-width:400px;position:relative;z-index:1;box-shadow:0 24px 64px rgba(0,0,0,.5);}
@@ -143,7 +143,7 @@
   .pw-strength{height:3px;border-radius:2px;margin-top:4px;background:var(--bg4);overflow:hidden}
   .pw-strength-fill{height:100%;border-radius:2px;transition:width .3s,background .3s;width:0}
   #appScreen{background:var(--bg)}
-  .topbar{height:var(--topbar-h);background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0;border-bottom:1px solid var(--border);z-index:50;}
+  .topbar{height:var(--topbar-h);background:#000;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0;border-bottom:1px solid var(--border);z-index:50;}
   .topbar-logo{display:flex;align-items:center;gap:8px}
   .topbar-logo span{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px}
   .topbar-profile{width:36px;height:36px;border-radius:50%;background:var(--bg3);overflow:hidden;cursor:pointer;border:2px solid var(--bg4);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
@@ -543,7 +543,7 @@
 
   <div id="splashScreen">
     <div class="splash-logo">
-      <img src="logo.png" alt="MY Song" onerror="this.style.display='none'">
+      <img src="logo1.png" alt="MY Song" onerror="this.style.display='none'">
       <span>MY Song</span>
     </div>
     <div class="splash-spinner"></div>
@@ -551,7 +551,7 @@
 
   <div class="screen" id="authScreen">
     <div class="auth-logo">
-      <div class="auth-logo-mark"><img src="logo.png" alt=""></div>
+      <div class="auth-logo-mark"><img src="logo1.png" alt=""></div>
       <span>MY Song</span>
     </div>
     <div class="auth-box">
@@ -639,7 +639,7 @@
   <div class="screen" id="appScreen">
     <div class="topbar">
       <div class="topbar-logo">
-        <div class="topbar-logo-mark"><img src="logo.png" alt=""></div>
+        <div class="topbar-logo-mark"><img src="logo1.png" alt=""></div>
         <span>MY Song</span>
       </div>
       <div class="topbar-right">
