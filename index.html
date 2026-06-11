@@ -9,17 +9,10 @@
   <meta name="theme-color" content="#000000">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
 
-  <!-- ═══════════════════════════════════════════════════════════
-       CRITICAL: Synchronous session pre-check runs BEFORE the
-       first paint. Reads localStorage immediately (zero latency)
-       and sets a CSS class on <html> so the correct screen is
-       shown from the very first rendered frame — no flash ever.
-  ═══════════════════════════════════════════════════════════ -->
   <script>
     (function() {
       var SESSION_KEY = 'mova_session_v2';
       var saved = localStorage.getItem(SESSION_KEY);
-      // Mark html element instantly — CSS uses this to decide what to show
       if (saved) {
         document.documentElement.classList.add('has-session');
       }
@@ -54,11 +47,6 @@
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);overflow:hidden;overscroll-behavior:none;}
 
-  /* ═══════════════════════════════════════════════════════════
-     SPLASH SCREEN — shown during async Firebase verification.
-     Displayed on first paint, fades out once auth is resolved.
-     This prevents EITHER screen from flashing incorrectly.
-  ═══════════════════════════════════════════════════════════ */
   #splashScreen {
     position: fixed;
     inset: 0;
@@ -102,22 +90,6 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ═══════════════════════════════════════════════════════════
-     SCREEN VISIBILITY RULES
-     
-     Default: both screens hidden (splash covers everything).
-     
-     When .has-session on <html>:
-       - authScreen stays hidden immediately (no flash)
-       - appScreen becomes the "intended" screen
-     
-     When NOT .has-session:
-       - authScreen is the intended screen
-     
-     .auth-resolved class (added after Firebase confirms/denies)
-     triggers the actual reveal with a smooth fade-in.
-     The splash hides at the same moment.
-  ═══════════════════════════════════════════════════════════ */
   .screen {
     display: none;
     position: fixed;
@@ -134,7 +106,6 @@
     opacity: 1;
   }
 
-  /* Auth screen specifics */
   .auth-logo-mark{width:95px;height:90px;}
   .auth-logo-mark img{width:130px;height:100px;object-fit:contain;}
   .topbar-logo-mark{width:32px;height:32px;border-radius:8px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -233,18 +204,15 @@
   .queue-clear-btn{margin:8px 20px 0;background:rgba(255,100,100,.08);border:1px solid rgba(255,100,100,.15);color:rgba(255,100,100,.7);border-radius:10px;padding:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;width:calc(100% - 40px);display:flex;align-items:center;justify-content:center;gap:6px;}
   .queue-clear-btn:active{background:rgba(255,100,100,.15)}
 
-  /* ── PAGES ── */
   .page{display:none;position:absolute;inset:0;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:var(--bg);}
   .page.active{display:flex}
   .page::-webkit-scrollbar{display:none}
 
-  /* ── FILTER CHIPS ── */
   .home-filter{display:flex;gap:8px;padding:14px 16px 12px;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch;}
   .home-filter::-webkit-scrollbar{display:none}
   .filter-chip{padding:7px 16px;border-radius:20px;border:1px solid var(--border);font-size:13px;color:var(--txt2);cursor:pointer;transition:.15s;background:transparent;font-family:inherit;white-space:nowrap;flex-shrink:0;}
   .filter-chip:active,.filter-chip.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
 
-  /* ── NOW PLAYING BANNER ── */
   .now-playing-card{margin:0 16px 16px;border-radius:16px;background:linear-gradient(135deg,rgba(29,185,84,.15) 0%,rgba(29,185,84,.04) 100%);border:1px solid rgba(29,185,84,.15);padding:16px;display:flex;align-items:center;gap:14px;flex-shrink:0;}
   .now-playing-art{width:62px;height:62px;border-radius:10px;background:var(--bg3);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;}
   .now-playing-art img{width:100%;height:100%;object-fit:cover}
@@ -284,7 +252,6 @@
   @keyframes eq{from{height:2px}to{height:10px}}
   .eq-bars.paused .eq-bar{animation-play-state:paused;height:3px}
 
-  /* ── SEARCH PAGE ── */
   .search-header{padding:16px 16px 12px;flex-shrink:0}
   .search-header h2{font-size:22px;font-weight:800;margin-bottom:14px}
   .search-input-wrap{position:relative}
@@ -295,7 +262,6 @@
   .search-results{padding:4px 8px;flex:1}
   .search-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--txt3);gap:10px;padding:40px;}
 
-  /* ── TRACK LIST ── */
   .track-list{padding:0 8px 8px;flex-shrink:0}
   .track-item{display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:10px;cursor:pointer;transition:.15s;position:relative;}
   .track-item:active{background:var(--bg3)}
@@ -312,7 +278,6 @@
   .track-more-btn{width:32px;height:32px;border-radius:50%;background:none;border:none;cursor:pointer;color:var(--txt3);display:flex;align-items:center;justify-content:center;}
   .track-more-btn:active{color:var(--txt);background:var(--bg4)}
 
-  /* ── LIBRARY ── */
   .lib-header{padding:16px 16px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
   .lib-header h2{font-size:22px;font-weight:800;flex:1}
   .btn-new-pl{display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;border:none;border-radius:20px;padding:8px 14px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;}
@@ -332,7 +297,6 @@
   .pl-card-more{width:32px;height:32px;border-radius:50%;background:none;border:none;cursor:pointer;color:var(--txt3);display:flex;align-items:center;justify-content:center;}
   .liked-card-art{background:linear-gradient(135deg,#4a3fa0,#2d1f6e);display:flex;align-items:center;justify-content:center;}
 
-  /* ── SETTINGS ── */
   .settings-page{background:var(--bg)}
   .settings-profile-section{padding:24px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;border-bottom:1px solid var(--border);flex-shrink:0;}
   .settings-avatar-wrap{position:relative;cursor:pointer}
@@ -357,7 +321,6 @@
   .stat-num{font-size:26px;font-weight:800;color:var(--accent)}
   .stat-label{font-size:11px;color:var(--txt2);margin-top:2px}
 
-  /* ── PLAYLIST DETAIL ── */
   .pl-detail-overlay{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column;overflow:hidden;}
   .pl-detail-overlay.open{display:flex}
   .pl-detail-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
@@ -380,7 +343,6 @@
   .pl-detail-tracks-section{padding:0 8px 80px;}
   .pl-detail-tracks-label{font-size:13px;font-weight:700;color:var(--txt3);padding:16px 8px 8px;text-transform:uppercase;letter-spacing:.06em;}
 
-  /* ── STATS ── */
   .stats-overlay{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column;overflow:hidden;}
   .stats-overlay.open{display:flex}
   .stats-topbar{height:var(--topbar-h);display:flex;align-items:center;gap:12px;padding:0 16px;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--bg);}
@@ -430,7 +392,6 @@
   .stats-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;color:var(--txt3);}
   .stats-empty-icon{font-size:48px;margin-bottom:12px;opacity:.5;}
 
-  /* ── FULL SCREEN NOW PLAYING ── */
   .nowplaying-overlay {position:fixed;inset:0;z-index:200;display:none;overflow:hidden;}
   .nowplaying-overlay.open{display:block;}
   .np-bg{position:absolute;inset:-40px;background-size:cover;background-position:center;background-repeat:no-repeat;filter:blur(55px) brightness(.35) saturate(1.5);transform:scale(1.2);pointer-events:none;}
@@ -466,7 +427,6 @@
   .np-vol-input::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;cursor:pointer;border:none;box-shadow:0 1px 4px rgba(0,0,0,.4);}
   @media(max-height:700px){.np-art{width:min(250px,70vw);height:min(250px,70vw);}.np-main-play{width:72px;height:72px;}}
 
-  /* ── CONTEXT SHEET ── */
   .ctx-sheet{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.6);display:none;align-items:flex-end;}
   .ctx-sheet.open{display:flex}
   .ctx-sheet-inner{width:100%;background:var(--bg3);border-radius:20px 20px 0 0;padding:8px 0 calc(16px + var(--safe-bottom));transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
@@ -481,7 +441,6 @@
   .ctx-item:active{background:var(--bg4);color:var(--txt)}
   .ctx-item.danger{color:var(--err)}
 
-  /* ── MODALS ── */
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:400;display:none;align-items:flex-end;backdrop-filter:blur(4px);}
   .modal-overlay.open{display:flex}
   .modal{background:var(--bg3);border:1px solid var(--border);border-radius:20px 20px 0 0;padding:20px 20px calc(24px + var(--safe-bottom));width:100%;max-height:85vh;display:flex;flex-direction:column;gap:14px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
@@ -536,7 +495,6 @@
   .topbar-stats-btn:active{color:var(--accent);background:var(--accent-dim);border-color:rgba(29,185,84,.3);}
   .topbar-right{display:flex;align-items:center;gap:8px;}
 
-  /* ── CROP MODAL ── */
   .crop-modal-overlay{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.92);display:none;flex-direction:column;align-items:center;justify-content:center;backdrop-filter:blur(12px);}
   .crop-modal-overlay.open{display:flex;}
   .crop-modal{width:100%;max-width:420px;display:flex;flex-direction:column;padding:0;max-height:100dvh;overflow:hidden;}
@@ -583,11 +541,6 @@
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════════════════
-       SPLASH SCREEN — Shown instantly on every load.
-       Hides once Firebase confirms or denies the session.
-       Zero auth-screen flash for returning users.
-  ═══════════════════════════════════════════════════════ -->
   <div id="splashScreen">
     <div class="splash-logo">
       <img src="logo.png" alt="MY Song" onerror="this.style.display='none'">
@@ -1106,6 +1059,7 @@
 
   <div class="toast" id="toast"></div>
   <audio id="audioEl"></audio>
+
    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -1129,21 +1083,13 @@
       return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // ══════════════════════════════════════════════════════════
-    // AUTH RESOLUTION HELPER
-    // The single function that dismisses the splash and reveals
-    // the correct screen. Called exactly once per page load.
-    // ══════════════════════════════════════════════════════════
     function resolveAuth(showScreen) {
-      // showScreen is 'app' or 'auth'
       const splash   = document.getElementById('splashScreen');
       const authEl   = document.getElementById('authScreen');
       const appEl    = document.getElementById('appScreen');
 
       if (showScreen === 'app') {
         appEl.classList.add('active');
-        // Micro-delay so the browser renders the element before
-        // triggering the CSS opacity transition for a smooth fade-in.
         requestAnimationFrame(() => requestAnimationFrame(() => {
           appEl.classList.add('visible');
           splash.classList.add('hidden');
@@ -1167,6 +1113,134 @@
     let currentLibTab = 'playlists';
     let playCounts = {}, listenSeconds = {}, sessionStarted = {}, statsPeriod = 'all', playHistory = [];
     const STATS_KEY = 'mova_stats_v1', HISTORY_KEY = 'mova_history_v1';
+
+    // ══════════════════════════════════════════════════════════
+    // MEDIA SESSION API
+    // Provides rich OS-level playback controls:
+    // Android notification panel, lock screen, Bluetooth devices,
+    // wearables, and car displays all read from this API.
+    // ══════════════════════════════════════════════════════════
+
+    /**
+     * updateMediaSession
+     * Called every time a new track starts playing.
+     * Pushes metadata (title, artist, album, artwork) to the OS
+     * and registers action handlers for hardware/software controls.
+     *
+     * @param {Object} track  — track object from songs.js
+     */
+    function updateMediaSession(track) {
+      // Guard: API not available in older browsers / non-secure contexts
+      if (!('mediaSession' in navigator)) return;
+
+      // ── 1. METADATA ──────────────────────────────────────────
+      // Build the artwork array. MediaMetadata accepts multiple
+      // sizes; the browser picks the most appropriate one.
+      // If the track has no cover, fall back to the app logo so
+      // the notification never shows a blank image.
+      const artworkSrc  = track.cover || 'logo.png';
+      const artworkList = [
+        { src: artworkSrc, sizes: '96x96',   type: 'image/jpeg' },
+        { src: artworkSrc, sizes: '128x128', type: 'image/jpeg' },
+        { src: artworkSrc, sizes: '192x192', type: 'image/jpeg' },
+        { src: artworkSrc, sizes: '256x256', type: 'image/jpeg' },
+        { src: artworkSrc, sizes: '384x384', type: 'image/jpeg' },
+        { src: artworkSrc, sizes: '512x512', type: 'image/jpeg' },
+      ];
+
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title:  track.name   || 'Unknown Title',
+        artist: track.artist || 'Unknown Artist',
+        album:  track.album  || 'MY Song',
+        artwork: artworkList,
+      });
+
+      // ── 2. ACTION HANDLERS ───────────────────────────────────
+     // These fire when the user taps controls on the lock screen,
+     //notification panel, Bluetooth headset buttons, smartwatch, etc.
+
+      navigator.mediaSession.setActionHandler('play', () => {
+        if (!isPlaying) togglePlay();
+      });
+
+      navigator.mediaSession.setActionHandler('pause', () => {
+        if (isPlaying) togglePlay();
+      });
+
+      navigator.mediaSession.setActionHandler('previoustrack', () => {
+        prevTrack();
+      });
+
+      navigator.mediaSession.setActionHandler('nexttrack', () => {
+        nextTrack();
+      });
+
+      // seekbackward / seekforward — optional but improves UX on
+      // devices that show a seek bar (e.g. Android Auto, WearOS).
+      navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+        const skipTime = details.seekOffset || 10;
+        audio.currentTime = Math.max(0, audio.currentTime - skipTime);
+        syncMediaSessionPosition();
+      });
+
+      navigator.mediaSession.setActionHandler('seekforward', (details) => {
+        const skipTime = details.seekOffset || 10;
+        audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + skipTime);
+        syncMediaSessionPosition();
+      });
+
+      // seekto — lets the lock-screen scrubber control playback
+      navigator.mediaSession.setActionHandler('seekto', (details) => {
+        if (details.seekTime !== undefined && audio.duration) {
+          audio.currentTime = details.seekTime;
+          syncMediaSessionPosition();
+        }
+      });
+
+      // Stop handler — some Bluetooth devices send a stop signal
+      navigator.mediaSession.setActionHandler('stop', () => {
+        audio.pause();
+        audio.currentTime = 0;
+        isPlaying = false;
+        updatePlayIcons(false);
+        updateMediaSessionPlaybackState('none');
+      });
+    }
+
+    /**
+     * updateMediaSessionPlaybackState
+     * Syncs the OS play/pause indicator with actual audio state.
+     * Values: 'playing' | 'paused' | 'none'
+     *
+     * @param {string} state
+     */
+    function updateMediaSessionPlaybackState(state) {
+      if (!('mediaSession' in navigator)) return;
+      navigator.mediaSession.playbackState = state;
+    }
+
+    /**
+     * syncMediaSessionPosition
+     * Pushes the current playback position and duration to the OS
+     * so the lock-screen progress bar stays accurate.
+     * Called on timeupdate and after seeks.
+     */
+    function syncMediaSessionPosition() {
+      if (!('mediaSession' in navigator)) return;
+      if (!audio.duration || isNaN(audio.duration)) return;
+
+      try {
+        navigator.mediaSession.setPositionState({
+          duration:     audio.duration,
+          playbackRate: audio.playbackRate,
+          position:     Math.min(audio.currentTime, audio.duration),
+        });
+      } catch (e) {
+        // setPositionState is not supported everywhere — fail silently
+      }
+    }
+
+    // ── END MEDIA SESSION API ──────────────────────────────────
 
     // ── STATS PERSISTENCE ──
     function loadStats() {
@@ -1215,19 +1289,6 @@
     function clearSession() { localStorage.removeItem(SESSION_KEY); }
     function getSavedSession() { return localStorage.getItem(SESSION_KEY); }
 
-    // ══════════════════════════════════════════════════════════
-    // BOOT — Session check on every page load.
-    //
-    // Timeline:
-    //   t=0ms   : Splash visible (no auth screen visible at all)
-    //   t=0ms   : Firebase SDK init begins
-    //   t=Xms   : Firebase get() resolves (network round-trip)
-    //   t=X+1ms : resolveAuth() called → correct screen fades in,
-    //             splash fades out simultaneously.
-    //
-    // Returning users never see the auth screen. New/logged-out
-    // users see the splash → auth screen (no app screen flash).
-    // ══════════════════════════════════════════════════════════
     (async () => {
       const saved = getSavedSession();
       if (saved) {
@@ -1235,20 +1296,17 @@
           const snap = await get(userRef(saved));
           if (snap.exists()) {
             await loginWithData(saved, snap.val(), /* skipResolve= */ false);
-            return; // resolveAuth('app') called inside loginWithData
+            return;
           }
-        } catch (e) {
-          // Network error — clear stale session, fall through to auth
-        }
+        } catch (e) {}
         clearSession();
       }
-      // No valid session → show auth screen
       resolveAuth('auth');
     })();
 
-    // ══════════════════════════════════════════════
-    // IMAGE CROP ENGINE (unchanged)
-    // ══════════════════════════════════════════════
+    // ══════════════════════════════════════════════════════════
+    // IMAGE CROP ENGINE
+    // ══════════════════════════════════════════════════════════
     let cropImg = null, cropCtx = null, cropCallback = null;
     let cropState = { x: 0, y: 0, zoom: 1, rotation: 0, brightness: 0, flipH: false, flipV: false };
     let cropDrag = { active: false, startX: 0, startY: 0, startImgX: 0, startImgY: 0 };
@@ -1316,7 +1374,6 @@
       }
       cropCtx.restore();
     }
-
     function onCropDragStart(e) { e.preventDefault(); cropDrag.active = true; cropDrag.startX = e.clientX; cropDrag.startY = e.clientY; cropDrag.startImgX = cropState.x; cropDrag.startImgY = cropState.y; document.getElementById('cropViewport').classList.add('dragging'); }
     function onCropTouchStart(e) { if (e.touches.length !== 1) return; e.preventDefault(); const t = e.touches[0]; cropDrag.active = true; cropDrag.startX = t.clientX; cropDrag.startY = t.clientY; cropDrag.startImgX = cropState.x; cropDrag.startImgY = cropState.y; document.getElementById('cropViewport').classList.add('dragging'); }
     function onCropDragMove(e) { if (!cropDrag.active) return; cropState.x = cropDrag.startImgX + (e.clientX - cropDrag.startX); cropState.y = cropDrag.startImgY + (e.clientY - cropDrag.startY); drawCrop(); }
@@ -1476,12 +1533,6 @@
       } catch (ex) { showAuthErr('Login failed: '+(ex.message||'Try again')); setAuthLoading('login',false); }
     };
 
-    // ══════════════════════════════════════════════════════════
-    // loginWithData — sets up app state and triggers screen
-    // reveal. Called from:
-    //   1. Session restore (boot IIFE) — resolves splash → app
-    //   2. Manual login / signup — resolves auth → app
-    // ══════════════════════════════════════════════════════════
     async function loginWithData(username, data) {
       currentUser = { username, displayName: data.displayName||username, phone: data.phone||'', avatarUrl: data.avatarUrl||'' };
       likedSet = new Set(data.liked||[]);
@@ -1490,7 +1541,6 @@
       setAuthLoading('signup',false);
       loadStats();
 
-      // Hide auth (if visible) and show app
       const authEl = document.getElementById('authScreen');
       authEl.classList.remove('active', 'visible');
 
@@ -1521,8 +1571,13 @@
       }
       audio.pause(); isPlaying = false; currentUser = null; likedSet.clear(); playlists = {}; queue = [];
       clearSession();
-      // Remove session class so next load shows auth immediately via splash
       document.documentElement.classList.remove('has-session');
+
+      // Clear Media Session on logout so the notification disappears
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = null;
+        navigator.mediaSession.playbackState = 'none';
+      }
 
       const appEl = document.getElementById('appScreen');
       const authEl = document.getElementById('authScreen');
@@ -1632,6 +1687,14 @@
         recordPlay(track.id);
         updateAllUI();
         renderGrid(filteredTracks);
+
+        // ── UPDATE MEDIA SESSION ──────────────────────────────
+        // Called immediately after audio.play() resolves so the
+        // OS notification shows the correct track from the start.
+        updateMediaSession(track);
+        updateMediaSessionPlaybackState('playing');
+        // ─────────────────────────────────────────────────────
+
       }).catch(() => showToast('Could not load track'));
     };
 
@@ -1745,15 +1808,25 @@
     window.togglePlay = () => {
       if (currentTrackIdx < 0 && tracks.length) { playTrack(0); return; }
       if (isPlaying) {
-        audio.pause(); isPlaying = false; updatePlayIcons(false);
+        audio.pause();
+        isPlaying = false;
+        updatePlayIcons(false);
+        // ── Sync Media Session playback state ────────────────
+        updateMediaSessionPlaybackState('paused');
+        // ────────────────────────────────────────────────────
         if (currentTrackIdx >= 0 && sessionStarted[tracks[currentTrackIdx].id]) {
           const el = (Date.now() - sessionStarted[tracks[currentTrackIdx].id]) / 1000;
           recordListenTime(tracks[currentTrackIdx].id, el);
           delete sessionStarted[tracks[currentTrackIdx].id];
         }
       } else {
-        audio.play(); isPlaying = true; updatePlayIcons(true);
+        audio.play();
+        isPlaying = true;
+        updatePlayIcons(true);
+        // ── Sync Media Session playback state ────────────────
+        updateMediaSessionPlaybackState('playing');
         if (currentTrackIdx >= 0) sessionStarted[tracks[currentTrackIdx].id] = Date.now();
+        // ────────────────────────────────────────────────────
       }
     };
 
@@ -1781,11 +1854,17 @@
       if (!audio.duration) return;
       audio.currentTime = (value/100)*audio.duration;
       document.getElementById('npProgFill').style.width = value + '%';
+      // ── Push updated position to OS after manual seek ────
+      syncMediaSessionPosition();
+      // ────────────────────────────────────────────────────
     };
     document.getElementById('npProgBar').addEventListener('click', e => {
       if (e.target.id === 'npProgInput') return;
       const pct = Math.max(0, Math.min(1, (e.clientX - e.currentTarget.getBoundingClientRect().left)/e.currentTarget.offsetWidth));
-      if (audio.duration) audio.currentTime = pct * audio.duration;
+      if (audio.duration) {
+        audio.currentTime = pct * audio.duration;
+        syncMediaSessionPosition();
+      }
     });
 
     function syncVolSliderTrack(value) { const el = document.getElementById('npVolInput'); if (el) el.style.setProperty('--vol-pct', value+'%'); }
@@ -1805,14 +1884,32 @@
       const progInput = document.getElementById('npProgInput');
       if (progInput && !progInput.matches(':active')) progInput.value = pct;
       document.getElementById('npCurTime').textContent = fmtTime(audio.currentTime);
+
+      // ── Push position state to OS every second ──────────
+      // Throttle to avoid spamming the API on every frame.
+      // We use a simple modulo on the floored currentTime.
+      if (Math.floor(audio.currentTime) % 1 === 0) {
+        syncMediaSessionPosition();
+      }
+      // ────────────────────────────────────────────────────
     });
+
     audio.addEventListener('loadedmetadata', () => {
       document.getElementById('npTotTime').textContent = fmtTime(audio.duration);
       if (currentTrackIdx >= 0) durations[tracks[currentTrackIdx].id] = audio.duration;
       const progInput = document.getElementById('npProgInput');
       if (progInput) progInput.value = 0;
+      // ── Set initial position state once duration is known ─
+      syncMediaSessionPosition();
+      // ────────────────────────────────────────────────────
     });
+
     audio.addEventListener('ended', () => { if (!isRepeat) nextTrack(); });
+
+    // ── Reflect actual play/pause events (e.g. from phone calls) ─
+    audio.addEventListener('play',  () => updateMediaSessionPlaybackState('playing'));
+    audio.addEventListener('pause', () => updateMediaSessionPlaybackState('paused'));
+    // ────────────────────────────────────────────────────────────
 
     function fmtTime(s) { if (!s||isNaN(s)) return '0:00'; return `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
     function fmtTimeVerbose(secs) { if (!secs||secs<60) return `${Math.round(secs||0)}s`; const h=Math.floor(secs/3600),m=Math.floor((secs%3600)/60); if(h>0) return `${h}h ${m}m`; return `${m}m`; }
@@ -1889,6 +1986,7 @@
       sleepEnd = Date.now()+mins*60000; clearTimeout(sleepTimer); clearInterval(sleepInterval);
       sleepTimer = setTimeout(() => {
         audio.pause(); isPlaying=false; updatePlayIcons(false);
+        updateMediaSessionPlaybackState('paused');
         showToast('Sleep timer ended — music stopped');
         document.getElementById('sleepIndicator').classList.remove('active');
         document.getElementById('sleepFieldValue').textContent='Off';
