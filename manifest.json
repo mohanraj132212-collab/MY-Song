@@ -1,16 +1,16 @@
 {
   "name": "My Song",
   "short_name": "MySong",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "logo1.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
