@@ -6,18 +6,45 @@
   <title>MY Song</title>
   <link href="logo.png" rel="icon">
   <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
   <meta name="theme-color" content="#000000">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CRITICAL: Synchronous session pre-check runs BEFORE the
+       first paint. Reads localStorage immediately (zero latency)
+       and sets a CSS class on <html> so the correct screen is
+       shown from the very first rendered frame — no flash ever.
+  ═══════════════════════════════════════════════════════════ -->
+  <script>
+    (function() {
+      var SESSION_KEY = 'mova_session_v2';
+      var saved = localStorage.getItem(SESSION_KEY);
+      // Mark html element instantly — CSS uses this to decide what to show
+      if (saved) {
+        document.documentElement.classList.add('has-session');
+      }
+    })();
+  </script>
 </head>
 <body>
 
-  <div class="screen active" id="authScreen">
-    <!-- AUTH SCREEN -->
+  <!-- ═══════════════════════════════════════════════════════
+       SPLASH SCREEN — Shown instantly on every load.
+       Hides once Firebase confirms or denies the session.
+       Zero auth-screen flash for returning users.
+  ═══════════════════════════════════════════════════════ -->
+  <div id="splashScreen">
+    <div class="splash-logo">
+      <img src="logo.png" alt="MY Song" onerror="this.style.display='none'">
+      <span>MY Song</span>
+    </div>
+    <div class="splash-spinner"></div>
+  </div>
+
+  <div class="screen" id="authScreen">
     <div class="auth-logo">
-      <div class="auth-logo-mark">
-        <img src="logo.png" alt="">
-      </div>
+      <div class="auth-logo-mark"><img src="logo.png" alt=""></div>
       <span>MY Song</span>
     </div>
     <div class="auth-box">
@@ -103,7 +130,6 @@
   </div>
 
   <div class="screen" id="appScreen">
-    <!-- APP SCREEN -->
     <div class="topbar">
       <div class="topbar-logo">
         <div class="topbar-logo-mark"><img src="logo.png" alt=""></div>
@@ -122,6 +148,7 @@
         </div>
       </div>
     </div>
+
     <div class="content-area">
       <div class="page active" id="homePage">
         <div class="home-filter" id="homeFilter">
@@ -154,10 +181,14 @@
             </div>
           </div>
         </div>
-        <div class="section-label" id="sectionLabel">All Tracks</div>
-        <div class="track-list" id="trackList"></div>
+        <div class="section-header">
+          <div class="section-label" id="sectionLabel">All Tracks</div>
+          <div class="section-count" id="sectionCount"></div>
+        </div>
+        <div class="track-grid" id="trackGrid"></div>
         <div style="height:8px;flex-shrink:0"></div>
       </div>
+
       <div class="page" id="searchPage">
         <div class="search-header">
           <h2>Search</h2>
@@ -173,6 +204,7 @@
           <div style="font-size:13px">Find by name, artist, or album</div>
         </div>
       </div>
+
       <div class="page" id="libraryPage">
         <div class="lib-header">
           <h2>Your Library</h2>
@@ -187,6 +219,7 @@
         </div>
         <div class="lib-content" id="libContent"></div>
       </div>
+
       <div class="page" id="settingsPage">
         <div class="settings-profile-section">
           <div class="settings-avatar-wrap" onclick="document.getElementById('settingsAvatarInput').click()">
@@ -218,35 +251,23 @@
           <div class="settings-section-label">Account</div>
           <div class="settings-field">
             <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-            <div class="settings-field-content">
-              <div class="settings-field-label">Username</div>
-              <div class="settings-field-value" id="settingsUsername">—</div>
-            </div>
+            <div class="settings-field-content"><div class="settings-field-label">Username</div><div class="settings-field-value" id="settingsUsername">—</div></div>
           </div>
           <div class="settings-field">
             <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.89-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-            <div class="settings-field-content">
-              <div class="settings-field-label">Mobile</div>
-              <div class="settings-field-value" id="settingsPhone">—</div>
-            </div>
+            <div class="settings-field-content"><div class="settings-field-label">Mobile</div><div class="settings-field-value" id="settingsPhone">—</div></div>
           </div>
         </div>
         <div class="settings-section">
           <div class="settings-section-label">Playback</div>
           <div class="settings-field" onclick="openSleepModal()" style="cursor:pointer">
             <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-            <div class="settings-field-content">
-              <div class="settings-field-label">Sleep Timer</div>
-              <div class="settings-field-value" id="sleepFieldValue">Off</div>
-            </div>
+            <div class="settings-field-content"><div class="settings-field-label">Sleep Timer</div><div class="settings-field-value" id="sleepFieldValue">Off</div></div>
             <div class="settings-field-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
           </div>
           <div class="settings-field" onclick="openStatsPage()" style="cursor:pointer">
             <div class="settings-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-            <div class="settings-field-content">
-              <div class="settings-field-label">Listening Stats</div>
-              <div class="settings-field-value">View your stats</div>
-            </div>
+            <div class="settings-field-content"><div class="settings-field-label">Listening Stats</div><div class="settings-field-value">View your stats</div></div>
             <div class="settings-field-action"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
           </div>
         </div>
@@ -257,6 +278,7 @@
         <div style="height:12px"></div>
       </div>
     </div>
+
     <div class="mini-player" id="miniPlayer" onclick="openNowPlaying()">
       <div class="mini-player-art" id="miniArt">
         <img id="miniArtImg" src="" alt="" style="display:none">
@@ -267,21 +289,16 @@
         <div class="mini-player-artist" id="miniArtist">Select a track</div>
       </div>
       <div class="mini-player-btns" onclick="event.stopPropagation()">
-        <button class="mini-btn" onclick="prevTrack()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
-        </button>
-        <button class="mini-play-btn" id="miniPlayBtn" onclick="togglePlay()">
-          <svg id="miniPlaySvg" width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
-        </button>
-        <button class="mini-btn" onclick="nextTrack()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-        </button>
+        <button class="mini-btn" onclick="prevTrack()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+        <button class="mini-play-btn" id="miniPlayBtn" onclick="togglePlay()"><svg id="miniPlaySvg" width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg></button>
+        <button class="mini-btn" onclick="nextTrack()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
         <button class="mini-queue-btn" id="miniQueueBtn" onclick="openQueuePanel()" title="View Queue">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         </button>
       </div>
       <div class="mini-player-prog"><div class="mini-player-prog-fill" id="miniProgFill" style="width:0%"></div></div>
     </div>
+
     <div class="bottom-nav">
       <div class="nav-tab active" id="tab-home" onclick="goTab('home')">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 3.247a1 1 0 0 0-1 0L4 7.577V20h4.5v-6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v6H20V7.577l-7.5-4.33z"/></svg>
@@ -317,31 +334,18 @@
   <!-- PLAYLIST DETAIL -->
   <div class="pl-detail-overlay" id="plDetailOverlay">
     <div class="pl-detail-topbar">
-      <button class="pl-back-btn" onclick="closePlDetail()">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
+      <button class="pl-back-btn" onclick="closePlDetail()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
       <div style="flex:1;font-size:15px;font-weight:700;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="plDetailTopName">Playlist</div>
       <div style="width:34px"></div>
     </div>
     <div class="pl-detail-scroll">
       <div class="pl-detail-hero">
         <div class="pl-detail-art"><img id="plDetailArt" src="" alt=""></div>
-        <div class="pl-detail-meta">
-          <h1 id="plDetailName">Playlist</h1>
-          <p id="plDetailSub">0 songs</p>
-        </div>
+        <div class="pl-detail-meta"><h1 id="plDetailName">Playlist</h1><p id="plDetailSub">0 songs</p></div>
         <div class="pl-detail-actions">
-          <button class="pl-play-btn" id="plPlayBtn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Play All
-          </button>
-          <button class="pl-add-songs-btn" id="plAddSongsBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            Add Songs
-          </button>
-          <button class="pl-delete-btn" id="plDeleteBtn" title="Delete Playlist">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-          </button>
+          <button class="pl-play-btn" id="plPlayBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Play All</button>
+          <button class="pl-add-songs-btn" id="plAddSongsBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Add Songs</button>
+          <button class="pl-delete-btn" id="plDeleteBtn" title="Delete Playlist"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
         </div>
       </div>
       <div class="pl-detail-tracks-section">
@@ -354,168 +358,54 @@
   <!-- STATS PAGE -->
   <div class="stats-overlay" id="statsOverlay">
     <div class="stats-topbar">
-      <button class="stats-back-btn" onclick="closeStatsPage()">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
+      <button class="stats-back-btn" onclick="closeStatsPage()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
       <div style="font-size:18px;font-weight:800;">Listening Stats</div>
       <div style="width:34px"></div>
     </div>
     <div class="stats-scroll" id="statsScroll"></div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       FULLSCREEN NOW PLAYING
-       FIX: np-progress uses position:relative so the
-       absolutely-positioned range input is contained
-       within the progress bar only, not the full screen.
-  ════════════════════════════════════════════ -->
+  <!-- FULLSCREEN NOW PLAYING -->
   <div class="nowplaying-overlay" id="nowplayingOverlay">
     <div class="np-bg" id="npBg"></div>
     <div class="np-solid"></div>
     <div class="np-content">
-
-      <!-- Top bar -->
       <div class="np-topbar">
-        <button class="np-close" onclick="closeNowPlaying()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
+        <button class="np-close" onclick="closeNowPlaying()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
         <div class="np-title-center">Now Playing</div>
-        <button class="np-close" onclick="openSleepModal()" style="background:rgba(255,255,255,.08)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </button>
+        <button class="np-close" onclick="openSleepModal()" style="background:rgba(255,255,255,.08)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button>
       </div>
-
-      <!-- Album art -->
       <div class="np-art" id="npArt">
         <div class="np-art-placeholder" id="npArtPlaceholder">🎵</div>
         <img id="npArtImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover">
       </div>
-
-      <!-- Song info + like -->
       <div class="np-meta-row">
-        <div style="flex:1;min-width:0">
-          <div class="np-name" id="npName">—</div>
-          <div class="np-artist" id="npArtist">Select a track</div>
-        </div>
-        <button class="np-like-btn" id="npLikeBtn" onclick="toggleLike()">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </button>
+        <div style="flex:1;min-width:0"><div class="np-name" id="npName">—</div><div class="np-artist" id="npArtist">Select a track</div></div>
+        <button class="np-like-btn" id="npLikeBtn" onclick="toggleLike()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
       </div>
-
-      <!-- ══════════════════════════════════════
-           SEEK BAR — FIX APPLIED HERE
-           
-           The <input range> is position:absolute inside
-           .np-prog-bar which is position:relative.
-           This CONTAINS the input to the bar's dimensions.
-           
-           Key fix: use left:0; top:-10px (NOT inset:-10px 0)
-           "inset" sets all 4 sides — right:0 + width:100%
-           caused the input to span the full viewport width,
-           making it an invisible screen-wide overlay that
-           swallowed every button tap below it.
-      ══════════════════════════════════════ -->
       <div class="np-progress">
         <div class="np-prog-bar" id="npProgBar">
           <div class="np-prog-fill" id="npProgFill" style="width:0%"></div>
-          <input
-            type="range"
-            id="npProgInput"
-            min="0" max="100" value="0"
-            step="0.1"
-            style="
-              position:absolute;
-              left:0;
-              top:-10px;
-              width:100%;
-              height:calc(100% + 20px);
-              opacity:0;
-              cursor:pointer;
-              margin:0;
-              z-index:3;
-            "
-            oninput="seekFromInput(this.value)"
-          >
+          <input type="range" id="npProgInput" min="0" max="100" value="0" step="0.1" style="position:absolute;left:0;top:-10px;width:100%;height:calc(100% + 20px);opacity:0;cursor:pointer;margin:0;z-index:3;" oninput="seekFromInput(this.value)">
         </div>
-        <div class="np-time-row">
-          <span id="npCurTime">0:00</span>
-          <span id="npTotTime">0:00</span>
-        </div>
+        <div class="np-time-row"><span id="npCurTime">0:00</span><span id="npTotTime">0:00</span></div>
       </div>
-
-      <!-- PLAYBACK CONTROLS -->
       <div class="np-controls">
-
-        <!-- Shuffle -->
-        <button class="np-control-btn" id="npShuffleBtn" onclick="toggleShuffle()">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="16 3 21 3 21 8"/>
-            <line x1="4" y1="20" x2="21" y2="3"/>
-            <polyline points="21 16 21 21 16 21"/>
-            <line x1="15" y1="15" x2="21" y2="21"/>
-          </svg>
-        </button>
-
-        <!-- Previous -->
-        <button class="np-control-btn" onclick="prevTrack()">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
-          </svg>
-        </button>
-
-        <!-- Play / Pause -->
-        <button class="np-main-play" id="npMainPlayBtn" onclick="togglePlay()">
-          <svg id="npMainPlaySvg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </button>
-
-        <!-- Next -->
-        <button class="np-control-btn" onclick="nextTrack()">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
-          </svg>
-        </button>
-
-        <!-- Repeat -->
-        <button class="np-control-btn" id="npRepeatBtn" onclick="toggleRepeat()">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="17 1 21 5 17 9"/>
-            <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
-            <polyline points="7 23 3 19 7 15"/>
-            <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
-          </svg>
-        </button>
-
+        <button class="np-control-btn" id="npShuffleBtn" onclick="toggleShuffle()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg></button>
+        <button class="np-control-btn" onclick="prevTrack()"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+        <button class="np-main-play" id="npMainPlayBtn" onclick="togglePlay()"><svg id="npMainPlaySvg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+        <button class="np-control-btn" onclick="nextTrack()"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+        <button class="np-control-btn" id="npRepeatBtn" onclick="toggleRepeat()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
       </div>
-
-      <!-- VOLUME ROW -->
       <div class="np-volume">
-        <button class="np-control-btn" id="npMuteBtn" onclick="toggleMute()" style="opacity:0.6">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-          </svg>
-        </button>
-
-        <input
-          type="range"
-          class="np-vol-input"
-          id="npVolInput"
-          min="0" max="100" value="80"
-          oninput="setVolumeFromInput(this.value)"
-        >
-
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-        </svg>
+        <button class="np-control-btn" id="npMuteBtn" onclick="toggleMute()" style="opacity:0.6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg></button>
+        <input type="range" class="np-vol-input" id="npVolInput" min="0" max="100" value="80" oninput="setVolumeFromInput(this.value)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
       </div>
+    </div>
+  </div>
 
-    </div><!-- /.np-content -->
-  </div><!-- /.nowplaying-overlay -->
-
-  <!-- IMAGE CROP MODAL -->
+  <!-- CROP MODAL -->
   <div class="crop-modal-overlay" id="cropModalOverlay">
     <div class="crop-modal">
       <div class="crop-topbar">
@@ -525,59 +415,36 @@
       </div>
       <div class="crop-viewport-wrap" id="cropViewport">
         <canvas id="cropCanvas" class="crop-canvas" width="300" height="300"></canvas>
-        <div class="crop-guides">
-          <div class="crop-guide-h"></div>
-          <div class="crop-guide-h"></div>
-          <div class="crop-guide-v"></div>
-          <div class="crop-guide-v"></div>
-        </div>
+        <div class="crop-guides"><div class="crop-guide-h"></div><div class="crop-guide-h"></div><div class="crop-guide-v"></div><div class="crop-guide-v"></div></div>
       </div>
       <div class="crop-controls">
         <div class="crop-control-row">
-          <div class="crop-ctrl-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-          </div>
+          <div class="crop-ctrl-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
           <span class="crop-ctrl-label">Zoom</span>
           <input type="range" class="crop-slider" id="zoomSlider" min="1" max="3" step="0.01" value="1" oninput="onZoomChange(this.value)">
           <span class="crop-slider-val" id="zoomVal">1.0×</span>
         </div>
         <div class="crop-control-row">
-          <div class="crop-ctrl-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-          </div>
+          <div class="crop-ctrl-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg></div>
           <span class="crop-ctrl-label">Rotate</span>
           <input type="range" class="crop-slider" id="rotateSlider" min="-180" max="180" step="1" value="0" oninput="onRotateChange(this.value)">
           <span class="crop-slider-val" id="rotateVal">0°</span>
         </div>
         <div class="crop-control-row">
-          <div class="crop-ctrl-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-          </div>
+          <div class="crop-ctrl-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
           <span class="crop-ctrl-label">Bright</span>
           <input type="range" class="crop-slider" id="brightnessSlider" min="-80" max="80" step="1" value="0" oninput="onBrightnessChange(this.value)">
           <span class="crop-slider-val" id="brightnessVal">0</span>
         </div>
       </div>
       <div class="crop-flip-row">
-        <button class="crop-flip-btn" id="flipHBtn" onclick="toggleFlipH()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3"/><path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"/><path d="M12 20v2M12 14v2M12 8v2M12 2v2"/></svg>
-          Flip H
-        </button>
-        <button class="crop-flip-btn" id="flipVBtn" onclick="toggleFlipV()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3"/><path d="M4 12H2M10 12H8M16 12h-2M22 12h-2"/></svg>
-          Flip V
-        </button>
-        <button class="crop-rotate-btn reset-btn" onclick="resetCrop()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-          Reset
-        </button>
+        <button class="crop-flip-btn" id="flipHBtn" onclick="toggleFlipH()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3"/><path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"/><path d="M12 20v2M12 14v2M12 8v2M12 2v2"/></svg>Flip H</button>
+        <button class="crop-flip-btn" id="flipVBtn" onclick="toggleFlipV()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3"/><path d="M4 12H2M10 12H8M16 12h-2M22 12h-2"/></svg>Flip V</button>
+        <button class="crop-rotate-btn reset-btn" onclick="resetCrop()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Reset</button>
       </div>
       <div class="crop-actions">
         <button class="crop-cancel-btn" onclick="closeCropModal()">Cancel</button>
-        <button class="crop-save-btn" onclick="saveCrop()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Apply Photo
-        </button>
+        <button class="crop-save-btn" onclick="saveCrop()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Apply Photo</button>
       </div>
     </div>
   </div>
@@ -588,27 +455,12 @@
       <div class="ctx-sheet-handle"></div>
       <div class="ctx-track-info" id="ctxTrackInfo">
         <div class="ctx-track-art"><img id="ctxTrackArt" src="" alt=""></div>
-        <div>
-          <div class="ctx-track-name" id="ctxTrackName">Song</div>
-          <div class="ctx-track-artist" id="ctxTrackArtist">Artist</div>
-        </div>
+        <div><div class="ctx-track-name" id="ctxTrackName">Song</div><div class="ctx-track-artist" id="ctxTrackArtist">Artist</div></div>
       </div>
-      <div class="ctx-item" onclick="ctxAddToQueue();closeCtxSheet()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-        Add to Queue
-      </div>
-      <div class="ctx-item" onclick="ctxLike();closeCtxSheet()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span id="ctxLikeLabel">Like Song</span>
-      </div>
-      <div class="ctx-item" onclick="ctxAddToPlaylist()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        Add to Playlist
-      </div>
-      <div class="ctx-item" onclick="ctxPlayNext();closeCtxSheet()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-        Play Next
-      </div>
+      <div class="ctx-item" onclick="ctxAddToQueue();closeCtxSheet()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Add to Queue</div>
+      <div class="ctx-item" onclick="ctxLike();closeCtxSheet()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="ctxLikeLabel">Like Song</span></div>
+      <div class="ctx-item" onclick="ctxAddToPlaylist()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Add to Playlist</div>
+      <div class="ctx-item" onclick="ctxPlayNext();closeCtxSheet()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>Play Next</div>
     </div>
   </div>
 
@@ -625,7 +477,7 @@
     <div class="delete-confirm-inner">
       <div class="delete-confirm-icon">🗑️</div>
       <div class="delete-confirm-title">Delete Playlist?</div>
-      <div class="delete-confirm-sub" id="deleteConfirmSub">This will permanently delete the playlist. This action cannot be undone.</div>
+      <div class="delete-confirm-sub" id="deleteConfirmSub">This will permanently delete the playlist.</div>
       <div class="delete-confirm-btns">
         <button class="delete-confirm-cancel" onclick="closeDeleteConfirm()">Cancel</button>
         <button class="delete-confirm-ok" id="deleteConfirmOk">Delete</button>
@@ -700,7 +552,7 @@
 
   <div class="toast" id="toast"></div>
   <audio id="audioEl"></audio>
+   <script type="module" src="script.js"></script>
 
-  <script type="module" src="script.js"></script>
 </body>
 </html>
