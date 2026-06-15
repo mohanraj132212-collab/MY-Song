@@ -1163,7 +1163,7 @@ export const tracks = [
   {
     "id": 130,
     "url": "https://res.cloudinary.com/dn9zyhvd0/video/upload/v1781517302/love-a_endaa_pannurom_f44s1h.mp3",
-    "name": "love-a endaa pannurom",
+    "name": "Beep Song ",
     "artist": "STR",
     "album": "aniruth",
     "cover": "https://res.cloudinary.com/dn9zyhvd0/image/upload/v1781516268/my_song_eqaolm.jpg",
