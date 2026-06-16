@@ -1169,4 +1169,319 @@ export const tracks = [
     "cover": "https://res.cloudinary.com/dn9zyhvd0/image/upload/v1781516268/my_song_eqaolm.jpg",
     "category": "motivation"
   },
+  {
+  id: 131,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781576181/Kaathal_Kaathal_-_Lofi_ljfylp.mp3",
+  name: "Kaathal Kaathal - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 132,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547312/2._Aagaayam_Ithanai_Naal_-_Lofi_llyfl5.mp3",
+  name: "Aagaayam Ithanai Naal - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 133,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547302/7._Un_Kangal_-_Lofi_iqqzz5.mp3",
+  name: "Un Kangal - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 134,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547296/10._Naane_Nee_Nee_Nee_-_Lofi_k9ljmu.mp3",
+  name: "Naane Nee Nee Nee - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 135,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547295/6._Kannaal_Pesum_Penne_-_Lofi_azxyy4.mp3",
+  name: "Kannaal Pesum Penne - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 136,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547292/8._Atrai_Thingal_Vanidam_-_Lofi_v3qcjx.mp3",
+  name: "Atrai Thingal Vanidam - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 137,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547290/9._Uruvaan_Churukku_-_Lofi_y7vzus.mp3",
+  name: "Uruvaan Churukku - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 138,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547288/3._Manja_Kaatu_Maina_-_Lofi_dxgznt.mp3",
+  name: "Manja Kaatu Maina - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 139,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547276/4._Kanmunne_Ethanai_Nilavu_-_Lofi_yihmya.mp3",
+  name: "Kanmunne Ethanai Nilavu - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 140,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547275/1._Verenna_Verenna_Vendum_-_Lofi_gmvxdi.mp3",
+  name: "Verenna Verenna Vendum - Lofi",
+  artist: "Unknown",
+  album: "Lofi Collection",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Verenna_Verenna_Vendum_-_Lofi_cover_ghnrzt.jpg",
+  category: "love"
+},
+{
+  id: 141,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547257/48._Thangamey_jzwlmd.mp3",
+  name: "Thangamey",
+  artist: "Anirudh Ravichander",
+  album: "Naanum Rowdy Dhaan",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547059/Thangamey_cover_hd2ums.jpg",
+  category: "love"
+},
+{
+  id: 142,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547254/47._Suttum_Vizhi_h0z9yl.mp3",
+  name: "Suttum Vizhi",
+  artist: "Unknown",
+  album: "Single",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547058/Suttum_Vizhi_cover_dxhhql.jpg",
+  category: "love"
+},
+{
+  id: 143,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547249/12._Urugi_Urugi_-_From__Joe__nqiw5e.mp3",
+  name: "Urugi Urugi",
+  artist: "Unknown",
+  album: "Joe",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547060/Urugi_Urugi_-_From_Joe_cover_qqpby8.jpg",
+  category: "love"
+},
+{
+  id: 144,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547247/46._Vizhi_Moodi_ekyyhs.mp3",
+  name: "Vizhi Moodi",
+  artist: "Harris Jayaraj",
+  album: "Ayan",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547060/Vizhi_Moodi_cover_ptfrab.jpg",
+  category: "love"
+},
+{
+  id: 145,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547243/42._Aval_iln706.mp3",
+  name: "Aval",
+  artist: "Unknown",
+  album: "Single",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547055/Aval_cover_cmi9j9.jpg",
+  category: "love"
+},
+{
+  id: 146,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547238/45._Vaseegara_lq83iu.mp3",
+  name: "Vaseegara",
+  artist: "Bombay Jayashri",
+  album: "Minnale",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547061/Vaseegara_cover_ynjmi3.jpg",
+  category: "love"
+},
+{
+  id: 147,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547224/34._Anbae_Peranbae_yrsiwx.mp3",
+  name: "Anbae Peranbae",
+  artist: "Sid Sriram",
+  album: "NGK",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547054/Anbae_Peranbae_cover_j62v8u.jpg",
+  category: "love"
+},
+{
+  id: 148,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547224/44._Saachitale_From__Love_Today__i011h5.mp3",
+  name: "Saachitale",
+  artist: "Yuvan Shankar Raja",
+  album: "Love Today",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547058/Saachitale_From_Love_Today_cover_ulnqh7.jpg",
+  category: "love"
+},
+{
+  id: 149,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547205/20._Ondra_Renda_dna0eq.mp3",
+  name: "Ondra Renda",
+  artist: "Harris Jayaraj",
+  album: "Kaakha Kaakha",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547057/Ondra_Renda_cover_gjxblv.jpg",
+  category: "love"
+},
+{
+  id: 150,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547194/37._Kadhal_Cricket_-_Love_Not_Out_xyczbm.mp3",
+  name: "Kadhal Cricket",
+  artist: "Sean Roldan",
+  album: "Love Not Out",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547055/Kadhal_Cricket_-_Love_Not_Out_cover_oi0cbd.jpg",
+  category: "love"
+},
+{
+  id: 151,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547192/36._Melliname_nxvoqv.mp3",
+  name: "Melliname",
+  artist: "Harish Raghavendra",
+  album: "Shahjahan",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547056/Melliname_cover_hhbm9q.jpg",
+  category: "love"
+},
+{
+  id: 152,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547180/35._Oh_Oh_From__Thanga_Magan__-_The_First_Love_of_Tamizh_kcnrbd.mp3",
+  name: "Oh Oh",
+  artist: "Anirudh Ravichander",
+  album: "Thanga Magan",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547056/Oh_Oh_From_Thanga_Magan_-_The_First_Love_of_Tamizh_cover_piizyg.jpg",
+  category: "love"
+},
+{
+  id: 153,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547176/5._Kannamma_-_From__Ispade_Rajavum_Idhaya_Raniyum__fjuphg.mp3",
+  name: "Kannamma",
+  artist: "Sam C. S.",
+  album: "Ispade Rajavum Idhaya Raniyum",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547055/Kannamma_-_From_Ispade_Rajavum_Idhaya_Raniyum_cover_rrpb8n.jpg",
+  category: "love"
+},
+{
+  id: 154,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547175/29._High_on_Love_ynnntl.mp3",
+  name: "High On Love",
+  artist: "Yuvan Shankar Raja",
+  album: "Pyaar Prema Kaadhal",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547055/High_on_Love_cover_ujzra2.jpg",
+  category: "love"
+},
+{
+  id: 155,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547162/24._Oh_Penne_hvvdkx.mp3",
+  name: "Oh Penne",
+  artist: "Anirudh Ravichander",
+  album: "Vanakkam Chennai",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547057/Oh_Penne_cover_igbjnz.jpg",
+  category: "love"
+},
+{
+  id: 156,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547157/25._Laali_Laali_s6utvs.mp3",
+  name: "Laali Laali",
+  artist: "Unknown",
+  album: "Single",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547056/Laali_Laali_cover_u5wlnh.jpg",
+  category: "love"
+},
+{
+  id: 157,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547155/22._Yembuttu_Irukkuthu_Aasai_joapsa.mp3",
+  name: "Yembuttu Irukkuthu Aasai",
+  artist: "D. Imman",
+  album: "Saravanan Irukka Bayamaen",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547061/Yembuttu_Irukkuthu_Aasai_cover_pvu5qf.jpg",
+  category: "love"
+},
+{
+  id: 158,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547144/21._Kandaangi_Kandaangi_vyxtzv.mp3",
+  name: "Kandaangi Kandaangi",
+  artist: "D. Imman",
+  album: "Jilla",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547055/Kandaangi_Kandaangi_cover_dhakjf.jpg",
+  category: "love"
+},
+{
+  id: 159,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547136/18._Adiye_-_From__Bachelor__a7u6i6.mp3",
+  name: "Adiye",
+  artist: "Dhibu Ninan Thomas",
+  album: "Bachelor",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547052/Adiye_-_From_Bachelor_cover_do4miu.jpg",
+  category: "love"
+},
+{
+  id: 160,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547128/17._Dhom_Dhom_-_From__Naan_Sirithal__ydsllp.mp3",
+  name: "Dhom Dhom",
+  artist: "Hiphop Tamizha",
+  album: "Naan Sirithal",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547055/Dhom_Dhom_-_From_Naan_Sirithal_cover_xyxe8l.jpg",
+  category: "love"
+},
+{
+  id: 161,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547127/16._Vaigaasi_Nilave_yvdys3.mp3",
+  name: "Vaigaasi Nilave",
+  artist: "Haricharan",
+  album: "Single",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547061/Vaigaasi_Nilave_cover_cpoy8c.jpg",
+  category: "love"
+},
+{
+  id: 162,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547126/1._Orasaadha_-_Madras_Gig_wpvqei.mp3",
+  name: "Orasaadha",
+  artist: "Vivek-Mervin",
+  album: "Madras Gig",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547058/Orasaadha_-_Madras_Gig_cover_gaofss.jpg",
+  category: "love"
+},
+{
+  id: 163,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547107/11._Unnaale_Unnaale_lvyyjw.mp3",
+  name: "Unnaale Unnaale",
+  artist: "Harris Jayaraj",
+  album: "Unnale Unnale",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547059/Unnaale_Unnaale_cover_c01jns.jpg",
+  category: "love"
+},
+{
+  id: 164,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547107/4._Kodi_Aruvi_ql9gbh.mp3",
+  name: "Kodi Aruvi",
+  artist: "Pradeep Kumar",
+  album: "Mehandi Circus",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547056/Kodi_Aruvi_cover_gkqrsk.jpg",
+  category: "love"
+},
+{
+  id: 165,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1781547097/2._Azhagiye_tacj4p.mp3",
+  name: "Azhagiye",
+  artist: "A. R. Rahman",
+  album: "Kaatru Veliyidai",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547054/Azhagiye_cover_zrrwna.jpg",
+  category: "love"
+},
 ];
