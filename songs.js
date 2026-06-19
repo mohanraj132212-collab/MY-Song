@@ -1,22 +1,22 @@
 export const tracks = [
   {
     id: 1,
-    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780031240/Thaanaa_Serndha_Koottam_-_Engae_Endru_Povathu_Official_Video___Suriya___Anirudh_l_Keerthi_Suresh_MP3_160K_fjh3ae.mp3",
-    name: "Engae Endru Povathu",
-    artist: "Anirudh Ravichander",
-    album: "Thaanaa Serndha Koottam",
-    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780034946/Engae_Endru_Povathu_jsrgtv.png",
-    category: "motivation"
+     url: "https://res.cloudinary.com/dyydbqmt1/video/upload/v1781885179/Pattampoochi_Lyric_Video___Vishwanath_and_Sons___Suriya__Mamitha_Baiju___G.V._Prakash___Venky_Atluri_MP3_160K_tyrmtm.mp3",
+     name: "Pattampoochi",
+     artist: "G. V. Prakash Kumar",
+     album: "Vishwanath and Sons",
+     cover: "https://res.cloudinary.com/dyydbqmt1/image/upload/v1781885214/Pattampoochi_egt74s.png",
+     category: "love"
   },
   {
-    id: 2,
-    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780031237/Young_And_Beautiful_MP3_160K_rbjhnv.mp3",
-    name: "Young And Beautiful",
-    artist: "Lana Del Rey",
-    album: "The Great Gatsby OST",
-    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045378/Young_And_Beautiful_pmk7ij.png",
-    category: "love"
-  },
+  id: 2,
+  url: "https://res.cloudinary.com/dyydbqmt1/video/upload/v1781885144/Vishwanath___Sons_Teaser_OST_Tamil___Suriya__Mamitha_Baiju___G_V_Prakash_Kumar___Venky_Atluri_MP3_160K_zef63q.mp3",
+  name: "Vishwanath & Sons Teaser Theme",
+  artist: "G. V. Prakash Kumar",
+  album: "Vishwanath and Sons",
+  cover: "https://res.cloudinary.com/dyydbqmt1/image/upload/v1781885219/Vishwanath_Sons_Teaser_Theme_zrupmd.png",
+  category: "emotion"
+},
   {
     id: 3,
     url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780031237/Vaa_Veera_From__Maaveeran__MP3_160K_gbrnoy.mp3",
@@ -1482,6 +1482,42 @@ export const tracks = [
   artist: "A. R. Rahman",
   album: "Kaatru Veliyidai",
   cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1781547054/Azhagiye_cover_zrrwna.jpg",
+  category: "love"
+},
+{
+  id: 166,
+  url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780031240/Thaanaa_Serndha_Koottam_-_Engae_Endru_Povathu_Official_Video___Suriya___Anirudh_l_Keerthi_Suresh_MP3_160K_fjh3ae.mp3",
+  name: "Engae Endru Povathu",
+  artist: "Anirudh Ravichander",
+  album: "Thaanaa Serndha Koottam",
+  cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780034946/Engae_Endru_Povathu_jsrgtv.png",
+  category: "motivation"
+},
+{
+  id: 167,
+  url: "https://res.cloudinary.com/dyydbqmt1/video/upload/v1781885158/Viswanath_and_Sons_-_Mazhai_Than_Maraiththathu_Music_Video___Suriya___Mamitha_Baiju___GV_Prakash_MP3_160K_oku578.mp3",
+  name: "Mazhai Than Maraiththathu",
+  artist: "G. V. Prakash Kumar",
+  album: "Vishwanath and Sons",
+  cover: "https://res.cloudinary.com/dyydbqmt1/image/upload/v1781885197/MAZHAI_THAN_MARAITHTHATHU_lses6c.jpg",
+  category: "love"
+},
+{
+    id: 168,
+    url: "https://res.cloudinary.com/djb46dfzg/video/upload/v1780031237/Young_And_Beautiful_MP3_160K_rbjhnv.mp3",
+    name: "Young And Beautiful",
+    artist: "Lana Del Rey",
+    album: "The Great Gatsby OST",
+    cover: "https://res.cloudinary.com/djb46dfzg/image/upload/v1780045378/Young_And_Beautiful_pmk7ij.png",
+    category: "love"
+  },
+{
+  id: 169,
+  url: "https://res.cloudinary.com/dyydbqmt1/video/upload/v1781885143/Viswanathan___Sons_-_Seng_Kaniye_First_Single___Suriya___Mamitha_Baiju___GV_Prakash__Venky_Atluri_MP3_160K_firen4.mp3",
+  name: "Seng Kaniye",
+  artist: "G. V. Prakash Kumar",
+  album: "Vishwanath and Sons",
+  cover: "https://res.cloudinary.com/dyydbqmt1/image/upload/v1781885219/seng_kaniye_zk8pbi.jpg",
   category: "love"
 },
 ];
